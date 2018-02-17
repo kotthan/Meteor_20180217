@@ -370,11 +370,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         )
         self.highScoreLabel.zPosition = -1                  //プレイヤーの後ろ
         self.baseNode.addChild(self.highScoreLabel)         //背景に固定のつもりでbaseNodeに追加
+        self.highScoreLabel.isHidden = true
         //===================
         //MARK: HUD
         //===================
         self.hudView = HUDView(frame: self.frame)
         self.view!.addSubview(hudView)
+        hudView.highScoreLabel.text = String( self.highScore )
         //===================
         //MARK: ポーズ画面
         //===================
@@ -994,6 +996,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         play()
         hudView.scoreLabel.isHidden = false
+        hudView.highScoreLabel.isHidden = false
         start0Node.zPosition = -50
         if( retryFlg == false ){
             //リトライ時はカメラ動かさない
