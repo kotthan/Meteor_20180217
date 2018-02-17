@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
     var guardGage = SKSpriteNode()                                     //ガードゲージ
+    var guardPod: GuardPod!
     var start0Node: SKSpriteNode!
     var score = 0                                                   //スコア
     let comboLabel = SKLabelNode()                                  //スコア表示ラベル
@@ -350,6 +351,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guardGage.xScale = 1 / 5
         guardGage.yScale = 1 / 5
         self.playerBaseNode.addChild(self.guardGage)               //playerにaddchiledすることでplayerに追従させる
+        guardPod = GuardPod()
+        guardGage.position = CGPoint(x: player.position.x - 60, y: player.position.y )
+        self.playerBaseNode.addChild(guardPod)
         
         //ハイスコアラベル
         if ( UserDefaults.standard.object(forKey: keyHighScore) != nil )

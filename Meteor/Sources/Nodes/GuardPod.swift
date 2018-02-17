@@ -30,7 +30,9 @@ class GuardPod: SKSpriteNode {
         for i in 0...maxCount {
             podTexture.append(SKTexture(imageNamed: imageName + String(i)))
         }
-        super.init(texture: podTexture[maxCount], color: UIColor.clear, size: CGSize(width: 100, height: 100))
+        super.init(texture: podTexture[maxCount] ,
+                   color: UIColor.clear,
+                   size: podTexture[maxCount].size())
         self.count = self.maxCount
         //デバッグ用ラベル
         countLabel.text = String(self.count)
