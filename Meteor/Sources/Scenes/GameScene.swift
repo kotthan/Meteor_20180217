@@ -1014,7 +1014,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //リトライ時はアニメーションはしない
             let action1 = SKAction.fadeOut(withDuration: 1.0)
             let action2 = SKAction.run{
-                let action1 = SKAction.moveTo(y: self.player.position.y + 300, duration: 2)
+                let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 2)
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
                     self.start0Node.isHidden = true
