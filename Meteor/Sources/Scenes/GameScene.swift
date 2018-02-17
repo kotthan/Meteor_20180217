@@ -328,25 +328,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //===================
             //MARK: start0Node
             //===================
-            start0Node = SKSpriteNode(imageNamed: "ロゴ　312　スタート入り")
-            self.start0Node.position = CGPoint(                          //表示位置をplayerのサイズ分左に
+            start0Node = SKSpriteNode(imageNamed: "logo_312")
+            self.start0Node.position = CGPoint(                         
                 x: 189.836,
                 y: 1003.673
             )
-            //self.ultraButton.xScale = 1 / 18
-            //self.ultraButton.yScale = 1 / 18
             self.ultraButton.zPosition = 10
-            self.baseNode.addChild(self.start0Node)               //playerにaddchiledすることでplayerに追従
-            /*
-            scene.enumerateChildNodes(withName: "start0Node", using:
-            { (node, stop) -> Void in
-                let start0Node = node as! SKSpriteNode
-                start0Node.name = "start0Node"
-                //シーンから削除して再配置
-                start0Node.removeFromParent()
-                self.start0Node = start0Node
-                self.baseNode.addChild(start0Node)
-            })*/
+            self.baseNode.addChild(self.start0Node)
 		}
         //攻撃判定用シェイプ
         attackShapeMake()

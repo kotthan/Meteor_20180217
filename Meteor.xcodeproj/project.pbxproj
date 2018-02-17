@@ -23,10 +23,8 @@
 		B63CFDB620373BF700F0F90E /* gorogoro.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAE20373BF700F0F90E /* gorogoro.wav */; };
 		B63CFDB720373BF700F0F90E /* slash3.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAF20373BF700F0F90E /* slash3.wav */; };
 		B63CFDB820373BF700F0F90E /* sibire.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDB020373BF700F0F90E /* sibire.wav */; };
-		B63CFDBA20373C1400F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDB920373C1400F0F90E /* Assets.xcassets */; };
 		B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDBD20373C9400F0F90E /* IconButton.swift */; };
 		B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC120373CB800F0F90E /* PauseButton.swift */; };
-		B63CFDC420373CCF00F0F90E /* reStartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC320373CCF00F0F90E /* reStartButton.swift */; };
 		B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC520373CEF00F0F90E /* GuardPod.swift */; };
 		B63CFDC820373CF800F0F90E /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC720373CF800F0F90E /* HUDView.swift */; };
 		B63CFDCE20373D2C00F0F90E /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC920373D2C00F0F90E /* GameOverView.swift */; };
@@ -44,6 +42,7 @@
 		B63CFDE320373DC100F0F90E /* move.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDDA20373DC000F0F90E /* move.wav */; };
 		B63CFDE420373DC100F0F90E /* tyakuti.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDDB20373DC000F0F90E /* tyakuti.wav */; };
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
+		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,8 +75,8 @@
 		B63CFD8A2037390800F0F90E /* MeteorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorUITests.swift; sourceTree = "<group>"; };
 		B63CFD8C2037390800F0F90E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B63CFDA320373B9B00F0F90E /* enter.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = enter.wav; sourceTree = "<group>"; };
-		B63CFDA520373BA400F0F90E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = Resources/Images/GameScene.sks; sourceTree = "<group>"; };
-		B63CFDA720373BAC00F0F90E /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Resources/GameScene.swift; sourceTree = "<group>"; };
+		B63CFDA520373BA400F0F90E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		B63CFDA720373BAC00F0F90E /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B63CFDA920373BF700F0F90E /* kaminari.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kaminari.wav; sourceTree = "<group>"; };
 		B63CFDAA20373BF700F0F90E /* slash2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash2.wav; sourceTree = "<group>"; };
 		B63CFDAB20373BF700F0F90E /* iwa.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = iwa.wav; sourceTree = "<group>"; };
@@ -86,10 +85,8 @@
 		B63CFDAE20373BF700F0F90E /* gorogoro.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gorogoro.wav; sourceTree = "<group>"; };
 		B63CFDAF20373BF700F0F90E /* slash3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash3.wav; sourceTree = "<group>"; };
 		B63CFDB020373BF700F0F90E /* sibire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sibire.wav; sourceTree = "<group>"; };
-		B63CFDB920373C1400F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../GitHub/meteor/MeteorSample_20170831/Meteor/Resources/Images/Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDBD20373C9400F0F90E /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		B63CFDC120373CB800F0F90E /* PauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
-		B63CFDC320373CCF00F0F90E /* reStartButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = reStartButton.swift; sourceTree = "<group>"; };
 		B63CFDC520373CEF00F0F90E /* GuardPod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuardPod.swift; sourceTree = "<group>"; };
 		B63CFDC720373CF800F0F90E /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		B63CFDC920373D2C00F0F90E /* GameOverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
@@ -107,6 +104,7 @@
 		B63CFDDA20373DC000F0F90E /* move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = move.wav; sourceTree = "<group>"; };
 		B63CFDDB20373DC000F0F90E /* tyakuti.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tyakuti.wav; sourceTree = "<group>"; };
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
+		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,14 +155,6 @@
 		B63CFD632037390800F0F90E /* Meteor */ = {
 			isa = PBXGroup;
 			children = (
-				B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */,
-				B63CFDA720373BAC00F0F90E /* GameScene.swift */,
-				B63CFDA520373BA400F0F90E /* GameScene.sks */,
-				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
-				B63CFDC120373CB800F0F90E /* PauseButton.swift */,
-				B63CFDC520373CEF00F0F90E /* GuardPod.swift */,
-				B63CFDC720373CF800F0F90E /* HUDView.swift */,
-				B63CFDC320373CCF00F0F90E /* reStartButton.swift */,
 				B63CFDA120373B4700F0F90E /* Supporting Files */,
 				B63CFD98203739C600F0F90E /* Sources */,
 				B63CFD9E20373AE500F0F90E /* Resources */,
@@ -195,6 +185,9 @@
 			children = (
 				B63CFD9920373A1D00F0F90E /* Defaults */,
 				B63CFD9A20373A3B00F0F90E /* Views */,
+				B63CFDF72037E32400F0F90E /* Scenes */,
+				B63CFDF52037E2FD00F0F90E /* Nodes */,
+				B63CFDF62037E31300F0F90E /* Particles */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -220,6 +213,9 @@
 		B63CFD9B20373A5900F0F90E /* Master */ = {
 			isa = PBXGroup;
 			children = (
+				B63CFDCD20373D2C00F0F90E /* ViewController.swift */,
+				B63CFDCA20373D2C00F0F90E /* GameView.swift */,
+				B63CFDCC20373D2C00F0F90E /* GameViewController.swift */,
 			);
 			path = Master;
 			sourceTree = "<group>";
@@ -228,10 +224,8 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDC920373D2C00F0F90E /* GameOverView.swift */,
-				B63CFDCA20373D2C00F0F90E /* GameView.swift */,
-				B63CFDCC20373D2C00F0F90E /* GameViewController.swift */,
+				B63CFDC720373CF800F0F90E /* HUDView.swift */,
 				B63CFDCB20373D2C00F0F90E /* PauseView.swift */,
-				B63CFDCD20373D2C00F0F90E /* ViewController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -256,7 +250,7 @@
 		B63CFD9F20373AFB00F0F90E /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				B63CFDB920373C1400F0F90E /* Assets.xcassets */,
+				B63CFDF32037E28D00F0F90E /* Assets.xcassets */,
 				B63CFDA020373B1400F0F90E /* Base.lproj */,
 			);
 			path = Images;
@@ -301,6 +295,33 @@
 				B63CFDAD20373BF700F0F90E /* tubure.wav */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
+				B63CFDC520373CEF00F0F90E /* GuardPod.swift */,
+				B63CFDC120373CB800F0F90E /* PauseButton.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		B63CFDF62037E31300F0F90E /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */,
+			);
+			path = Particles;
+			sourceTree = "<group>";
+		};
+		B63CFDF72037E32400F0F90E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				B63CFDA720373BAC00F0F90E /* GameScene.swift */,
+				B63CFDA520373BA400F0F90E /* GameScene.sks */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -414,6 +435,7 @@
 				B63CFDB120373BF700F0F90E /* kaminari.wav in Resources */,
 				B63CFDB420373BF700F0F90E /* select.wav in Resources */,
 				B63CFDDD20373DC100F0F90E /* hakai.wav in Resources */,
+				B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */,
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
 				B63CFDE120373DC100F0F90E /* bgmn.mp3 in Resources */,
 				B63CFDE020373DC100F0F90E /* slash.wav in Resources */,
@@ -425,7 +447,6 @@
 				B63CFDE320373DC100F0F90E /* move.wav in Resources */,
 				B63CFDDF20373DC100F0F90E /* bgm.mid in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
-				B63CFDBA20373C1400F0F90E /* Assets.xcassets in Resources */,
 				B63CFDB620373BF700F0F90E /* gorogoro.wav in Resources */,
 				B63CFDB720373BF700F0F90E /* slash3.wav in Resources */,
 				B63CFDB520373BF700F0F90E /* tubure.wav in Resources */,
@@ -459,7 +480,6 @@
 			files = (
 				B63CFDC820373CF800F0F90E /* HUDView.swift in Sources */,
 				B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */,
-				B63CFDC420373CCF00F0F90E /* reStartButton.swift in Sources */,
 				B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
