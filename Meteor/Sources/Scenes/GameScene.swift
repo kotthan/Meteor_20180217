@@ -274,6 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 x: self.player.size.width/2,
                 y: self.player.size.height/2 - 50
             )
+            self.comboLabel.fontName = "GillSansStd-ExtraBold"
             self.comboLabel.isHidden = true
             self.playerBaseNode.addChild(self.comboLabel)               //playerにaddchiledすることでplayerに追従させる
             //===================
