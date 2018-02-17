@@ -1250,36 +1250,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameoverFlg != true else { return }
         guard guardStatus != .disable else{ return }
         
-            if( guardStatus != .guarding )
-            {   //ガード開始
-                //print("---ガードフラグをON---")
-                self.guardStatus = .guarding
-                print(self.guardStatus)
-                playerBaseNode.addChild( guardShape )
-            }
-            if( endFlg == true )
-            {
-                if let guardNode = playerBaseNode.childNode(withName: guardShapeName) {
-                    let action1 = SKAction.wait(forDuration: 0.1)
-                    let action2 = SKAction.removeFromParent()
-                    let action3 = SKAction.run{
-                        if( self.guardStatus != .disable ){
-                            self.guardStatus = .enable
-                            //print("---ガードフラグをOFF---")
-                        }
+        if( guardStatus != .guarding )
+        {   //ガード開始
+            //print("---ガードフラグをON---")
+            self.guardStatus = .guarding
+            print(self.guardStatus)
+            playerBaseNode.addChild( guardShape )
+        }
+        if( endFlg == true )
+        {
+            if let guardNode = playerBaseNode.childNode(withName: guardShapeName) {
+                let action1 = SKAction.wait(forDuration: 0.1)
+                let action2 = SKAction.removeFromParent()
+                let action3 = SKAction.run{
+                    if( self.guardStatus != .disable ){
+                        self.guardStatus = .enable
+                        //print("---ガードフラグをOFF---")
                     }
-                    let actions = SKAction.sequence([action1,action2,action3])
-                    guardNode.run(actions)
                 }
-                //アニメーション
-                let names = ["guard01","player00"]
-                self.guardTextureAnimation(self.player, names: names)
+                let actions = SKAction.sequence([action1,action2,action3])
+                guardNode.run(actions)
             }
-            else{
-                //アニメーション
-                let names = ["guard01"]
-                self.guardTextureAnimation(self.player, names: names)
-            }
+            //アニメーション
+            let names = ["guard01","player00"]
+            self.guardTextureAnimation(self.player, names: names)
+        }
+        else{
+            //アニメーション
+            let names = ["guard01"]
+            self.guardTextureAnimation(self.player, names: names)
+        }
     }
 
     func guardMeteor()
