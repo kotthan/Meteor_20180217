@@ -1359,6 +1359,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let actions = SKAction.sequence(
                 [ SKAction.scale(to: 1000, duration: 1.0),
                   SKAction.wait(forDuration: 0.5),
+                  SKAction.group(
+                    [ SKAction.wait(forDuration: 0.2),
+                      SKAction.run{
+                        self.playerBaseNode.isHidden = true
+                        self.meteorBase.isHidden = true
+                        },
+                      ]),
                   SKAction.fadeOut(withDuration: 1),
                   SKAction.removeFromParent(),
                   SKAction.run{self.isPaused = true},
