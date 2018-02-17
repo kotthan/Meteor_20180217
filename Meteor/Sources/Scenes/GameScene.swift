@@ -64,12 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: フラグ
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var attackFlg : Bool = false                                    //攻撃フラグ
-    enum guardState{    //ガード状態
-        case enable     //ガード可
-        case disable    //ガード不可
-        case guarding   //ガード中
-    }
-    var guardStatus = guardState.enable                             //ガード状態
     var moving: Bool = false                                        //移動中フラグ
     var jumping: Bool = false                                       //ジャンプ中フラグ
     var centerPosFlg: Bool = true                                   //中央位置フラグ
@@ -544,17 +538,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if( debug )
         {
             playerPosLabel.text = "playerSpeed : \(self.playerSpeed) \n" + "y +: \(CGFloat( playerSpeed / 60 ))"
-        }
-        if guardPower < 0
-        {
-            guardPower = 0
-        }
-        else if guardPower <= 4500
-        {
-            guardPower += 10
-            if( ( guardPower >= 4500 ) && ( guardStatus == .disable ) ){
-                guardStatus = .enable
-            }
         }
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
@@ -1268,11 +1251,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func guardAction(endFlg: Bool)
     {
         guard gameoverFlg != true else { return }
-        guard guardPod.guardStatus != .disable else{ return }
         
-        switch ( guardStatus ){
+        switch ( self.guardPod.guardStatus ){
         case .enable:   //ガード開始
-            guardStatus = .guarding
+            self.guardPod.guardStatus = .guarding
             if playerBaseNode.childNode(withName: guardShapeName) == nil {
                 playerBaseNode.addChild( guardShape )
             }
@@ -1290,7 +1272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let guardNode = playerBaseNode.childNode(withName: guardShapeName) {
                 guardNode.removeFromParent()
             }
-            self.guardStatus = .enable
+            self.guardPod.guardStatus = .enable
             //アニメーション
             let names = ["player00"]
             self.guardTextureAnimation(self.player, names: names)
@@ -1305,7 +1287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        if (guardStatus == .guarding)
+        if (self.guardPod.guardStatus == .guarding)
         {
             playSound(soundName: "bougyo")
             guardPod.subCount()
