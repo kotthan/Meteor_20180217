@@ -10,7 +10,6 @@ import UIKit
 import SpriteKit
 
 class GameView: SKView {
-	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 	}

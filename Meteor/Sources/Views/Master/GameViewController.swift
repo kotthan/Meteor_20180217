@@ -10,7 +10,6 @@ class GameViewController: UIViewController {
 
 	var gameView: GameView!
 	var gameScene: GameScene!
-    var titleScene: GameView!
 	
 	class func gameViewController() -> GameViewController {
 		let gameView = GameViewController(nibName: "GameViewController", bundle: nil)
@@ -47,28 +46,9 @@ class GameViewController: UIViewController {
 		self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
 		// ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
-        
-        /*
-        //===================
-        // Title Scene作成
-        //===================
-        self.titleScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
-        self.titleScene.scaleMode = .aspectFill
-        //シーンをビューと同じサイズに調整する
-        self.titleScene.size = CGSize(width: frame.size.width, height: frame.size.height)
-        // ゲームシーンを表示
-        self.gameView.presentScene(self.titleScene)
- */
     }
 
 	override func viewDidAppear(_ animated: Bool)
-    {
-	}
-	
-	@IBOutlet weak var jumpButton: UIButton!
-	@IBAction func jumpButtonAction(_ sender: AnyObject)
-    {
-		gameScene.startButtonAction()
-        jumpButton.isHidden = true
-	}
+    {}
+
 }
