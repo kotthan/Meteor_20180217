@@ -39,8 +39,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
-    var guardGage = SKSpriteNode()                                     //ガードゲージ
+    var guardGage = SKSpriteNode()                                  //ガードゲージ
     var start0Node: SKSpriteNode!
+    var cloud_1: SKSpriteNode!
+    var cloud_2: SKSpriteNode!
     var score = 0                                                   //スコア
     let comboLabel = SKLabelNode()                                  //スコア表示ラベル
     var combo = 0                                                   //スコア
@@ -326,9 +328,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             x: 189.836,
             y: 1003.673
         )
-        self.start0Node.zPosition = 10
+        self.start0Node.zPosition = 50
         self.baseNode.addChild(self.start0Node)
         scaleLoopAction(start0Node)                             //ふわふわアニメ実行
+        
+        //===================
+        //MARK: cloud
+        //===================
+        //cloud_1
+        self.cloud_1 = SKSpriteNode(imageNamed: "cloud_0")
+        self.cloud_1.position = CGPoint(
+            x: 200,
+            y: 400
+        )
+        self.cloud_1.zPosition = -15
+        self.baseNode.addChild(self.cloud_1)
+        cloudLoopAction(cloud_1)
+        
+        //cloud_2
+        self.cloud_2 = SKSpriteNode(imageNamed: "cloud_1")
+        self.cloud_2.position = CGPoint(
+            x: 200,
+            y: 1000
+        )
+        self.cloud_2.zPosition = 30
+        self.baseNode.addChild(self.cloud_2)
+        cloudLoopAction(cloud_2)
         
         //===================
         //MARK: ガードゲージ
@@ -536,7 +561,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         //guardGage.yScale = CGFloat(guardPower / 1000)
-        
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
     override func didSimulatePhysics()
@@ -929,6 +953,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .none:
                 //何もしない
                 break
+            }
+            if attackFlg == false{
+                let names = ["stand01","stand02"]
+                self.startStandTextureAnimation(player, names: names)
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -1503,6 +1531,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let loopAction = SKAction.repeatForever(actions)
         node.run(loopAction)
     }
+    
+    func cloudLoopAction(_ node: SKSpriteNode){
+        let actions = SKAction.sequence(
+            [ SKAction.moveTo(x: -1000, duration: 3000.0),
+              SKAction.wait(forDuration: 1.0),
+              SKAction.moveTo(x: 1000, duration: 0),
+              SKAction.wait(forDuration: 1.0),
+             //SKAction.run{self.isPaused = true},
+            ])
+        let loopAction = SKAction.repeatForever(actions)
+        node.run(loopAction)
+    }
+    
+   
+    
     //MARK:デバッグ用
     //SKShapeNodeのサイズの四角を追加する
     func addBodyFrame(node: SKSpriteNode){
