@@ -16,28 +16,29 @@ class HUDView: UIView {
         //scoreLabel
         scoreLabel.textColor = UIColor.black
         scoreLabel.text = "0"
-        scoreLabel.font = UIFont.boldSystemFont(ofSize: 32)
+        scoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 53)
         scoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)//左上
-        scoreLabel.layer.position = CGPoint(x: 23, y: 50)//iPhoneX基準で調整
+        scoreLabel.layer.position = CGPoint(x: 23, y: 55)//iPhoneX基準で調整
         addSubview(scoreLabel)
-        scoreLabel.isHidden = true
+        scoreLabel.isHidden = false
         scoreLabel.sizeToFit()
         //highScoreLabel
         highScoreLabel.textColor = UIColor.black
         highScoreLabel.text = "00000000000"
-        highScoreLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        //highScoreLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        highScoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 17)
         highScoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)
-        highScoreLabel.layer.position = CGPoint(x: 23, y: 35)
+        highScoreLabel.layer.position = CGPoint(x: 23, y: 38)
         addSubview(highScoreLabel)
-        highScoreLabel.isHidden = true
+        highScoreLabel.isHidden = false
         highScoreLabel.sizeToFit()
 }
     
     func stringSizeChange() {
-        self.scoreLabel.font = UIFont.boldSystemFont(ofSize: 33)
+        self.scoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 60)
         self.scoreLabel.sizeToFit()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
+            self.scoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 53)
             self.scoreLabel.sizeToFit()
         }
     }

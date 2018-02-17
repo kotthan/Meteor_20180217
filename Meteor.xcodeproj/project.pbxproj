@@ -44,6 +44,7 @@
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
+		B63CFDFF2038714000F0F90E /* GillSansStd-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDFE2038714000F0F90E /* GillSansStd-ExtraBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
+		B63CFDFE2038714000F0F90E /* GillSansStd-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GillSansStd-ExtraBold.otf"; path = "../../../../../../Downloads/gill-sans-std/GillSansStd-ExtraBold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 		B63CFD9E20373AE500F0F90E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B63CFDFB20386F8800F0F90E /* Fonts */,
 				B63CFDA220373B8400F0F90E /* Sounds */,
 				B63CFD9F20373AFB00F0F90E /* Images */,
 			);
@@ -325,6 +328,14 @@
 				B63CFDA520373BA400F0F90E /* GameScene.sks */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		B63CFDFB20386F8800F0F90E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B63CFDFE2038714000F0F90E /* GillSansStd-ExtraBold.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -442,6 +453,7 @@
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
 				B63CFDE120373DC100F0F90E /* bgmn.mp3 in Resources */,
 				B63CFDE020373DC100F0F90E /* slash.wav in Resources */,
+				B63CFDFF2038714000F0F90E /* GillSansStd-ExtraBold.otf in Resources */,
 				B63CFDDE20373DC100F0F90E /* bougyo.wav in Resources */,
 				B63CFDE420373DC100F0F90E /* tyakuti.wav in Resources */,
 				B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */,
