@@ -274,6 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 x: self.player.size.width/2,
                 y: self.player.size.height/2 - 50
             )
+            self.comboLabel.isHidden = true
             self.playerBaseNode.addChild(self.comboLabel)               //playerにaddchiledすることでplayerに追従させる
             //===================
             //MARK: 必殺技ボタン
@@ -309,6 +310,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			wallFrameNode.physicsBody!.categoryBitMask = 0b0000             //接触判定用マスク設定
 			wallFrameNode.physicsBody!.usesPreciseCollisionDetection = true //詳細物理判定
 		}
+        //隕石ベース
+        self.addChild(self.meteorBase)
         //攻撃判定用シェイプ
         attackShapeMake()
         //ガード判定用シェイプ
@@ -960,6 +963,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var meteorInt: Int = 0
     var meteorDouble: Double = 70.0
     var meteores: [SKSpriteNode] = []
+    let meteorBase = SKNode()
     
     //MARK: 隕石落下
     func buildMeteor(size: Double, meteorString: String, meteorZ: Double){
@@ -985,7 +989,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         meteor.physicsBody?.collisionBitMask = 0b0000                        //接触対象をなしに設定
         meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
         meteor.name = "meteor"//meteorString
-        self.addChild(meteor)
+        self.meteorBase.addChild(meteor)
         //print("---meteor\(meteorString)を生成しました---")
         self.meteores.append(meteor)
         if( debug ){    //デバッグ用
@@ -1148,6 +1152,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //コンボ
                 self.combo += 1;
                 self.comboLabel.text = String( self.combo )
+                self.comboLabel.removeAllActions()
+                self.comboLabel.isHidden = false
+                self.comboLabel.alpha = 1.0
+                self.comboLabel.position.x = 20
+                //self.comboLabel.position.x += CGFloat(arc4random_uniform(40))
+                self.comboLabel.position.y = self.player.size.height / 2
+                let act1_1 = SKAction.moveBy(x: 0, y: +20, duration: 1)
+                let act1_2 = SKAction.fadeOut(withDuration: 1)
+                let act1 = SKAction.group([act1_1,act1_2])
+                let act2 = SKAction.run{
+                    self.comboLabel.isHidden = true
+                }
+                self.comboLabel.run(SKAction.sequence([act1,act2]))
                 //必殺技
                 if( ultraAttackState == .none )
                 {
@@ -1342,6 +1359,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let actions = SKAction.sequence(
                 [ SKAction.scale(to: 1000, duration: 1.0),
                   SKAction.wait(forDuration: 0.5),
+                  SKAction.group(
+                    [ SKAction.wait(forDuration: 0.2),
+                      SKAction.run{
+                        self.playerBaseNode.isHidden = true
+                        self.meteorBase.isHidden = true
+                        },
+                      ]),
                   SKAction.fadeOut(withDuration: 1),
                   SKAction.removeFromParent(),
                   SKAction.run{self.isPaused = true},
