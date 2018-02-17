@@ -11,6 +11,7 @@ import SpriteKit
 class GuardPod: SKNode {
     
     var podSprites:[SKSpriteNode] = []
+    let gaugeMask = SKCropNode()
     enum guardState{    //ガード状態
         case enable     //ガード可
         case disable    //ガード不可
@@ -23,7 +24,6 @@ class GuardPod: SKNode {
     let recoverBrokenTime:Double = 5.0  //破壊状態から回復するまでの時間
     let actionKey = "recover"
     let countLabel = SKLabelNode()  //テスト表示用
-    
     override init() {
         super.init()
         //画像作成
@@ -37,6 +37,13 @@ class GuardPod: SKNode {
         }
         self.podSprites[self.maxCount].isHidden = false
         self.count = self.maxCount
+        //ゲージマスク
+        let gaugeSize = CGSize(width: 10, height: 10)
+        let maskNode = SKShapeNode(rect: CGRect(origin: CGPoint.zero, size: gaugeSize))
+        maskNode.fillColor = UIColor.white
+        maskNode.zPosition = self.zPosition + 1
+        self.gaugeMask.maskNode = maskNode
+        self.addChild(maskNode)
         //デバッグ用ラベル
         countLabel.text = String(self.count)
         countLabel.position = CGPoint(x: -10, y: -10) //ポッドの左下
