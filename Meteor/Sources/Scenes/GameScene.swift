@@ -312,22 +312,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			wallFrameNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: scene.size.width, height: scene.size.height))
 			wallFrameNode.physicsBody!.categoryBitMask = 0b0000             //接触判定用マスク設定
 			wallFrameNode.physicsBody!.usesPreciseCollisionDetection = true //詳細物理判定
-
-            //===================
-            //MARK: start0Node
-            //===================
-            start0Node = SKSpriteNode(imageNamed: "logo_312")
-            self.start0Node.position = CGPoint(                         
-                x: 189.836,
-                y: 1003.673
-            )
-            self.start0Node.zPosition = 10
-            self.baseNode.addChild(self.start0Node)
 		}
         //攻撃判定用シェイプ
         attackShapeMake()
         //ガード判定用シェイプ
         guardShapeMake()
+        
+        //===================
+        //MARK: start0Node
+        //===================
+        start0Node = SKSpriteNode(imageNamed: "logo_312")
+        self.start0Node.position = CGPoint(
+            x: 189.836,
+            y: 1003.673
+        )
+        self.start0Node.zPosition = 10
+        self.baseNode.addChild(self.start0Node)
+        scaleLoopAction(start0Node)                             //ふわふわアニメ実行
+        
         //===================
         //MARK: ガードゲージ
         //===================
@@ -402,7 +404,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         { //リトライ時はそのままスタートする
             startButtonAction()
         }
-        scaleLoopAction(start0Node)
 	}
     
     //アプリがバックグラウンドから復帰した際に呼ばれる関数
