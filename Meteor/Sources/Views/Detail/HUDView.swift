@@ -10,17 +10,28 @@ import UIKit
 
 class HUDView: UIView {
     var scoreLabel = UILabel()
+    var highScoreLabel = UILabel()
     override init(frame:CGRect){
         super.init(frame:frame)
+        //scoreLabel
         scoreLabel.textColor = UIColor.black
         scoreLabel.text = "0"
         scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
         scoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)//左上
-        scoreLabel.layer.position = CGPoint(x: 25, y: 60 )//適当な余白
+        scoreLabel.layer.position = CGPoint(x: 25, y: 65 )//iPhoneX基準で調整
         addSubview(scoreLabel)
         scoreLabel.isHidden = true
         scoreLabel.sizeToFit()
-    }
+        //highScoreLabel
+        highScoreLabel.textColor = UIColor.black
+        highScoreLabel.text = "00000000000"
+        highScoreLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        highScoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)
+        highScoreLabel.layer.position = CGPoint(x: 25, y: 45)
+        addSubview(highScoreLabel)
+        highScoreLabel.isHidden = true
+        highScoreLabel.sizeToFit()
+}
     
     func stringSizeChange() {
         self.scoreLabel.font = UIFont.boldSystemFont(ofSize: 33)
