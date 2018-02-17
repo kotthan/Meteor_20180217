@@ -1001,6 +1001,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         play()
         hudView.scoreLabel.isHidden = false
         hudView.highScoreLabel.isHidden = false
+        //pod回復スタート
+        self.guardPod.startRecover()
         start0Node.zPosition = -50
         if( retryFlg == false ){
             //リトライ時はカメラ動かさない
