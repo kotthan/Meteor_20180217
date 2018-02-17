@@ -36,6 +36,11 @@ class GuardPod: SKNode {
             self.addChild(pod)
         }
         self.podSprites[0].isHidden = false
+        //ふわふわ
+        let act1 = SKAction.moveBy(x: 0, y: 20, duration: 2)
+        act1.timingMode = .easeInEaseOut
+        let acts = SKAction.sequence([act1,act1.reversed()])
+        self.run(SKAction.repeatForever(acts))
         //デバッグ用ラベル
         countLabel.text = String(self.count)
         countLabel.position = CGPoint(x: -10, y: -10) //ポッドの左下
@@ -105,7 +110,7 @@ class GuardPod: SKNode {
         self.count = 0
         countLabel.text = String(self.count)
         //通常の回復Actionをキャンセル
-        self.removeAllActions()
+        self.removeAction(forKey: self.actionKey)
         //全快までのスケジュール追加
         let act1 = SKAction.wait(forDuration: self.recoverBrokenTime)
         let act2 = SKAction.run{self.addCount(self.maxCount)}
