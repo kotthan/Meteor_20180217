@@ -10,7 +10,8 @@ import SpriteKit
 
 class GuardPod: SKNode {
     
-    var podSprites:[SKSpriteNode] = []
+    var podSprite:SKSpriteNode!
+    var podGaugeSprite:SKSpriteNode!
     let gaugeMask = SKCropNode()
     enum guardState{    //ガード状態
         case enable     //ガード可
@@ -18,31 +19,38 @@ class GuardPod: SKNode {
         case guarding   //ガード中
     }
     var guardStatus = guardState.enable //ガード状態
-    let maxCount = 3    //最大ガード回数
-    var count = 0
+    let maxCount:CGFloat = 90.0   //最大値
+    var count:CGFloat = 0.0
     let recoverCountTime:Double = 2.0 //ガードを１回復するまでの時間
     let recoverBrokenTime:Double = 5.0  //破壊状態から回復するまでの時間
     let actionKey = "recover"
+    var gaugeMaskShape: SKShapeNode!
     let countLabel = SKLabelNode()  //テスト表示用
     override init() {
         super.init()
+        //マスク
+        self.gaugeMaskShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 20, height: 20))
+        self.gaugeMaskShape.position.x -= 10
+        self.gaugeMaskShape.position.y -= 10
+        self.gaugeMaskShape.fillColor = UIColor.white
+        self.gaugeMask.maskNode = self.gaugeMaskShape
+        self.addChild(gaugeMask)
         //画像作成
-        for i in 0...maxCount {
-            let pod = SKSpriteNode(imageNamed: "Pod"+String(i))
-            pod.xScale /= 5
-            pod.yScale /= 5
-            podSprites.append(pod)
-            pod.isHidden = true
-            self.addChild(pod)
-        }
-        self.podSprites[0].isHidden = false
+        podGaugeSprite = SKSpriteNode(imageNamed: "Pod3")
+        podGaugeSprite.xScale /= 5
+        podGaugeSprite.yScale /= 5
+        self.gaugeMask.addChild(podGaugeSprite)
+        podSprite = SKSpriteNode(imageNamed: "Pod0")
+        podSprite.xScale /= 5
+        podSprite.yScale /= 5
+        self.addChild(podSprite)
         //ふわふわ
         let act1 = SKAction.moveBy(x: 0, y: 20, duration: 2)
         act1.timingMode = .easeInEaseOut
         let acts = SKAction.sequence([act1,act1.reversed()])
         self.run(SKAction.repeatForever(acts))
         //デバッグ用ラベル
-        countLabel.text = String(self.count)
+        countLabel.text = String(describing: self.count)
         countLabel.position = CGPoint(x: -10, y: -10) //ポッドの左下
         countLabel.zPosition = self.zPosition + 1
         //self.addChild(countLabel)
@@ -50,27 +58,31 @@ class GuardPod: SKNode {
     
     //回復開始
     func startRecover(){
-        let act1 = SKAction.wait(forDuration: self.recoverCountTime)
+        let act1 = SKAction.wait(forDuration: 0.02)
         let act2 = SKAction.run{self.addCount()}
         let acts = SKAction.sequence([act1,act2])
-        self.run(acts, withKey: self.actionKey)
+        self.run(SKAction.repeatForever(acts), withKey: self.actionKey)
     }
-
+    //回復停止
+    func stopRecover(){
+        self.removeAction(forKey: actionKey)
+    }
+    
     //ガード回復
-    @objc func addCount(_ num: Int = 1){
-        podSprites[self.count].isHidden = true
+    @objc func addCount(_ num: CGFloat = 0.1){
         self.count += num
-        countLabel.text = String(self.count)
+        countLabel.text = String(describing: self.count)
         //最大値を超える場合は最大値にする
         if( self.count >= self.maxCount ){
             self.count = self.maxCount
             //ガード可とする
             self.guardStatus = .enable
+            stopRecover()
         }
         else{
             startRecover()
         }
-        podSprites[self.count].isHidden = false
+        self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
     }
     
     //ガード
@@ -87,35 +99,23 @@ class GuardPod: SKNode {
     }
 
     //ガード減らす
-    func subCount(_ num: Int = 1){
-        podSprites[self.count].isHidden = true
+    func subCount(_ num: CGFloat = 30.0){
         self.count -= num
-        countLabel.text = String(self.count)
+        countLabel.text = String(describing: self.count)
         if( self.count <= 0 ){
             self.broken()
         }
         //回復のAcitonが予定されていない場合
         if( self.action(forKey: actionKey) == nil ){
-            //回復Action追加
-            let act1 = SKAction.wait(forDuration: self.recoverCountTime)
-            let act2 = SKAction.run{self.addCount()}
-            let acts = SKAction.sequence([act1,act2])
-            self.run(acts, withKey: self.actionKey)
+            startRecover()
         }
-        podSprites[self.count].isHidden = false
+        self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
     }
     
     //ガード破損
     func broken(){
         self.count = 0
-        countLabel.text = String(self.count)
-        //通常の回復Actionをキャンセル
-        self.removeAction(forKey: self.actionKey)
-        //全快までのスケジュール追加
-        let act1 = SKAction.wait(forDuration: self.recoverBrokenTime)
-        let act2 = SKAction.run{self.addCount(self.maxCount)}
-        let acts = SKAction.sequence([act1,act2])
-        self.run(acts, withKey: self.actionKey)
+        countLabel.text = String(describing: self.count)
         //ガード不可状態にする
         self.guardStatus = .disable
     }
