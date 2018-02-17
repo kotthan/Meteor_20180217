@@ -5,7 +5,7 @@
 //  Created by Kazuaki Oe on 2018/02/17.
 //  Copyright © 2018年 Kazuaki Oe. All rights reserved.
 //
-
+/*
 import UIKit
 import SpriteKit
 import AVFoundation
@@ -26,13 +26,6 @@ class startLogo: SKSpriteNode {
     self.start0Node.zPosition = 10
     self.baseNode.addChild(self.start0Node)
     let
-    
-    var podTexture:[SKTexture] = []
-    let imageName = "pod"
-    enum guardState{    //ガード状態
-        case enable     //ガード可
-        case disable    //ガード不可
-        case guarding   //ガード中
     }
     var guardStatus = guardState.enable //ガード状態
     
@@ -53,3 +46,4 @@ class startLogo: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+ */
