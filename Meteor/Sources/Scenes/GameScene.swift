@@ -272,18 +272,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //addBodyFrame(node: player)  //枠表示
             }
             //===================
-            //MARK: タイトルロゴ
-            //===================
-            scene.enumerateChildNodes(withName: "titleLogo", using:
-                { (node, stop) -> Void in
-                    let titleLogo = node as! SKSpriteNode
-                    titleLogo.name = "titleLogo"
-                    //シーンから削除して再配置
-                    titleLogo.removeFromParent()
-                    self.baseNode.addChild(titleLogo)
-                    //print("---SKSファイルより背景＝\(titleLogo)を読み込みました---")
-            })
-            //===================
             //MARK: コンボ
             //===================
             self.comboLabel.text = String( self.combo )         //スコアを表示する
@@ -334,7 +322,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 x: 189.836,
                 y: 1003.673
             )
-            self.ultraButton.zPosition = 10
+            self.start0Node.zPosition = 10
             self.baseNode.addChild(self.start0Node)
 		}
         //攻撃判定用シェイプ
@@ -1506,13 +1494,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func scaleLoopAction(_ node: SKSpriteNode){
         let actions = SKAction.sequence(
-            [ SKAction.scale(to: 1.1, duration: 1.0),
+            [ SKAction.scale(to: 1.03, duration: 0.3),
               //SKAction.wait(forDuration: 0.1),
-              SKAction.scale(to: 1.0, duration: 1.0),
+              SKAction.scale(to: 1.0, duration: 0.3),
               //SKAction.wait(forDuration: 0.1),
-              SKAction.scale(to: 0.9, duration: 1.0),
+              SKAction.scale(to: 0.97, duration: 0.3),
               //SKAction.wait(forDuration: 0.1),
-              SKAction.scale(to: 1.0, duration: 1.0)
+              SKAction.scale(to: 1.0, duration: 0.3)
               //SKAction.run{self.isPaused = true},
             ])
         let loopAction = SKAction.repeatForever(actions)

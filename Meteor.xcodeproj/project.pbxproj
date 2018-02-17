@@ -43,6 +43,7 @@
 		B63CFDE420373DC100F0F90E /* tyakuti.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDDB20373DC000F0F90E /* tyakuti.wav */; };
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
+		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		B63CFDDB20373DC000F0F90E /* tyakuti.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tyakuti.wav; sourceTree = "<group>"; };
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
+				B63CFDF92037E88000F0F90E /* StartLogo.swift */,
 				B63CFDC520373CEF00F0F90E /* GuardPod.swift */,
 				B63CFDC120373CB800F0F90E /* PauseButton.swift */,
 			);
@@ -479,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B63CFDC820373CF800F0F90E /* HUDView.swift in Sources */,
+				B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */,
 				B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */,
 				B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
