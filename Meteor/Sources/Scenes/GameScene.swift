@@ -333,7 +333,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 x: 189.836,
                 y: 1003.673
             )
-            self.ultraButton.zPosition = 10
+            self.start0Node.zPosition = 10
             self.baseNode.addChild(self.start0Node)
 		}
         //攻撃判定用シェイプ
