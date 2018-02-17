@@ -34,6 +34,7 @@ class GuardPod: SKNode {
         self.gaugeMaskShape.position.y -= 10
         self.gaugeMaskShape.fillColor = UIColor.white
         self.gaugeMask.maskNode = self.gaugeMaskShape
+        self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         self.addChild(gaugeMask)
         //画像作成
         podGaugeSprite = SKSpriteNode(imageNamed: "Pod3")
