@@ -1249,7 +1249,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func guardShapeMake()
     {
         let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height + 10))
-        guardShape.name = "guardShape"
+        guardShape.name = guardShapeName
         let physicsBody = SKPhysicsBody(rectangleOf: guardShape.frame.size)
         guardShape.position = CGPoint(x: 0, y: 0)
         guardShape.fillColor = UIColor.clear
@@ -1270,34 +1270,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameoverFlg != true else { return }
         guard guardPod.guardStatus != .disable else{ return }
         
-        if( guardStatus != .guarding )
-        {   //ガード開始
-            //print("---ガードフラグをON---")
-            self.guardStatus = .guarding
-            print(self.guardStatus)
-            playerBaseNode.addChild( guardShape )
+        switch ( guardStatus ){
+        case .enable:   //ガード開始
+            guardStatus = .guarding
+            if playerBaseNode.childNode(withName: guardShapeName) == nil {
+                playerBaseNode.addChild( guardShape )
+            }
+            //アニメーション
+            let names = ["guard01"]
+            self.guardTextureAnimation(self.player, names: names)
+        case .guarding: //ガード中
+            break
+        case .disable:  //ガード不可
+            return
         }
+
         if( endFlg == true )
         {
             if let guardNode = playerBaseNode.childNode(withName: guardShapeName) {
-                let action1 = SKAction.wait(forDuration: 0.1)
-                let action2 = SKAction.removeFromParent()
-                let action3 = SKAction.run{
-                    if( self.guardStatus != .disable ){
-                        self.guardStatus = .enable
-                        //print("---ガードフラグをOFF---")
-                    }
-                }
-                let actions = SKAction.sequence([action1,action2,action3])
-                guardNode.run(actions)
+                guardNode.removeFromParent()
             }
+            self.guardStatus = .enable
             //アニメーション
-            let names = ["guard01","player00"]
-            self.guardTextureAnimation(self.player, names: names)
-        }
-        else{
-            //アニメーション
-            let names = ["guard01"]
+            let names = ["player00"]
             self.guardTextureAnimation(self.player, names: names)
         }
     }
@@ -1305,25 +1300,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func guardMeteor()
     {
         guard gameoverFlg != true else { return }
+        guard let guardNode = playerBaseNode.childNode(withName: guardShapeName) else {
+            print("guardShapeなしガード")
+            return
+        }
         
         if (guardStatus == .guarding)
         {
-            //print("---隕石をガード---")
             playSound(soundName: "bougyo")
             guardPod.subCount()
-            guardPower -= 1500
-            if( guardPower < 0 ){
-                print( "guardBroken!!" )
-                guardStatus = .disable
-                print(self.guardStatus)
-            }
             //ガードシェイプ削除
-            if let guardNode = playerBaseNode.childNode(withName: guardShapeName) {
-                guardNode.removeFromParent()
-            }
-            if( guardStatus != .disable ){
-                guardStatus = .enable
-            }
+            guardNode.removeFromParent()
             for i in meteores
             {
                 i.removeAllActions()
@@ -1335,14 +1322,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.playerBaseNode.position.y = meteorMinY - playerHalfSize - 1
                 }
                 self.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
-                //print("---隕石がガードされたモーションを実行---")
                 self.combo = 0
                 self.comboLabel.text = String( self.combo )
             }
         }
         else
         {
-            //print("---guardShapeとmeteorが衝突したけどフラグOFFでした---")
+            print("---guardShapeとmeteorが衝突したけどフラグOFFでした---")
             return
         }
     }
