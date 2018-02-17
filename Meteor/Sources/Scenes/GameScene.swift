@@ -376,7 +376,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         self.hudView = HUDView(frame: self.frame)
         self.view!.addSubview(hudView)
-        hudView.highScoreLabel.text = String( self.highScore )
+        hudView.highScoreLabel.text = "BEST " + String(self.highScore)
         //===================
         //MARK: ポーズ画面
         //===================
