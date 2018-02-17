@@ -36,16 +36,19 @@ class GuardPod: SKNode {
             self.addChild(pod)
         }
         self.podSprites[0].isHidden = false
-        //回復Action追加
-        let act1 = SKAction.wait(forDuration: self.recoverCountTime)
-        let act2 = SKAction.run{self.addCount()}
-        let acts = SKAction.sequence([act1,act2])
-        self.run(acts, withKey: self.actionKey)
         //デバッグ用ラベル
         countLabel.text = String(self.count)
         countLabel.position = CGPoint(x: -10, y: -10) //ポッドの左下
         countLabel.zPosition = self.zPosition + 1
         //self.addChild(countLabel)
+    }
+    
+    //回復開始
+    func startRecover(){
+        let act1 = SKAction.wait(forDuration: self.recoverCountTime)
+        let act2 = SKAction.run{self.addCount()}
+        let acts = SKAction.sequence([act1,act2])
+        self.run(acts, withKey: self.actionKey)
     }
 
     //ガード回復
@@ -60,11 +63,7 @@ class GuardPod: SKNode {
             self.guardStatus = .enable
         }
         else{
-            //回復Action追加
-            let act1 = SKAction.wait(forDuration: self.recoverCountTime)
-            let act2 = SKAction.run{self.addCount()}
-            let acts = SKAction.sequence([act1,act2])
-            self.run(acts, withKey: self.actionKey)
+            startRecover()
         }
         podSprites[self.count].isHidden = false
     }
