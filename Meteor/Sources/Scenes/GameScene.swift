@@ -1402,13 +1402,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     @objc func newGameButtonAction(_ sender: UIButton ){
-        removeParamSlider()
-        gameOverView.removeFromSuperview()
+        for view in self.view!.subviews {
+            view.removeFromSuperview()
+        }
         newGame()
     }
     @objc func retryButtonAction(_ sender: UIButton ){
-        removeParamSlider()
-        gameOverView.removeFromSuperview()
+        for view in self.view!.subviews {
+            view.removeFromSuperview()
+        }
         let scene = GameScene(size: self.scene!.size)
         scene.scaleMode = SKSceneScaleMode.aspectFill
         scene.retryFlg = true
