@@ -78,6 +78,7 @@ class GuardPod: SKNode {
 
     //ガード減らす
     func subCount(_ num: Int = 1){
+        print("subcount")
         self.count -= num
         countLabel.text = String(self.count)
         if( self.count <= 0 ){

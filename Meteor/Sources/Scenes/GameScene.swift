@@ -1296,6 +1296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             //print("---隕石をガード---")
             playSound(soundName: "bougyo")
+            guardPod.subCount()
             guardPower -= 1500
             if( guardPower < 0 ){
                 print( "guardBroken!!" )
