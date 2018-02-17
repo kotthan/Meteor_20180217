@@ -340,7 +340,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guardGage.yScale = 1 / 5
         self.playerBaseNode.addChild(self.guardGage)               //playerにaddchiledすることでplayerに追従させる
         guardPod = GuardPod()
-        guardGage.position = CGPoint(x: player.position.x - 60, y: player.position.y )
+        guardPod.position = CGPoint(x: player.position.x - 60, y: player.position.y )
+        guardPod.zPosition = -1
         self.playerBaseNode.addChild(guardPod)
         
         //ハイスコアラベル

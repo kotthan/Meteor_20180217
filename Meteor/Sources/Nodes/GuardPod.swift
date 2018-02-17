@@ -8,10 +8,9 @@
 
 import SpriteKit
 
-class GuardPod: SKSpriteNode {
+class GuardPod: SKNode {
     
-    var podTexture:[SKTexture] = []
-    let imageName = "pod"
+    var podSprite:[SKSpriteNode] = []
     enum guardState{    //ガード状態
         case enable     //ガード可
         case disable    //ガード不可
@@ -23,16 +22,20 @@ class GuardPod: SKSpriteNode {
     let recoverCountTime:Double = 1.0 //ガードを１回復するまでの時間
     let recoverBrokenTime:Double = 3.0  //破壊状態から回復するまでの時間
     let actionKey = "recover"
-    let countLabel = SKLabelNode()  //テスト表示用 
+    let countLabel = SKLabelNode()  //テスト表示用
     
-    init() {
-        //テクスチャアトラス作成
+    override init() {
+        super.init()
+        //画像作成
         for i in 0...maxCount {
-            podTexture.append(SKTexture(imageNamed: imageName + String(i)))
+            let pod = SKSpriteNode(imageNamed: "Pod"+String(i))
+            pod.xScale /= 5
+            pod.yScale /= 5
+            podSprite.append(pod)
+            pod.isHidden = true
+            self.addChild(pod)
         }
-        super.init(texture: podTexture[maxCount] ,
-                   color: UIColor.clear,
-                   size: podTexture[maxCount].size())
+        self.podSprite[self.maxCount].isHidden = false
         self.count = self.maxCount
         //デバッグ用ラベル
         countLabel.text = String(self.count)

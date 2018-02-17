@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import AVFoundation
 import AudioToolbox
-
+/*
 class startLogo: SKSpriteNode {
     
     func createStartLogo() {
@@ -53,3 +53,4 @@ class startLogo: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+*/
