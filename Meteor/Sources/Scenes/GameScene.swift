@@ -1247,12 +1247,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func guardAction(endFlg: Bool)
     {
-        if gameoverFlg == true
-        {
-            return
-        }
-        else if (guardStatus != .disable)
-        {
+        guard gameoverFlg != true else { return }
+        guard guardStatus != .disable else{ return }
+        
             if( guardStatus != .guarding )
             {   //ガード開始
                 //print("---ガードフラグをON---")
@@ -1283,7 +1280,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let names = ["guard01"]
                 self.guardTextureAnimation(self.player, names: names)
             }
-        }
     }
 
     func guardMeteor()
