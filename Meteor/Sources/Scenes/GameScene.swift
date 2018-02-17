@@ -149,6 +149,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(camera)
         self.camera = camera
         print("camera : \(self.camera!.position)")
+        /*
+        //画面上で動かさないものはcamaraにaddChiledすればよさそう
+        let lbl = SKLabelNode.init()
+        lbl.text = "UI"
+        self.camera?.addChild(lbl)
+         */
         
         //MARK: 設定関係
         self.backgroundColor = SKColor.clear                           //背景色
