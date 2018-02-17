@@ -26,13 +26,6 @@ class startLogo: SKSpriteNode {
     self.start0Node.zPosition = 10
     self.baseNode.addChild(self.start0Node)
     let
-    
-    var podTexture:[SKTexture] = []
-    let imageName = "pod"
-    enum guardState{    //ガード状態
-        case enable     //ガード可
-        case disable    //ガード不可
-        case guarding   //ガード中
     }
     var guardStatus = guardState.enable //ガード状態
     
