@@ -310,6 +310,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			wallFrameNode.physicsBody!.categoryBitMask = 0b0000             //接触判定用マスク設定
 			wallFrameNode.physicsBody!.usesPreciseCollisionDetection = true //詳細物理判定
 		}
+        //隕石ベース
+        self.addChild(self.meteorBase)
         //攻撃判定用シェイプ
         attackShapeMake()
         //ガード判定用シェイプ
@@ -961,6 +963,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var meteorInt: Int = 0
     var meteorDouble: Double = 70.0
     var meteores: [SKSpriteNode] = []
+    let meteorBase = SKNode()
     
     //MARK: 隕石落下
     func buildMeteor(size: Double, meteorString: String, meteorZ: Double){
@@ -986,7 +989,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         meteor.physicsBody?.collisionBitMask = 0b0000                        //接触対象をなしに設定
         meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
         meteor.name = "meteor"//meteorString
-        self.addChild(meteor)
+        self.meteorBase.addChild(meteor)
         //print("---meteor\(meteorString)を生成しました---")
         self.meteores.append(meteor)
         if( debug ){    //デバッグ用
