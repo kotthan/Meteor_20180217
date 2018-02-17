@@ -13,7 +13,11 @@ import AudioToolbox
 
 class startLogo: SKSpriteNode {
     
-    
+    func createStartLogo() {
+        startLogo = SKSpriteNode(imageName: "logo_312")
+        startLogo.position = CGPoint(
+            x)
+    }
     start0Node = SKSpriteNode(imageNamed: "logo_312")
     self.start0Node.position = CGPoint(
     x: 189.836,
