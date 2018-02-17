@@ -50,5 +50,9 @@ class GameViewController: UIViewController {
 
 	override func viewDidAppear(_ animated: Bool)
     {}
+    
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
 
 }

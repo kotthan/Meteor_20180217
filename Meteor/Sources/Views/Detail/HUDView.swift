@@ -16,18 +16,18 @@ class HUDView: UIView {
         //scoreLabel
         scoreLabel.textColor = UIColor.black
         scoreLabel.text = "0"
-        scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 32)
         scoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)//左上
-        scoreLabel.layer.position = CGPoint(x: 25, y: 65 )//iPhoneX基準で調整
+        scoreLabel.layer.position = CGPoint(x: 23, y: 50)//iPhoneX基準で調整
         addSubview(scoreLabel)
         scoreLabel.isHidden = true
         scoreLabel.sizeToFit()
         //highScoreLabel
         highScoreLabel.textColor = UIColor.black
         highScoreLabel.text = "00000000000"
-        highScoreLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        highScoreLabel.font = UIFont.boldSystemFont(ofSize: 17)
         highScoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)
-        highScoreLabel.layer.position = CGPoint(x: 25, y: 45)
+        highScoreLabel.layer.position = CGPoint(x: 23, y: 35)
         addSubview(highScoreLabel)
         highScoreLabel.isHidden = true
         highScoreLabel.sizeToFit()
