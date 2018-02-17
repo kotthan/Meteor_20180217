@@ -271,18 +271,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //addBodyFrame(node: player)  //枠表示
             }
             //===================
-            //MARK: タイトルロゴ
-            //===================
-            scene.enumerateChildNodes(withName: "titleLogo", using:
-                { (node, stop) -> Void in
-                    let titleLogo = node as! SKSpriteNode
-                    titleLogo.name = "titleLogo"
-                    //シーンから削除して再配置
-                    titleLogo.removeFromParent()
-                    self.baseNode.addChild(titleLogo)
-                    //print("---SKSファイルより背景＝\(titleLogo)を読み込みました---")
-            })
-            //===================
             //MARK: コンボ
             //===================
             self.comboLabel.text = String( self.combo )         //スコアを表示する
