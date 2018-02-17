@@ -1009,20 +1009,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         play()
         hudView.scoreLabel.isHidden = false
         hudView.highScoreLabel.isHidden = false
-        //pod回復スタート
-        self.guardPod.startRecover()
-        start0Node.zPosition = -50
+        //start0Node.zPosition = -50
         if( retryFlg == false ){
-            //リトライ時はカメラ動かさない
-            let action1 = SKAction.moveTo(y: self.player.position.y + 300, duration: 1)
-            let action2 = SKAction.run {
-                self.gameFlg = true
+            //リトライ時はアニメーションはしない
+            let action1 = SKAction.fadeOut(withDuration: 1.0)
+            let action2 = SKAction.run{
+                let action1 = SKAction.moveTo(y: self.player.position.y + 300, duration: 2)
+                action1.timingMode = .easeInEaseOut
+                let action2 = SKAction.run {
+                    self.start0Node.isHidden = true
+                    self.gameFlg = true
+                    //pod回復スタート
+                    self.guardPod.startRecover()
+                }
+                let actionAll = SKAction.sequence([action1,action2])
+                self.camera?.run(actionAll)
             }
-            let actionAll = SKAction.sequence([action1,action2])
-            camera?.run(actionAll)
+            self.start0Node.run(SKAction.sequence([action1,action2]))
         }
         else{
+            self.start0Node.isHidden = true
             gameFlg = true
+            //pod回復スタート
+            self.guardPod.startRecover()
         }
         pauseButton.isHidden = false //ポーズボタンを表示する
         /*
