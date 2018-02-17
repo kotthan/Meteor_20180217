@@ -929,6 +929,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
             case .landing:
                 ultraAttackState = .attacking
+                //print(ultraAttackState)
                 ultraAttackJump()
                 break
             case .attacking:
@@ -1096,11 +1097,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playSound(soundName: "slash")
             if playerBaseNode.childNode(withName: attackShapeName) == nil {
                 self.playerBaseNode.addChild(attackShape)
+                //print("add attackShape")
                 let action1 = SKAction.wait(forDuration: 0.3)
                 let action2 = SKAction.removeFromParent()
                 let action3 = SKAction.run{
                     self.attackFlg = false
-                    //print("---アタックフラグをOFF---")
+                    //print("remove attackShape")
                 }
                 let actions = SKAction.sequence([action1,action2,action3])
                 attackShape.run(actions)
@@ -1200,13 +1202,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //必殺技
     func ultraAttack(){
-        print("!!!!!!!!!!ultraAttack!!!!!!!!!")
+        //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
         //ボタンを元に戻す
         ultraButton.isHidden = false
         ultraOkButton.isHidden = true
         UltraPower = 0
         //入力を受け付けないようにフラグを立てる
         ultraAttackState = .landing
+        //print(ultraAttackState)
         if( jumping ) //空中にいる場合
         {
             //地面に戻る
@@ -1215,6 +1218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else
         {
             ultraAttackState = .attacking
+            //print(ultraAttackState)
             //大ジャンプ
             ultraAttackJump()
         }
@@ -1227,9 +1231,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             attackNode.removeAllActions()
             attackNode.removeFromParent()
         }
-        else{
-            self.playerBaseNode.addChild(attackShape)
-        }
+        self.playerBaseNode.addChild(attackShape)
+        //print("add ultra attackShape")
         //大ジャンプ
         moving = false
         jumping = true
@@ -1243,9 +1246,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let attackNode = playerBaseNode.childNode(withName: attackShapeName)
         {
             attackNode.removeFromParent()
+            //print("remove ultra attackShape")
         }
         //フラグを落とす
         ultraAttackState = .none
+        //print(ultraAttackState)
         if( meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
             //次のmeteores生成
             self.buildFlg = true
@@ -1306,7 +1311,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         guard gameoverFlg != true else { return }
         guard let guardNode = playerBaseNode.childNode(withName: guardShapeName) else {
-            print("guardShapeなしガード")
+            //print("guardShapeなしガード")
             return
         }
         
@@ -1380,7 +1385,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverView: GameOverView!
     func gameOverViewCreate(){
         
-        print("gameOverViewCreate")
         //ゲームオーバー画面
         gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
         var buttonX:CGFloat = 10    //左端の余白
