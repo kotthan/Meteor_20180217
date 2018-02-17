@@ -274,6 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 x: self.player.size.width/2,
                 y: self.player.size.height/2 - 50
             )
+            self.comboLabel.isHidden = true
             self.playerBaseNode.addChild(self.comboLabel)               //playerにaddchiledすることでplayerに追従させる
             //===================
             //MARK: 必殺技ボタン
@@ -1148,6 +1149,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //コンボ
                 self.combo += 1;
                 self.comboLabel.text = String( self.combo )
+                self.comboLabel.removeAllActions()
+                self.comboLabel.isHidden = false
+                self.comboLabel.alpha = 1.0
+                self.comboLabel.position.x = 20
+                //self.comboLabel.position.x += CGFloat(arc4random_uniform(40))
+                self.comboLabel.position.y = self.player.size.height / 2
+                let act1_1 = SKAction.moveBy(x: 0, y: +20, duration: 1)
+                let act1_2 = SKAction.fadeOut(withDuration: 1)
+                let act1 = SKAction.group([act1_1,act1_2])
+                let act2 = SKAction.run{
+                    self.comboLabel.isHidden = true
+                }
+                self.comboLabel.run(SKAction.sequence([act1,act2]))
                 //必殺技
                 if( ultraAttackState == .none )
                 {
