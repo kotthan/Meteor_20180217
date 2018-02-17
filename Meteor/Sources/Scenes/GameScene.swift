@@ -39,7 +39,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
-    var guardGage = SKSpriteNode()                                     //ガードゲージ
     var guardPod: GuardPod!
     var start0Node: SKSpriteNode!
     var score = 0                                                   //スコア
@@ -332,15 +331,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         //MARK: ガードゲージ
         //===================
-        guardGage = SKSpriteNode(imageNamed: "pod9")
-        guardGage.name = "guardGage"
-        guardGage.position = CGPoint(x: player.position.x - 30, y: player.position.y )
-        guardGage.zPosition = -1
-        guardGage.xScale = 1 / 5
-        guardGage.yScale = 1 / 5
-        self.playerBaseNode.addChild(self.guardGage)               //playerにaddchiledすることでplayerに追従させる
         guardPod = GuardPod()
-        guardPod.position = CGPoint(x: player.position.x - 60, y: player.position.y )
+        guardPod.position = CGPoint(x: player.position.x - 30, y: player.position.y )
         guardPod.zPosition = -1
         self.playerBaseNode.addChild(guardPod)
         
@@ -539,7 +531,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 guardStatus = .enable
             }
         }
-        //guardGage.yScale = CGFloat(guardPower / 1000)
         
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
@@ -1248,7 +1239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func guardAction(endFlg: Bool)
     {
         guard gameoverFlg != true else { return }
-        guard guardStatus != .disable else{ return }
+        guard guardPod.guardStatus != .disable else{ return }
         
         if( guardStatus != .guarding )
         {   //ガード開始
@@ -1284,10 +1275,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func guardMeteor()
     {
-        if gameoverFlg == true
-        {
-            return
-        }
+        guard gameoverFlg != true else { return }
+        
         if (guardStatus == .guarding)
         {
             //print("---隕石をガード---")

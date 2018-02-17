@@ -10,7 +10,7 @@ import SpriteKit
 
 class GuardPod: SKNode {
     
-    var podSprite:[SKSpriteNode] = []
+    var podSprites:[SKSpriteNode] = []
     enum guardState{    //ガード状態
         case enable     //ガード可
         case disable    //ガード不可
@@ -19,8 +19,8 @@ class GuardPod: SKNode {
     var guardStatus = guardState.enable //ガード状態
     let maxCount = 3    //最大ガード回数
     var count = 0  //initでmaxCountに設定される
-    let recoverCountTime:Double = 1.0 //ガードを１回復するまでの時間
-    let recoverBrokenTime:Double = 3.0  //破壊状態から回復するまでの時間
+    let recoverCountTime:Double = 2.0 //ガードを１回復するまでの時間
+    let recoverBrokenTime:Double = 5.0  //破壊状態から回復するまでの時間
     let actionKey = "recover"
     let countLabel = SKLabelNode()  //テスト表示用
     
@@ -31,11 +31,11 @@ class GuardPod: SKNode {
             let pod = SKSpriteNode(imageNamed: "Pod"+String(i))
             pod.xScale /= 5
             pod.yScale /= 5
-            podSprite.append(pod)
+            podSprites.append(pod)
             pod.isHidden = true
             self.addChild(pod)
         }
-        self.podSprite[self.maxCount].isHidden = false
+        self.podSprites[self.maxCount].isHidden = false
         self.count = self.maxCount
         //デバッグ用ラベル
         countLabel.text = String(self.count)
@@ -46,6 +46,7 @@ class GuardPod: SKNode {
 
     //ガード回復
     @objc func addCount(_ num: Int = 1){
+        podSprites[self.count].isHidden = true
         self.count += num
         countLabel.text = String(self.count)
         //最大値を超える場合は最大値にする
@@ -61,8 +62,9 @@ class GuardPod: SKNode {
             let acts = SKAction.sequence([act1,act2])
             self.run(acts, withKey: self.actionKey)
         }
+        podSprites[self.count].isHidden = false
     }
-
+    
     //ガード
     func guardMeteor() -> Bool{
         //ガードできる状態ではない場合
@@ -78,7 +80,7 @@ class GuardPod: SKNode {
 
     //ガード減らす
     func subCount(_ num: Int = 1){
-        print("subcount")
+        podSprites[self.count].isHidden = true
         self.count -= num
         countLabel.text = String(self.count)
         if( self.count <= 0 ){
@@ -92,6 +94,7 @@ class GuardPod: SKNode {
             let acts = SKAction.sequence([act1,act2])
             self.run(acts, withKey: self.actionKey)
         }
+        podSprites[self.count].isHidden = false
     }
     
     //ガード破損
