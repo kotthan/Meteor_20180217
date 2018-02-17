@@ -9,23 +9,34 @@
 import UIKit
 
 class HUDView: UIView {
-    
-    let scoreLabel = UILabel()
-    
+    var scoreLabel = UILabel()
     override init(frame:CGRect){
         super.init(frame:frame)
-        scoreLabel.textColor = UIColor.white
-        scoreLabel.text = "SCORE:"
-        scoreLabel.sizeToFit()
+        scoreLabel.textColor = UIColor.black
+        scoreLabel.text = "0"
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
         scoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)//左上
-        scoreLabel.layer.position = CGPoint(x: 10, y: 25 )//適当な余白
+        scoreLabel.layer.position = CGPoint(x: 25, y: 60 )//適当な余白
         addSubview(scoreLabel)
+        scoreLabel.isHidden = true
+        scoreLabel.sizeToFit()
+    }
+    
+    func stringSizeChange() {
+        self.scoreLabel.font = UIFont.boldSystemFont(ofSize: 33)
+        self.scoreLabel.sizeToFit()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
+            self.scoreLabel.sizeToFit()
+        }
     }
 
     func drawScore(score: Int){
-        scoreLabel.text = "SCORE:" + String(score)
+        scoreLabel.text = String(score)
+        stringSizeChange()
         scoreLabel.sizeToFit()
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

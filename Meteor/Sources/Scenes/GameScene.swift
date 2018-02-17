@@ -55,7 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var allScreenSize = CGSize(width: 0, height: 0)                 //全画面サイズ
 	let oneScreenSize = CGSize(width: 375, height: 667)             //１画面サイズ
     static let ScreenSize = CGSize(width: 375, height: 667) //テスト
-    var pauseView: PauseView!                                     //ポーズ画面
+    var pauseView: PauseView!                                       //ポーズ画面
     var hudView = HUDView()                                         //HUD
     
     //MARK: タイマー
@@ -381,7 +381,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         self.hudView = HUDView(frame: self.frame)
         self.view!.addSubview(hudView)
-        self.hudView.drawScore(score: self.score)
         //===================
         //MARK: ポーズ画面
         //===================
@@ -1011,6 +1010,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func startButtonAction()
     {
         play()
+        hudView.scoreLabel.isHidden = false
         start0Node.zPosition = -50
         if( retryFlg == false ){
             //リトライ時はカメラ動かさない
