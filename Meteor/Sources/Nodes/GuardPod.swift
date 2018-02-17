@@ -19,7 +19,7 @@ class GuardPod: SKNode {
     }
     var guardStatus = guardState.enable //ガード状態
     let maxCount = 3    //最大ガード回数
-    var count = 0  //initでmaxCountに設定される
+    var count = 0
     let recoverCountTime:Double = 2.0 //ガードを１回復するまでの時間
     let recoverBrokenTime:Double = 5.0  //破壊状態から回復するまでの時間
     let actionKey = "recover"
@@ -35,20 +35,17 @@ class GuardPod: SKNode {
             pod.isHidden = true
             self.addChild(pod)
         }
-        self.podSprites[self.maxCount].isHidden = false
-        self.count = self.maxCount
-        //ゲージマスク
-        let gaugeSize = CGSize(width: 10, height: 10)
-        let maskNode = SKShapeNode(rect: CGRect(origin: CGPoint.zero, size: gaugeSize))
-        maskNode.fillColor = UIColor.white
-        maskNode.zPosition = self.zPosition + 1
-        self.gaugeMask.maskNode = maskNode
-        self.addChild(maskNode)
+        self.podSprites[0].isHidden = false
+        //回復Action追加
+        let act1 = SKAction.wait(forDuration: self.recoverCountTime)
+        let act2 = SKAction.run{self.addCount()}
+        let acts = SKAction.sequence([act1,act2])
+        self.run(acts, withKey: self.actionKey)
         //デバッグ用ラベル
         countLabel.text = String(self.count)
         countLabel.position = CGPoint(x: -10, y: -10) //ポッドの左下
         countLabel.zPosition = self.zPosition + 1
-        self.addChild(countLabel)
+        //self.addChild(countLabel)
     }
 
     //ガード回復
