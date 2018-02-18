@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: - 基本構成
     //MARK: ノード
     let baseNode = SKNode()                                         //ゲームベースノード
-    let playerBaseNode = Player()                                   //プレイヤーベース
+    let player = Player()                                   //プレイヤーベース
     let backScrNode = SKNode()                                      //背景ノード
     let titleLogo = SKSpriteNode()                                  //タイトルロゴノード
     //var player: SKSpriteNode!                                       //プレイヤーノード
@@ -163,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 		//MARK: 背景
         self.addChild(self.baseNode)                                //ベース追加
-        self.baseNode.addChild(self.playerBaseNode)                 //プレイヤーベース追加
+        self.baseNode.addChild(self.player)                 //プレイヤーベース追加
         self.addChild(self.backScrNode)                             //背景追加
  
         //MARK: ゲーム進行関係
@@ -244,10 +244,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			self.charYOffset = self.oneScreenSize.height * 0.5
 			scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
 				let player = node as! SKSpriteNode
-                self.playerBaseNode.position = player.position  //プレイヤーのポジションをBaseの位置にして
+                self.player.position = player.position  //プレイヤーのポジションをBaseの位置にして
                 player.position = CGPoint(x:0,y:0)              //baseNodeに追加するplayerの位置は０にする
-                self.playerBaseNode.setSprite(sprite: player)
-                self.defaultYPosition = self.playerBaseNode.position.y
+                self.player.setSprite(sprite: player)
+                self.defaultYPosition = self.player.position.y
                 print("playerDefault : \(self.defaultYPosition)")
                 //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
                 //アニメーション
@@ -262,34 +262,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //===================
             self.comboLabel.text = String( self.combo )         //スコアを表示する
             self.comboLabel.position = CGPoint(                 //表示位置をplayerのサイズ分右上に
-                x: self.playerBaseNode.sprite.size.width/2,
-                y: self.playerBaseNode.sprite.size.height/2 - 50
+                x: self.player.sprite.size.width/2,
+                y: self.player.sprite.size.height/2 - 50
             )
             self.comboLabel.fontName = "GillSansStd-ExtraBold"
             self.comboLabel.isHidden = true
-            self.playerBaseNode.addChild(self.comboLabel)               //playerにaddchiledすることでplayerに追従させる
+            self.player.addChild(self.comboLabel)               //playerにaddchiledすることでplayerに追従させる
             //===================
             //MARK: 必殺技ボタン
             //===================
             ultraButton = SKSpriteNode(imageNamed: "ultraButtun")
             self.ultraButton.position = CGPoint(                          //表示位置をplayerのサイズ分左に
                 x: 0,
-                y: +self.playerBaseNode.sprite.size.height / 2
+                y: +self.player.sprite.size.height / 2
             )
             self.ultraButton.xScale = 1 / 18
             self.ultraButton.yScale = 1 / 18
             self.ultraButton.zPosition = 2
-            self.playerBaseNode.addChild(self.ultraButton)               //playerにaddchiledすることでplayerに追従
+            self.player.addChild(self.ultraButton)               //playerにaddchiledすることでplayerに追従
             ultraOkButton = SKSpriteNode(imageNamed: "ultraOkButtun")
             self.ultraOkButton.position = CGPoint(                       //表示位置をplayerのサイズ分左上に
                 x: 0,
-                y: +self.playerBaseNode.sprite.size.height / 2
+                y: +self.player.sprite.size.height / 2
             )
             self.ultraOkButton.xScale = 1 / 18
             self.ultraOkButton.yScale = 1 / 18
             self.ultraOkButton.zPosition = 2
             ultraOkButton.removeFromParent()
-            self.playerBaseNode.addChild(self.ultraOkButton)             //playerにaddchiledすることでplayerに追従させる
+            self.player.addChild(self.ultraOkButton)             //playerにaddchiledすることでplayerに追従させる
             self.ultraOkButton.isHidden = true
             
             //===================
@@ -348,9 +348,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //MARK: ガードゲージ
         //===================
         guardPod = GuardPod()
-        guardPod.position = CGPoint(x: self.playerBaseNode.sprite.position.x - 30, y: self.playerBaseNode.sprite.position.y )
+        guardPod.position = CGPoint(x: self.player.sprite.position.x - 30, y: self.player.sprite.position.y )
         guardPod.zPosition = -1
-        self.playerBaseNode.addChild(guardPod)
+        self.player.addChild(guardPod)
         
         //ハイスコアラベル
         if ( UserDefaults.standard.object(forKey: keyHighScore) != nil )
@@ -409,7 +409,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             view.showsPhysics = true
             let playerBaseShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 10, height: 10))
             playerBaseShape.zPosition = -50
-            playerBaseNode.addChild( playerBaseShape )
+            player.addChild( playerBaseShape )
         }
         setDefaultParam()
         if( retryFlg )
@@ -449,14 +449,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             // 次の位置を計算する
             self.playerSpeed += self.gravity * self.playerGravityCoefficient / 60   // [pixcel/s^2] / 60[fps]
-            self.playerBaseNode.position.y += CGFloat( playerSpeed / 60 )           // [pixcel/s] / 60[fps]
+            self.player.position.y += CGFloat( playerSpeed / 60 )           // [pixcel/s] / 60[fps]
             if ( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                let playerMaxY = playerBaseNode.position.y + (playerBaseNode.sprite.size.height/2)
+                let playerMaxY = player.position.y + (player.sprite.size.height/2)
                 let playerHalfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
                 if( meteorCollisionFlg ){ //衝突する
-                    self.playerBaseNode.position.y = meteorMinY - playerHalfSize
+                    self.player.position.y = meteorMinY - playerHalfSize
                     self.playerSpeed -= self.meteorSpeed / 60
                     if( self.playerSpeed < self.meteorSpeed ){
                         //playerが上昇中にfalseにすると何度も衝突がおきてplayeerがぶれるので
@@ -466,8 +466,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if( debug )
                     {
                         //衝突位置表示
-                        var points = [CGPoint(x:frame.minX,y:playerBaseNode.position.y + playerHalfSize),
-                                      CGPoint(x:frame.maxX,y:playerBaseNode.position.y + playerHalfSize)]
+                        var points = [CGPoint(x:frame.minX,y:player.position.y + playerHalfSize),
+                                      CGPoint(x:frame.maxX,y:player.position.y + playerHalfSize)]
                         if( collisionLine != nil )
                         {
                             collisionLine.removeFromParent()
@@ -489,18 +489,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
-            if( self.playerBaseNode.position.y < defaultYPosition )
+            if( self.player.position.y < defaultYPosition )
             {
-                self.playerBaseNode.position.y = defaultYPosition
+                self.player.position.y = defaultYPosition
             }
-            self.playerBaseNode.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策
+            self.player.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策
         }
         else{
             if( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                let playerHalfSize = self.playerBaseNode.sprite.size.height / 2
-                if( self.playerBaseNode.position.y < meteorMinY - playerHalfSize ){
+                let playerHalfSize = self.player.sprite.size.height / 2
+                if( self.player.position.y < meteorMinY - playerHalfSize ){
                     meteorCollisionFlg = false
                     if( collisionLine != nil ){
                         collisionLine.removeFromParent()
@@ -521,11 +521,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.start0Node.position.y)
         }
-        else if (jumping == true) && (self.playerBaseNode.position.y + 200 > self.oneScreenSize.height/2)
+        else if (jumping == true) && (self.player.position.y + 200 > self.oneScreenSize.height/2)
         {
-            if( self.playerBaseNode.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
+            if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
-                self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.playerBaseNode.position.y + 200 );
+                self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.player.position.y + 200 );
             }
         }
         else
@@ -777,8 +777,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightPosFlg = true
             self.moving = true
             let names = ["attack01","attack02","player00"]
-            self.attackTextureAnimation(self.playerBaseNode.sprite, names: names)
-            playerBaseNode.run(moveR)
+            self.attackTextureAnimation(self.player.sprite, names: names)
+            player.run(moveR)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
             {
@@ -795,8 +795,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightPosFlg = false
             self.moving = true
             let names = ["attack01","attack02","player00"]
-            attackTextureAnimation(self.playerBaseNode.sprite, names: names)
-            playerBaseNode.run(moveC)
+            attackTextureAnimation(self.player.sprite, names: names)
+            player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
             {
@@ -824,8 +824,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = true
             self.rightPosFlg = false
             let names = ["attack01","attack02","player00"]
-            attackTextureAnimation(self.playerBaseNode.sprite, names: names)
-            playerBaseNode.run(moveL)
+            attackTextureAnimation(self.player.sprite, names: names)
+            player.run(moveL)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
             {
@@ -841,8 +841,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = false
             let names = ["attack01","attack02","player00"]
-            attackTextureAnimation(self.playerBaseNode.sprite, names: names)
-            playerBaseNode.run(moveC)
+            attackTextureAnimation(self.player.sprite, names: names)
+            player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
             {
@@ -866,10 +866,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func moveStop() {
         moving = false
         if jumping == false {
-            self.playerBaseNode.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+            self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
         let names = ["stand01","stand02"]
-        self.startStandTextureAnimation(self.playerBaseNode.sprite, names: names)
+        self.startStandTextureAnimation(self.player.sprite, names: names)
     }
     
     //MARK: - ジャンプ
@@ -916,11 +916,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             jumping = false
             playSound(soundName: "tyakuti")
             self.playerSpeed = 0.0
-            self.playerBaseNode.position.y = self.defaultYPosition
+            self.player.position.y = self.defaultYPosition
             //着地エフェクト
             let landingEffect = LandingEffect()
-            landingEffect.position.y -= self.playerBaseNode.sprite.size.height / 2
-            self.playerBaseNode.addChild(landingEffect)
+            landingEffect.position.y -= self.player.sprite.size.height / 2
+            self.player.addChild(landingEffect)
             switch ( ultraAttackState )
             {
             case .landing:
@@ -937,7 +937,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if attackFlg == false{
                 let names = ["stand01","stand02"]
-                self.startStandTextureAnimation(self.playerBaseNode.sprite, names: names)
+                self.startStandTextureAnimation(self.player.sprite, names: names)
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -976,7 +976,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if meteores.isEmpty
         {
             //meteor.position = CGPoint(x: 187, y: self.meteorPos + (meteor.size.height)/2)
-            meteor.position = CGPoint(x:187, y: self.playerBaseNode.position.y + 700 + (meteor.size.height) / 2)
+            meteor.position = CGPoint(x:187, y: self.player.position.y + 700 + (meteor.size.height) / 2)
         } else
         {
             meteor.position = CGPoint(x: 187, y: (meteores.first?.position.y)!)
@@ -1070,10 +1070,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: 攻撃
     func attackShapeMake()
     {
-        let attackShape = SKShapeNode(rect: CGRect(x: 0.0 - self.playerBaseNode.sprite.size.width/2, y: 0.0 - self.playerBaseNode.sprite.size.height/2, width: self.playerBaseNode.sprite.size.width, height: self.playerBaseNode.sprite.size.height))
+        let attackShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.sprite.size.width/2, y: 0.0 - self.player.sprite.size.height/2, width: self.player.sprite.size.width, height: self.player.sprite.size.height))
         attackShape.name = attackShapeName
         let physicsBody = SKPhysicsBody(rectangleOf: attackShape.frame.size)
-        attackShape.position = CGPoint(x: 0, y: self.playerBaseNode.sprite.size.height)
+        attackShape.position = CGPoint(x: 0, y: self.player.sprite.size.height)
         attackShape.fillColor = UIColor.clear
         attackShape.strokeColor = UIColor.clear
         attackShape.zPosition = 1
@@ -1098,10 +1098,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---アタックフラグをON---")
             self.attackFlg = true
             let names = ["attack01","attack02","player00"]
-            self.attackTextureAnimation(self.playerBaseNode.sprite, names: names)
+            self.attackTextureAnimation(self.player.sprite, names: names)
             playSound(soundName: "slash")
-            if playerBaseNode.childNode(withName: attackShapeName) == nil {
-                self.playerBaseNode.addChild(attackShape)
+            if player.childNode(withName: attackShapeName) == nil {
+                self.player.addChild(attackShape)
                 //print("add attackShape")
                 let action1 = SKAction.wait(forDuration: 0.3)
                 let action2 = SKAction.removeFromParent()
@@ -1128,7 +1128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 if ultraAttackState == .none //必殺技のときは続けて攻撃するため
                 {
-                    if let attackNode = playerBaseNode.childNode(withName: attackShapeName)
+                    if let attackNode = player.childNode(withName: attackShapeName)
                     {
                         attackNode.removeAllActions()
                         attackNode.removeFromParent()
@@ -1142,8 +1142,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //隕石を爆発させる
                 let particle = SKEmitterNode(fileNamed: "MeteorBroken.sks")
                 //接触座標にパーティクルを放出するようにする。
-                particle!.position = CGPoint(x: playerBaseNode.position.x,
-                                             y: playerBaseNode.position.y + (attackShape.position.y))
+                particle!.position = CGPoint(x: player.position.x,
+                                             y: player.position.y + (attackShape.position.y))
                 //0.7秒後にシーンから消すアクションを作成する。
                 let action1 = SKAction.wait(forDuration: 0.5)
                 let action2 = SKAction.removeFromParent()
@@ -1167,7 +1167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.comboLabel.alpha = 1.0
                 self.comboLabel.position.x = 20
                 //self.comboLabel.position.x += CGFloat(arc4random_uniform(40))
-                self.comboLabel.position.y = self.playerBaseNode.sprite.size.height / 2
+                self.comboLabel.position.y = self.player.sprite.size.height / 2
                 let act1_1 = SKAction.moveBy(x: 0, y: +20, duration: 1)
                 let act1_2 = SKAction.fadeOut(withDuration: 1)
                 let act1 = SKAction.group([act1_1,act1_2])
@@ -1232,11 +1232,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func ultraAttackJump(){
         //攻撃Shapeを出す
         self.attackFlg = true
-        if let attackNode = playerBaseNode.childNode(withName: attackShapeName) {
+        if let attackNode = player.childNode(withName: attackShapeName) {
             attackNode.removeAllActions()
             attackNode.removeFromParent()
         }
-        self.playerBaseNode.addChild(attackShape)
+        self.player.addChild(attackShape)
         //print("add ultra attackShape")
         //大ジャンプ
         moving = false
@@ -1248,7 +1248,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func ultraAttackEnd(){
         self.attackFlg = false
         //attackShapeを消す
-        if let attackNode = playerBaseNode.childNode(withName: attackShapeName)
+        if let attackNode = player.childNode(withName: attackShapeName)
         {
             attackNode.removeFromParent()
             //print("remove ultra attackShape")
@@ -1264,7 +1264,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: 防御
     func guardShapeMake()
     {
-        let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.playerBaseNode.sprite.size.width/2, y: 0.0 - self.playerBaseNode.sprite.size.height/2, width: self.playerBaseNode.sprite.size.width, height: self.playerBaseNode.sprite.size.height + 10))
+        let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.sprite.size.width/2, y: 0.0 - self.player.sprite.size.height/2, width: self.player.sprite.size.width, height: self.player.sprite.size.height + 10))
         guardShape.name = guardShapeName
         let physicsBody = SKPhysicsBody(rectangleOf: guardShape.frame.size)
         guardShape.position = CGPoint(x: 0, y: 0)
@@ -1288,12 +1288,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch ( self.guardPod.guardStatus ){
         case .enable:   //ガード開始
             self.guardPod.guardStatus = .guarding
-            if playerBaseNode.childNode(withName: guardShapeName) == nil {
-                playerBaseNode.addChild( guardShape )
+            if player.childNode(withName: guardShapeName) == nil {
+                player.addChild( guardShape )
             }
             //アニメーション
             let names = ["guard01"]
-            self.guardTextureAnimation(self.playerBaseNode.sprite, names: names)
+            self.guardTextureAnimation(self.player.sprite, names: names)
         case .guarding: //ガード中
             break
         case .disable:  //ガード不可
@@ -1302,20 +1302,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if( endFlg == true )
         {
-            if let guardNode = playerBaseNode.childNode(withName: guardShapeName) {
+            if let guardNode = player.childNode(withName: guardShapeName) {
                 guardNode.removeFromParent()
             }
             self.guardPod.guardStatus = .enable
             //アニメーション
             let names = ["player00"]
-            self.guardTextureAnimation(self.playerBaseNode.sprite, names: names)
+            self.guardTextureAnimation(self.player.sprite, names: names)
         }
     }
 
     func guardMeteor()
     {
         guard gameoverFlg != true else { return }
-        guard let guardNode = playerBaseNode.childNode(withName: guardShapeName) else {
+        guard let guardNode = player.childNode(withName: guardShapeName) else {
             //print("guardShapeなしガード")
             return
         }
@@ -1333,8 +1333,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.playerSpeed = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
                     let meteor = self.meteores.first
                     let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                    let playerHalfSize = self.playerBaseNode.sprite.size.height / 2
-                    self.playerBaseNode.position.y = meteorMinY - playerHalfSize - 1
+                    let playerHalfSize = self.player.sprite.size.height / 2
+                    self.player.position.y = meteorMinY - playerHalfSize - 1
                 }
                 self.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
                 self.combo = 0
@@ -1365,7 +1365,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             stop()
             //墜落演出
             let circle = SKShapeNode(circleOfRadius:1)
-            circle.position = playerBaseNode.position
+            circle.position = player.position
             circle.zPosition = 1500.0
             circle.fillColor = UIColor.white
             self.addChild(circle)
@@ -1375,7 +1375,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                   SKAction.group(
                     [ SKAction.wait(forDuration: 0.2),
                       SKAction.run{
-                        self.playerBaseNode.isHidden = true
+                        self.player.isHidden = true
                         self.meteorBase.isHidden = true
                         },
                       ]),
