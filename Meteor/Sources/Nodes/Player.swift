@@ -10,13 +10,15 @@ import SpriteKit
 
 class Player: SKNode {
     
+    var velocity: CGFloat = 0.0
     var sprite: SKSpriteNode!
     var size: CGSize!
+    let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
     let standAnimationTextureNames = ["stand01","stand02"]
     let attackAnimationTextureNames = ["attack01","attack02","player00"]
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
-    
+
     override init() {
         super.init()
     }

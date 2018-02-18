@@ -99,7 +99,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var defaultYPosition : CGFloat = 0.0
     
     //MARK: 隕石・プレイヤー動作プロパティ
-    var playerSpeed : CGFloat = 0.0                                 //プレイヤーの速度
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
     //調整用パラメータ
@@ -447,17 +446,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if jumping == true
         {
             // 次の位置を計算する
-            self.playerSpeed += self.gravity * self.playerGravityCoefficient / 60   // [pixcel/s^2] / 60[fps]
-            self.player.position.y += CGFloat( playerSpeed / 60 )           // [pixcel/s] / 60[fps]
+            self.player.velocity += self.gravity * self.playerGravityCoefficient / 60   // [pixcel/s^2] / 60[fps]
+            self.player.position.y += CGFloat( player.velocity / 60 )           // [pixcel/s] / 60[fps]
             if ( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                 let playerMaxY = player.position.y + (player.size.height/2)
-                let playerHalfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
                 if( meteorCollisionFlg ){ //衝突する
-                    self.player.position.y = meteorMinY - playerHalfSize
-                    self.playerSpeed -= self.meteorSpeed / 60
-                    if( self.playerSpeed < self.meteorSpeed ){
+                    self.player.position.y = meteorMinY - player.halfSize
+                    self.player.velocity -= self.meteorSpeed / 60
+                    if( self.player.velocity < self.meteorSpeed ){
                         //playerが上昇中にfalseにすると何度も衝突がおきてplayeerがぶれるので
                         //落下速度が隕石より早くなってからfalseにする
                         self.meteorCollisionFlg = false
@@ -465,8 +463,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if( debug )
                     {
                         //衝突位置表示
-                        var points = [CGPoint(x:frame.minX,y:player.position.y + playerHalfSize),
-                                      CGPoint(x:frame.maxX,y:player.position.y + playerHalfSize)]
+                        var points = [CGPoint(x:frame.minX,y:player.position.y + player.halfSize),
+                                      CGPoint(x:frame.maxX,y:player.position.y + player.halfSize)]
                         if( collisionLine != nil )
                         {
                             collisionLine.removeFromParent()
@@ -498,8 +496,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                let playerHalfSize = self.player.size.height / 2
-                if( self.player.position.y < meteorMinY - playerHalfSize ){
+                if( self.player.position.y < meteorMinY - player.halfSize ){
                     meteorCollisionFlg = false
                     if( collisionLine != nil ){
                         collisionLine.removeFromParent()
@@ -533,7 +530,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if( debug )
         {
-            playerPosLabel.text = "playerSpeed : \(self.playerSpeed) \n" + "y +: \(CGFloat( playerSpeed / 60 ))"
+            playerPosLabel.text = "playerSpeed : \(self.player.velocity) \n" + "y +: \(CGFloat( player.velocity / 60 ))"
         }
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
@@ -871,7 +868,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if jumping == false {
             moving = false
             jumping = true
-            playerSpeed = pleyerJumpSpeed
+            player.velocity = pleyerJumpSpeed
             playSound(soundName: "jump")
         }
     }
@@ -909,7 +906,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---Playerと地面が接触しました---")
             jumping = false
             playSound(soundName: "tyakuti")
-            self.playerSpeed = 0.0
+            self.player.velocity = 0.0
             self.player.position.y = self.defaultYPosition
             //着地エフェクト
             let landingEffect = LandingEffect()
@@ -1183,7 +1180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if( meteorCollisionFlg )
                 {
                     self.meteorCollisionFlg = false
-                    playerSpeed = 0;
+                    player.velocity = 0;
                 }
             }
             if meteores.isEmpty == true
@@ -1210,7 +1207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if( jumping ) //空中にいる場合
         {
             //地面に戻る
-            playerSpeed = -2000
+            player.velocity = -2000
         }
         else
         {
@@ -1233,7 +1230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //大ジャンプ
         moving = false
         jumping = true
-        playerSpeed = self.playerUltraAttackSpped
+        player.velocity = self.playerUltraAttackSpped
         //サウンド
         playSound(soundName: "jump")
     }
@@ -1320,7 +1317,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 i.removeAllActions()
                 if jumping == true {
-                    self.playerSpeed = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
+                    self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
                     let meteor = self.meteores.first
                     let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                     let playerHalfSize = self.player.size.height / 2
