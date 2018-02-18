@@ -251,8 +251,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("playerDefault : \(self.defaultYPosition)")
                 //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
                 //アニメーション
-                let names = ["stand01","stand02"]
-                self.player.standAnimation(names: names)
+                self.player.standAnimation()
             })
             if( debug ){ //デバッグ用
                 //addBodyFrame(node: player)  //枠表示
@@ -776,8 +775,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = true
             self.moving = true
-            let names = ["attack01","attack02","player00"]
-            self.player.attackAnimation(names: names)
+            self.player.attackAnimation()
             player.run(moveR)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -794,8 +792,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = false
             self.moving = true
-            let names = ["attack01","attack02","player00"]
-            self.player.attackAnimation(names: names)
+            self.player.attackAnimation()
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -823,8 +820,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.centerPosFlg = false
             self.leftPosFlg = true
             self.rightPosFlg = false
-            let names = ["attack01","attack02","player00"]
-            self.player.attackAnimation(names: names)
+            self.player.attackAnimation()
             player.run(moveL)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -840,8 +836,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.centerPosFlg = true
             self.leftPosFlg = false
             self.rightPosFlg = false
-            let names = ["attack01","attack02","player00"]
-            self.player.attackAnimation(names: names)
+            self.player.attackAnimation()
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -868,8 +863,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if jumping == false {
             self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
-        let names = ["stand01","stand02"]
-        self.player.standAnimation(names: names)
+        self.player.standAnimation()
     }
     
     //MARK: - ジャンプ
@@ -936,8 +930,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break
             }
             if attackFlg == false{
-                let names = ["stand01","stand02"]
-                self.player.standAnimation(names: names)
+                self.player.standAnimation()
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -1097,8 +1090,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             //print("---アタックフラグをON---")
             self.attackFlg = true
-            let names = ["attack01","attack02","player00"]
-            self.player.attackAnimation(names: names)
+            self.player.attackAnimation()
             playSound(soundName: "slash")
             if player.childNode(withName: attackShapeName) == nil {
                 self.player.addChild(attackShape)

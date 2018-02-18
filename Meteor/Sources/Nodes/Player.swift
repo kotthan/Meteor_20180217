@@ -12,6 +12,8 @@ class Player: SKNode {
     
     var sprite: SKSpriteNode!
     var size: CGSize!
+    let standAnimationTextureNames = ["stand01","stand02"]
+    let attackAnimationTextureNames = ["attack01","attack02","player00"]
     
     override init() {
         super.init()
@@ -40,20 +42,20 @@ class Player: SKNode {
     }
     
     //立ちアニメ
-    func standAnimation(names: [String]) {
+    func standAnimation() {
         sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
-        for name in names {
+        for name in self.standAnimationTextureNames {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 1.0, resize: false, restore: false)
         sprite.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
-    func attackAnimation(names: [String]) {
+    func attackAnimation() {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
-        for name in names {
+        for name in self.attackAnimationTextureNames {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
