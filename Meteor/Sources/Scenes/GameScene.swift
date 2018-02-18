@@ -1469,17 +1469,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //==========================================================
     //MARK: - テクスチャアニメーション
     //==========================================================
-    //開始
-    func startTextureAnimation(_ node: SKSpriteNode, names: [String]) {
-        node.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in names {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: true, restore: false)
-        node.run(SKAction.repeatForever(action), withKey: "textureAnimation")
-    }
-    
     func attackTextureAnimation(_ node: SKSpriteNode, names: [String]) {
         node.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
