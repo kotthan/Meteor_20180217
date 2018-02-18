@@ -252,7 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
                 //アニメーション
                 let names = ["stand01","stand02"]
-                self.startStandTextureAnimation(player, names: names)
+                self.player.startStandTextureAnimation(names: names)
             })
             if( debug ){ //デバッグ用
                 //addBodyFrame(node: player)  //枠表示
@@ -869,7 +869,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
         let names = ["stand01","stand02"]
-        self.startStandTextureAnimation(self.player.sprite, names: names)
+        self.player.startStandTextureAnimation(names: names)
     }
     
     //MARK: - ジャンプ
@@ -937,7 +937,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if attackFlg == false{
                 let names = ["stand01","stand02"]
-                self.startStandTextureAnimation(self.player.sprite, names: names)
+                self.player.startStandTextureAnimation(names: names)
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -1484,17 +1484,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func stopTextureAnimation(_ node: SKSpriteNode, name: String) {
         node.removeAction(forKey: "textureAnimation")
         node.texture = SKTexture(imageNamed: name)
-    }
-    
-    //立ちアニメ
-    func startStandTextureAnimation(_ node: SKSpriteNode, names: [String]) {
-        node.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in names {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 1.0, resize: false, restore: false)
-        node.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
     func attackTextureAnimation(_ node: SKSpriteNode, names: [String]) {

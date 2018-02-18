@@ -36,6 +36,18 @@ class Player: SKNode {
         //スプライトのサイズをbaseのサイズにする
         self.size = sprite.size
         self.addChild(sprite)
+        
+    }
+    
+    //立ちアニメ
+    func startStandTextureAnimation(names: [String]) {
+        sprite.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in names {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 1.0, resize: false, restore: false)
+        sprite.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
     required init?(coder aDecoder: NSCoder) {
