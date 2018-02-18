@@ -17,16 +17,20 @@ class GameOverView: UIView {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         //スコアラベル
         let scoreLabel = UILabel( )
+        scoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 50)
         scoreLabel.text = "Score: " + String( score )
         scoreLabel.sizeToFit()
+        scoreLabel.frame.size.height += 5
         scoreLabel.textColor = UIColor.white
         scoreLabel.layer.position.y = self.frame.size.height/4
         scoreLabel.layer.position.x = self.frame.size.width/2
         self.addSubview(scoreLabel)
         //ハイスコアラベル
         let highScoreLabel = UILabel( )
+        highScoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size:25)
         highScoreLabel.text = "High Score: " + String( highScore )
         highScoreLabel.sizeToFit()
+        highScoreLabel.frame.size.height += 3
         highScoreLabel.textColor = UIColor.white
         highScoreLabel.layer.position.y = self.frame.size.height/4 + scoreLabel.frame.size.height
         highScoreLabel.layer.position.x = self.frame.size.width/2
