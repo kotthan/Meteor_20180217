@@ -1153,11 +1153,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.hudView.drawScore( score: self.score )
                 //コンボ
                 self.combo += 1;
-                self.comboLabel.text = String( self.combo )
+                self.comboLabel.text = String( self.combo ) + "COMBO!"
                 self.comboLabel.removeAllActions()
                 self.comboLabel.isHidden = false
                 self.comboLabel.alpha = 1.0
-                self.comboLabel.position.x = 20
+                self.comboLabel.position.x = 100
+                self.comboLabel.zPosition = 10
                 //self.comboLabel.position.x += CGFloat(arc4random_uniform(40))
                 self.comboLabel.position.y = self.player.size.height / 2
                 let act1_1 = SKAction.moveBy(x: 0, y: +20, duration: 1)
@@ -1328,7 +1329,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 self.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
                 self.combo = 0
-                self.comboLabel.text = String( self.combo )
+                self.comboLabel.text = String( self.combo ) + "COMBO!"
             }
         }
         else
