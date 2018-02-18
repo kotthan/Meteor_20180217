@@ -48,6 +48,17 @@ class Player: SKNode {
         
     }
     
+    //MARK: - ジャンプ
+    func jump() {
+        if self.jumping == false {
+            self.moving = false
+            self.jumping = true
+            self.velocity = self.jumpVelocity
+            let sound = SKAction.playSoundFileNamed("jump", waitForCompletion: true)
+            self.run(sound)
+        }
+    }
+    
     //立ちアニメ
     func stand() {
         sprite.removeAction(forKey: "textureAnimation")

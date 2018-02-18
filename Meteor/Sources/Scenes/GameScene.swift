@@ -685,7 +685,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .swipeDown:
                 guardAction(endFlg: true)
             case .swipeUp where player.jumping == false: //ジャンプしてない場合のみ
-                jumpingAction()
+                self.player.jump()
             case .swipeLeft where player.jumping == false: //ジャンプしてない場合のみ
                 moveToLeft()
             case .swipeRight where player.jumping == false://ジャンプしてない場合のみ
@@ -858,16 +858,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
         self.player.stand()
-    }
-    
-    //MARK: - ジャンプ
-    func jumpingAction() {
-        if player.jumping == false {
-            player.moving = false
-            player.jumping = true
-            player.velocity = player.jumpVelocity
-            playSound(soundName: "jump")
-        }
     }
     
     //MARK: - 関数定義　接触判定
