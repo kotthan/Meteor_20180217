@@ -10,12 +10,26 @@ import SpriteKit
 
 class Player: SKNode {
     
+    var velocity: CGFloat = 0.0
     var sprite: SKSpriteNode!
     var size: CGSize!
+    let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
     let standAnimationTextureNames = ["stand01","stand02"]
     let attackAnimationTextureNames = ["attack01","attack02","player00"]
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
+    var jumpVelocity:CGFloat = 9.8 * 150 * 1.2  //プレイヤーのジャンプ時の初速
+    var jumping: Bool = false   //ジャンプ中フラグ
+    var moving: Bool = false                                        //移動中フラグ
+    let moveSound = SKAction.playSoundFileNamed("move", waitForCompletion: true)
+    let jumpSound = SKAction.playSoundFileNamed("jump", waitForCompletion: true)
+    //横位置
+    enum PosState: Double {
+        case left = 93.75
+        case center = 187.5
+        case right = 281.25
+    }
+    var posStatus = PosState.center
     
     override init() {
         super.init()
@@ -41,6 +55,16 @@ class Player: SKNode {
         self.size = sprite.size
         self.addChild(sprite)
         
+    }
+    
+    //MARK: - ジャンプ
+    func jump() {
+        if self.jumping == false {
+            self.moving = false
+            self.jumping = true
+            self.velocity = self.jumpVelocity
+            self.run(self.jumpSound)
+        }
     }
     
     //立ちアニメ
@@ -82,6 +106,50 @@ class Player: SKNode {
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
         self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
+
+    func moveToRight()
+    {
+        switch self.posStatus {
+        case .center:
+            moveTo(.right)
+        case .left:
+            moveTo(.center)
+        case .right:
+            break
+        }
+    }
+
+    func moveToLeft()
+    {
+        switch self.posStatus {
+        case .center:
+            moveTo(.left)
+        case .right:
+            moveTo(.center)
+        case .left:
+            break
+        }
+    }
+    
+    func moveTo(_ pos: PosState){
+        guard self.jumping == false else{return}
+        guard self.moving == false else{return}
+        
+        self.posStatus = pos
+        let move = SKAction.moveTo(x: CGFloat(pos.rawValue), duration: 0.15)
+        let stop = SKAction.run(moveStop)
+        self.run(self.moveSound)
+        self.run(SKAction.sequence([move,stop]))
+    }
+    
+    //MARK: - 停止
+    func moveStop() {
+        self.moving = false
+        if self.jumping == false {
+            self.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+        }
+        self.stand()
     }
     
     required init?(coder aDecoder: NSCoder) {
