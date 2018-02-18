@@ -1284,8 +1284,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 player.addChild( guardShape )
             }
             //アニメーション
-            let names = ["guard01"]
-            self.player.guardAnimation(names: names)
+            self.player.guardStartAnimation()
         case .guarding: //ガード中
             break
         case .disable:  //ガード不可
@@ -1299,8 +1298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             self.guardPod.guardStatus = .enable
             //アニメーション
-            let names = ["player00"]
-            self.player.guardAnimation(names: names)
+            self.player.guardEndAnimation()
         }
     }
 

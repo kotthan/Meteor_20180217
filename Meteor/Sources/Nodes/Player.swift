@@ -14,6 +14,8 @@ class Player: SKNode {
     var size: CGSize!
     let standAnimationTextureNames = ["stand01","stand02"]
     let attackAnimationTextureNames = ["attack01","attack02","player00"]
+    let guardStartAnimationTextureNames = ["guard01"]
+    let guardEndAnimationTextureNames = ["player00"]
     
     override init() {
         super.init()
@@ -62,10 +64,20 @@ class Player: SKNode {
         self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
-    func guardAnimation(names: [String]) {
+    func guardStartAnimation() {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
-        for name in names {
+        for name in self.guardStartAnimationTextureNames {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
+    
+    func guardEndAnimation() {
+        self.sprite.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in guardEndAnimationTextureNames {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
