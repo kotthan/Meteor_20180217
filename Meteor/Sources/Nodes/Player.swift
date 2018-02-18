@@ -21,9 +21,6 @@ class Player: SKNode {
     var jumpVelocity:CGFloat = 9.8 * 150 * 1.2  //プレイヤーのジャンプ時の初速
     var jumping: Bool = false   //ジャンプ中フラグ
     var moving: Bool = false                                        //移動中フラグ
-    let moveL: SKAction!
-    let moveC: SKAction!
-    let moveR: SKAction!
     let moveSound = SKAction.playSoundFileNamed("move", waitForCompletion: true)
     let jumpSound = SKAction.playSoundFileNamed("jump", waitForCompletion: true)
     //横位置
@@ -35,10 +32,6 @@ class Player: SKNode {
     var posStatus = PosState.center
     
     override init() {
-        //MARK: - 移動
-        self.moveL = SKAction.moveTo(x: CGFloat(PosState.left.rawValue), duration: 0.15)
-        self.moveC = SKAction.moveTo(x: CGFloat(PosState.center.rawValue), duration: 0.15)
-        self.moveR = SKAction.moveTo(x: CGFloat(PosState.right.rawValue), duration: 0.15)
         super.init()
     }
     
@@ -115,87 +108,39 @@ class Player: SKNode {
         self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
 
-    //MARK: - 右移動
-    func moveCtoR()
-    {
-        if self.jumping == false
-        {
-            self.posStatus = .right
-            self.moving = true
-            self.attack()
-            self.run(moveR)
-            self.run(self.moveSound)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
-    func moveLtoC()
-    {
-        if self.jumping == false
-        {
-            self.posStatus = .center
-            self.moving = true
-            self.attack()
-            self.run(moveC)
-            self.run(self.moveSound)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
     func moveToRight()
     {
         switch self.posStatus {
         case .center:
-            moveCtoR()
+            moveTo(.right)
         case .left:
-            moveLtoC()
+            moveTo(.center)
         case .right:
             break
         }
     }
-    //MARK: - 左移動
-    func moveCtoL()
-    {
-        if self.jumping == false
-        {
-            self.posStatus = .left
-            self.attack()
-            self.run(moveL)
-            self.run(self.moveSound)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
-    func moveRtoC()
-    {
-        if self.jumping == false
-        {
-            self.posStatus = .center
-            self.attack()
-            self.run(moveC)
-            self.run(self.moveSound)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
+
     func moveToLeft()
     {
         switch self.posStatus {
         case .center:
-            moveCtoL()
+            moveTo(.left)
         case .right:
-            moveRtoC()
+            moveTo(.center)
         case .left:
             break
         }
+    }
+    
+    func moveTo(_ pos: PosState){
+        guard self.jumping == false else{return}
+        guard self.moving == false else{return}
+        
+        self.posStatus = pos
+        let move = SKAction.moveTo(x: CGFloat(pos.rawValue), duration: 0.15)
+        let stop = SKAction.run(moveStop)
+        self.run(self.moveSound)
+        self.run(SKAction.sequence([move,stop]))
     }
     
     //MARK: - 停止
