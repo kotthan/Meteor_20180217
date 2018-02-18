@@ -64,9 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: フラグ
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var attackFlg : Bool = false                                    //攻撃フラグ
-    var centerPosFlg: Bool = true                                   //中央位置フラグ
-    var leftPosFlg: Bool = false                                    //左位置フラグ
-    var rightPosFlg: Bool = false                                   //右位置フラグ
     var firstBuildFlg: Bool = true
     var buildFlg:Bool = true
     var gameFlg:Bool = false
@@ -687,9 +684,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .swipeUp where player.jumping == false: //ジャンプしてない場合のみ
                 self.player.jump()
             case .swipeLeft where player.jumping == false: //ジャンプしてない場合のみ
-                moveToLeft()
+                self.player.moveToLeft()
             case .swipeRight where player.jumping == false://ジャンプしてない場合のみ
-                moveToRight()
+                self.player.moveToRight()
             default:
                 break   //何もしない
             }
@@ -756,109 +753,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         baseNode.addChild(touchPath)
     }
     
-    //MARK: - 移動
-    let moveL = SKAction.moveTo(x: 93.75, duration: 0.15)
-    let moveC = SKAction.moveTo(x: 187.5, duration: 0.15)
-    let moveR = SKAction.moveTo(x: 281.25, duration: 0.15)
-    //MARK: - 右移動
-    func moveCtoR()
-    {
-        if player.jumping == false
-        {
-            self.centerPosFlg = false
-            self.leftPosFlg = false
-            self.rightPosFlg = true
-            self.player.moving = true
-            self.player.attack()
-            player.run(moveR)
-            playSound(soundName: "move")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
-    func moveLtoC()
-    {
-        if player.jumping == false
-        {
-            self.centerPosFlg = true
-            self.leftPosFlg = false
-            self.rightPosFlg = false
-            self.player.moving = true
-            self.player.attack()
-            player.run(moveC)
-            playSound(soundName: "move")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
-    func moveToRight()
-    {
-        if centerPosFlg == true
-        {
-            moveCtoR()
-        }
-        else if leftPosFlg == true
-        {
-            moveLtoC()
-        }
-    }
-    //MARK: - 左移動
-    func moveCtoL()
-    {
-        if player.jumping == false
-        {
-            self.centerPosFlg = false
-            self.leftPosFlg = true
-            self.rightPosFlg = false
-            self.player.attack()
-            player.run(moveL)
-            playSound(soundName: "move")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
-    func moveRtoC()
-    {
-        if player.jumping == false
-        {
-            self.centerPosFlg = true
-            self.leftPosFlg = false
-            self.rightPosFlg = false
-            self.player.attack()
-            player.run(moveC)
-            playSound(soundName: "move")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
-            {
-                self.moveStop()
-            }
-        }
-    }
-    func moveToLeft()
-    {
-        if centerPosFlg == true
-        {
-            moveCtoL()
-        }
-        else if rightPosFlg == true
-        {
-            moveRtoC()
-        }
-    }
-    
-    //MARK: - 停止
-    func moveStop() {
-        player.moving = false
-        if player.jumping == false {
-            self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-        }
-        self.player.stand()
-    }
     
     //MARK: - 関数定義　接触判定
     func didBegin(_ contact: SKPhysicsContact) {
