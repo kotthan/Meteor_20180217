@@ -104,7 +104,13 @@ class Player: SKNode {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+        let stand = SKAction.run{
+            if( self.jumping == false ){
+                self.stand()
+            }
+        }
+        let actions = SKAction.sequence([action,stand])
+        self.sprite.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
     }
     
     func guardStart() {
@@ -120,8 +126,15 @@ class Player: SKNode {
     func guardEnd() {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
-        for name in guardEndAnimationTextureNames {
-            ary.append(SKTexture(imageNamed: name))
+        if( self.jumping == true ){
+            for name in guardEndAnimationTextureNames {
+                ary.append(SKTexture(imageNamed: name))
+            }
+        }
+        else{
+            for name in standAnimationTextureNames {
+                ary.append(SKTexture(imageNamed: name))
+            }
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
         self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
