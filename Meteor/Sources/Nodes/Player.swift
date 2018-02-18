@@ -18,6 +18,7 @@ class Player: SKNode {
     let attackAnimationTextureNames = ["attack01","attack02","player00"]
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
+    var jumping: Bool = false   //ジャンプ中フラグ
 
     override init() {
         super.init()
