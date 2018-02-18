@@ -251,7 +251,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("playerDefault : \(self.defaultYPosition)")
                 //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
                 //アニメーション
-                self.player.standAnimation()
+                self.player.stand()
             })
             if( debug ){ //デバッグ用
                 //addBodyFrame(node: player)  //枠表示
@@ -775,7 +775,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = true
             self.moving = true
-            self.player.attackAnimation()
+            self.player.attack()
             player.run(moveR)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -792,7 +792,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = false
             self.moving = true
-            self.player.attackAnimation()
+            self.player.attack()
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -820,7 +820,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.centerPosFlg = false
             self.leftPosFlg = true
             self.rightPosFlg = false
-            self.player.attackAnimation()
+            self.player.attack()
             player.run(moveL)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -836,7 +836,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.centerPosFlg = true
             self.leftPosFlg = false
             self.rightPosFlg = false
-            self.player.attackAnimation()
+            self.player.attack()
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -863,7 +863,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if jumping == false {
             self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
-        self.player.standAnimation()
+        self.player.stand()
     }
     
     //MARK: - ジャンプ
@@ -930,7 +930,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break
             }
             if attackFlg == false{
-                self.player.standAnimation()
+                self.player.stand()
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -1090,7 +1090,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             //print("---アタックフラグをON---")
             self.attackFlg = true
-            self.player.attackAnimation()
+            self.player.attack()
             playSound(soundName: "slash")
             if player.childNode(withName: attackShapeName) == nil {
                 self.player.addChild(attackShape)
@@ -1284,7 +1284,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 player.addChild( guardShape )
             }
             //アニメーション
-            self.player.guardStartAnimation()
+            self.player.guardStart()
         case .guarding: //ガード中
             break
         case .disable:  //ガード不可
@@ -1298,7 +1298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             self.guardPod.guardStatus = .enable
             //アニメーション
-            self.player.guardEndAnimation()
+            self.player.guardEnd()
         }
     }
 
