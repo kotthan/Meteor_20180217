@@ -15,6 +15,18 @@ class GameOverView: UIView {
         super.init(frame: frame)
         //背景色
         self.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        let image1:UIImage = UIImage(named: "gameOverPanel")!
+        let imageView = UIImageView(image:image1)
+        // 画面の横幅を取得
+        //let screenWidth:CGFloat = view.frame.size.width
+        //let screenHeight:CGFloat = view.frame.size.height
+        // 画像の中心を画面の中心に設定
+        //imageView.center = CGPoint(x:screenWidth/2, y:screenHeight/2)
+        
+        // UIImageViewのインスタンスをビューに追加
+        self.addSubview(imageView)
+//        self.view.addSubview(imageView)
+
         //スコアラベル
         let scoreLabel = UILabel( )
         scoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 50)
