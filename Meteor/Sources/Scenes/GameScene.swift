@@ -23,7 +23,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 @available(iOS 9.0, *)
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    let debug = true   //デバッグフラグ
+    let debug = false   //デバッグフラグ
 	//MARK: - 基本構成
     //MARK: ノード
     let baseNode = SKNode()                                         //ゲームベースノード
@@ -745,6 +745,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var touchPath: SKShapeNode! = nil
     func drawTouchPath(begin: CGPoint, end:CGPoint){
+        guard debug else { return } //デバッグフラグがfalseならなにもしない
         //カメラが存在するかどうかのチェック
         guard let camera = camera else{
             return
