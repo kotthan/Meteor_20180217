@@ -50,6 +50,26 @@ class Player: SKNode {
         sprite.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
+    func attackTextureAnimation(names: [String]) {
+        self.sprite.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in names {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
+    
+    func guardTextureAnimation(names: [String]) {
+        self.sprite.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in names {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

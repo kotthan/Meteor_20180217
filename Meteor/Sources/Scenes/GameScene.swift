@@ -777,7 +777,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightPosFlg = true
             self.moving = true
             let names = ["attack01","attack02","player00"]
-            self.attackTextureAnimation(self.player.sprite, names: names)
+            self.player.attackTextureAnimation(names: names)
             player.run(moveR)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -795,7 +795,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightPosFlg = false
             self.moving = true
             let names = ["attack01","attack02","player00"]
-            attackTextureAnimation(self.player.sprite, names: names)
+            self.player.attackTextureAnimation(names: names)
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -824,7 +824,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = true
             self.rightPosFlg = false
             let names = ["attack01","attack02","player00"]
-            attackTextureAnimation(self.player.sprite, names: names)
+            self.player.attackTextureAnimation(names: names)
             player.run(moveL)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -841,7 +841,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = false
             let names = ["attack01","attack02","player00"]
-            attackTextureAnimation(self.player.sprite, names: names)
+            self.player.attackTextureAnimation(names: names)
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -1098,7 +1098,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---アタックフラグをON---")
             self.attackFlg = true
             let names = ["attack01","attack02","player00"]
-            self.attackTextureAnimation(self.player.sprite, names: names)
+            self.player.attackTextureAnimation(names: names)
             playSound(soundName: "slash")
             if player.childNode(withName: attackShapeName) == nil {
                 self.player.addChild(attackShape)
@@ -1293,7 +1293,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             //アニメーション
             let names = ["guard01"]
-            self.guardTextureAnimation(self.player.sprite, names: names)
+            self.player.guardTextureAnimation(names: names)
         case .guarding: //ガード中
             break
         case .disable:  //ガード不可
@@ -1308,7 +1308,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.guardPod.guardStatus = .enable
             //アニメーション
             let names = ["player00"]
-            self.guardTextureAnimation(self.player.sprite, names: names)
+            self.player.guardTextureAnimation(names: names)
         }
     }
 
@@ -1467,28 +1467,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     //==========================================================
-    //MARK: - テクスチャアニメーション
+    //MARK: - アクション
     //==========================================================
-    func attackTextureAnimation(_ node: SKSpriteNode, names: [String]) {
-        node.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in names {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        node.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
-    }
- 
-    func guardTextureAnimation(_ node: SKSpriteNode, names: [String]) {
-        node.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in names {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        node.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
-    }
-    
     func scaleLoopAction(_ node: SKSpriteNode){
         let actions = SKAction.sequence(
             [ SKAction.scale(to: 1.03, duration: 0.3),
