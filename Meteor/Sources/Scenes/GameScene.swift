@@ -103,7 +103,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
     var meteorPos :CGFloat = 1320.0                                 //隕石の初期位置(1500.0)
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
-    var pleyerJumpSpeed : CGFloat = 9.8 * 150 * 1.2                 //プレイヤーのジャンプ時の初速
     var playerUltraAttackSpped : CGFloat = 9.8 * 150 * 2            //プレイヤーの必殺技ジャンプ時の初速
     var playerGravityCoefficient: CGFloat = 1                       //プレイヤーが受ける重力の影響を調整する係数
     var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
@@ -866,7 +865,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if player.jumping == false {
             player.moving = false
             player.jumping = true
-            player.velocity = pleyerJumpSpeed
+            player.velocity = player.jumpVelocity
             playSound(soundName: "jump")
         }
     }
@@ -1512,14 +1511,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let paramMin:[Float] = [0,       //gravity
                             0,       //meteorPos
                             0,       //meteorGravityCoefficient
-                            0,       //pleyerJumpSpeed
+                            0,       //pleyer.jumpVeloctiy
                             0,       //playerGravityCoefficient
                             0,       //meteorSpeedAtGuard
                             0]       //speedFromMeteorOnGuard
     let paramMax:[Float] = [1000,    //gravity
                             5000,    //meteorPos
                             100,     //meteorGravityCoefficient
-                            2000,    //pleyerJumpSpeed
+                            2000,    //pleyer.jumpVeloctiy
                             100,     //playerGravityCoefficient
                             1000,    //meteorSpeedAtGuard
                             1000]    //speedFromMeteorOnGuard
@@ -1554,7 +1553,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         params.append(&gravity)
         params.append(&meteorPos)
         params.append(&meteorGravityCoefficient)
-        params.append(&pleyerJumpSpeed)
+        params.append(&pleyer.jumpVeloctiy)
         params.append(&playerGravityCoefficient)
         params.append(&meteorSpeedAtGuard)
         params.append(&speedFromMeteorAtGuard)
@@ -1614,7 +1613,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gravity = -900                               //重力 9.8 [m/s^2] * 150 [pixels/m]
         meteorPos = 2400                             //隕石の初期位置
         meteorGravityCoefficient = 0.06              //隕石が受ける重力の影響を調整する係数
-        pleyerJumpSpeed = 1500                       //プレイヤーのジャンプ時の初速
+        player.jumpVelocity = 1500                       //プレイヤーのジャンプ時の初速
         playerGravityCoefficient = 1                 //隕石が受ける重力の影響を調整する係数
         meteorSpeedAtGuard = 100                     //隕石が防御された時の速度
         speedFromMeteorAtGuard = -500                //隕石を防御した時にプレイヤーの速度
