@@ -262,8 +262,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //===================
             self.comboLabel.text = String( self.combo )         //スコアを表示する
             self.comboLabel.position = CGPoint(                 //表示位置をplayerのサイズ分右上に
-                x: self.player.sprite.size.width/2,
-                y: self.player.sprite.size.height/2 - 50
+                x: self.player.size.width/2,
+                y: self.player.size.height/2 - 50
             )
             self.comboLabel.fontName = "GillSansStd-ExtraBold"
             self.comboLabel.isHidden = true
@@ -274,7 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             ultraButton = SKSpriteNode(imageNamed: "ultraButtun")
             self.ultraButton.position = CGPoint(                          //表示位置をplayerのサイズ分左に
                 x: 0,
-                y: +self.player.sprite.size.height / 2
+                y: +self.player.size.height / 2
             )
             self.ultraButton.xScale = 1 / 18
             self.ultraButton.yScale = 1 / 18
@@ -283,7 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             ultraOkButton = SKSpriteNode(imageNamed: "ultraOkButtun")
             self.ultraOkButton.position = CGPoint(                       //表示位置をplayerのサイズ分左上に
                 x: 0,
-                y: +self.player.sprite.size.height / 2
+                y: +self.player.size.height / 2
             )
             self.ultraOkButton.xScale = 1 / 18
             self.ultraOkButton.yScale = 1 / 18
@@ -453,7 +453,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if ( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                let playerMaxY = player.position.y + (player.sprite.size.height/2)
+                let playerMaxY = player.position.y + (player.size.height/2)
                 let playerHalfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
                 if( meteorCollisionFlg ){ //衝突する
                     self.player.position.y = meteorMinY - playerHalfSize
@@ -499,7 +499,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                let playerHalfSize = self.player.sprite.size.height / 2
+                let playerHalfSize = self.player.size.height / 2
                 if( self.player.position.y < meteorMinY - playerHalfSize ){
                     meteorCollisionFlg = false
                     if( collisionLine != nil ){
@@ -919,7 +919,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.position.y = self.defaultYPosition
             //着地エフェクト
             let landingEffect = LandingEffect()
-            landingEffect.position.y -= self.player.sprite.size.height / 2
+            landingEffect.position.y -= self.player.size.height / 2
             self.player.addChild(landingEffect)
             switch ( ultraAttackState )
             {
@@ -1070,10 +1070,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: 攻撃
     func attackShapeMake()
     {
-        let attackShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.sprite.size.width/2, y: 0.0 - self.player.sprite.size.height/2, width: self.player.sprite.size.width, height: self.player.sprite.size.height))
+        let attackShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height))
         attackShape.name = attackShapeName
         let physicsBody = SKPhysicsBody(rectangleOf: attackShape.frame.size)
-        attackShape.position = CGPoint(x: 0, y: self.player.sprite.size.height)
+        attackShape.position = CGPoint(x: 0, y: self.player.size.height)
         attackShape.fillColor = UIColor.clear
         attackShape.strokeColor = UIColor.clear
         attackShape.zPosition = 1
@@ -1167,7 +1167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.comboLabel.alpha = 1.0
                 self.comboLabel.position.x = 20
                 //self.comboLabel.position.x += CGFloat(arc4random_uniform(40))
-                self.comboLabel.position.y = self.player.sprite.size.height / 2
+                self.comboLabel.position.y = self.player.size.height / 2
                 let act1_1 = SKAction.moveBy(x: 0, y: +20, duration: 1)
                 let act1_2 = SKAction.fadeOut(withDuration: 1)
                 let act1 = SKAction.group([act1_1,act1_2])
@@ -1264,7 +1264,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: 防御
     func guardShapeMake()
     {
-        let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.sprite.size.width/2, y: 0.0 - self.player.sprite.size.height/2, width: self.player.sprite.size.width, height: self.player.sprite.size.height + 10))
+        let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height + 10))
         guardShape.name = guardShapeName
         let physicsBody = SKPhysicsBody(rectangleOf: guardShape.frame.size)
         guardShape.position = CGPoint(x: 0, y: 0)
@@ -1333,7 +1333,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.playerSpeed = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
                     let meteor = self.meteores.first
                     let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                    let playerHalfSize = self.player.sprite.size.height / 2
+                    let playerHalfSize = self.player.size.height / 2
                     self.player.position.y = meteorMinY - playerHalfSize - 1
                 }
                 self.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる

@@ -11,6 +11,7 @@ import SpriteKit
 class Player: SKNode {
     
     var sprite: SKSpriteNode!
+    var size: CGSize!
     
     override init() {
         super.init()
@@ -32,6 +33,8 @@ class Player: SKNode {
         //シーンから削除して再配置
         sprite.removeFromParent()
         sprite.isPaused = false
+        //スプライトのサイズをbaseのサイズにする
+        self.size = sprite.size
         self.addChild(sprite)
     }
     
