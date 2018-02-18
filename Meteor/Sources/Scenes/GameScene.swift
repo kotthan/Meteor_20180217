@@ -932,6 +932,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playSound(soundName: "tyakuti")
             self.playerSpeed = 0.0
             self.playerBaseNode.position.y = self.defaultYPosition
+            //着地エフェクト
+            let landingEffect = LandingEffect()
+            landingEffect.position.y -= self.player.size.height / 2
+            self.playerBaseNode.addChild(landingEffect)
             switch ( ultraAttackState )
             {
             case .landing:

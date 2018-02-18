@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */; };
+		A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBAE80203926C50025B9DD /* LandingEffect.swift */; };
 		B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFD642037390800F0F90E /* AppDelegate.swift */; };
 		B63CFD702037390800F0F90E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD6E2037390800F0F90E /* Main.storyboard */; };
 		B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD732037390800F0F90E /* LaunchScreen.storyboard */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GillSansStd-ExtraBold.otf"; sourceTree = "<group>"; };
+		A3DBAE80203926C50025B9DD /* LandingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingEffect.swift; sourceTree = "<group>"; };
 		B63CFD612037390800F0F90E /* Meteor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63CFD642037390800F0F90E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B63CFD6F2037390800F0F90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
 				B63CFDF92037E88000F0F90E /* StartLogo.swift */,
 				B63CFDC520373CEF00F0F90E /* GuardPod.swift */,
@@ -505,6 +508,7 @@
 				B63CFDCE20373D2C00F0F90E /* GameOverView.swift in Sources */,
 				B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */,
 				B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */,
+				A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
