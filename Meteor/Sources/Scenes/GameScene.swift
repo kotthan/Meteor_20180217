@@ -91,7 +91,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let centerPosition = CGPoint(x: 187.5, y: 243.733)              //中央位置
     let leftPosition = CGPoint(x: 93.75, y: 243.733)                //左位置
     let rightPosition = CGPoint(x: 281.25, y: 243.733)              //右位置
-    var defaultYPosition : CGFloat = 0.0
     
     //MARK: 隕石・プレイヤー動作プロパティ
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
@@ -237,11 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			self.charYOffset = self.oneScreenSize.height * 0.5
 			scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
 				let player = node as! SKSpriteNode
-                self.player.position = player.position  //プレイヤーのポジションをBaseの位置にして
-                player.position = CGPoint(x:0,y:0)              //baseNodeに追加するplayerの位置は０にする
                 self.player.setSprite(sprite: player)
-                self.defaultYPosition = self.player.position.y
-                print("playerDefault : \(self.defaultYPosition)")
                 //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
                 //アニメーション
                 self.player.stand()
@@ -480,9 +475,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
-            if( self.player.position.y < defaultYPosition )
+            if( self.player.position.y < self.player.defaultYPosition )
             {
-                self.player.position.y = defaultYPosition
+                self.player.position.y = self.player.defaultYPosition
             }
             self.player.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策
         }
@@ -785,14 +780,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b0001 || bitB == 0b0001)
         {
             //print("---Playerと地面が接触しました---")
-            player.jumping = false
-            playSound(soundName: "tyakuti")
-            self.player.velocity = 0.0
-            self.player.position.y = self.defaultYPosition
-            //着地エフェクト
-            let landingEffect = LandingEffect()
-            landingEffect.position.y -= self.player.size.height / 2
-            self.player.addChild(landingEffect)
+            self.player.landing()
             switch ( ultraAttackState )
             {
             case .landing:
