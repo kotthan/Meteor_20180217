@@ -19,10 +19,12 @@ class Player: SKNode {
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
     var jumpVelocity:CGFloat = 9.8 * 150 * 1.2  //プレイヤーのジャンプ時の初速
+    var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
     var moving: Bool = false                                        //移動中フラグ
     let moveSound = SKAction.playSoundFileNamed("move", waitForCompletion: true)
     let jumpSound = SKAction.playSoundFileNamed("jump", waitForCompletion: true)
+    let landingSound = SKAction.playSoundFileNamed("tyakuti", waitForCompletion: true)
     //横位置
     enum PosState: Double {
         case left = 93.75
@@ -37,6 +39,10 @@ class Player: SKNode {
     
     func setSprite(sprite: SKSpriteNode){
         self.sprite = sprite
+        //baseNodeをspriteの位置にする
+        self.position = sprite.position
+        sprite.position = CGPoint(x:0,y:0)
+        self.defaultYPosition = self.position.y
         sprite.name = "player"
         //sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64), center: CGPoint(x: 0, y: 0))
         let texture = SKTexture(imageNamed: "player00")
@@ -65,6 +71,19 @@ class Player: SKNode {
             self.velocity = self.jumpVelocity
             self.run(self.jumpSound)
         }
+    }
+    
+    //着地
+    func landing(){
+        self.jumping = false
+        self.velocity = 0.0
+        self.position.y = self.defaultYPosition
+        //SE
+        self.run(landingSound)
+        //着地エフェクト
+        let landingEffect = LandingEffect()
+        landingEffect.position.y -= self.size.height / 2
+        self.addChild(landingEffect)
     }
     
     //立ちアニメ
