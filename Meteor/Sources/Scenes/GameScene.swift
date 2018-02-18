@@ -1222,6 +1222,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.gameoverFlg = true
             self.meteorTimer?.invalidate()
             pauseButton.isHidden = true//ポーズボタンを非表示にする
+            hudView.scoreLabel.isHidden = true
+            hudView.highScoreLabel.isHidden = true
             //ハイスコア更新
             print("------------score:\(self.score) high:\(self.highScore)------------")
             if( self.score > self.highScore ){
@@ -1248,8 +1250,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         self.meteorBase.isHidden = true
                         },
                       ]),
-                  SKAction.fadeOut(withDuration: 1),
-                  SKAction.removeFromParent(),
+                  //SKAction.fadeOut(withDuration: 1),
+                  //SKAction.removeFromParent(),
                   SKAction.run{self.isPaused = true},
                   SKAction.run(gameOverViewCreate)])
             circle.run(actions)
