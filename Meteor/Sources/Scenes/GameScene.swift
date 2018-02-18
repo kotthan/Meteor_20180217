@@ -44,7 +44,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
     var score = 0                                                   //スコア
-    let comboLabel = SKLabelNode()                                  //スコア表示ラベル
     var combo = 0                                                   //スコア
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
     var highScore = 0                                               //ハイスコア
@@ -244,17 +243,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if( debug ){ //デバッグ用
                 //addBodyFrame(node: player)  //枠表示
             }
-            //===================
-            //MARK: コンボ
-            //===================
-            self.comboLabel.text = String( self.combo )         //スコアを表示する
-            self.comboLabel.position = CGPoint(                 //表示位置をplayerのサイズ分右上に
-                x: self.player.size.width/2,
-                y: self.player.size.height/2 - 50
-            )
-            self.comboLabel.fontName = "GillSansStd-ExtraBold"
-            self.comboLabel.isHidden = true
-            self.player.addChild(self.comboLabel)               //playerにaddchiledすることでplayerに追従させる
             //===================
             //MARK: 必殺技ボタン
             //===================
@@ -1019,21 +1007,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.hudView.drawScore( score: self.score )
                 //コンボ
                 self.combo += 1;
-                self.comboLabel.text = String( self.combo ) + "COMBO!"
-                self.comboLabel.removeAllActions()
-                self.comboLabel.isHidden = false
-                self.comboLabel.alpha = 1.0
-                self.comboLabel.position.x = 100
-                self.comboLabel.zPosition = 10
-                //self.comboLabel.position.x += CGFloat(arc4random_uniform(40))
-                self.comboLabel.position.y = self.player.size.height / 2
-                let act1_1 = SKAction.moveBy(x: 0, y: +20, duration: 1)
-                let act1_2 = SKAction.fadeOut(withDuration: 1)
-                let act1 = SKAction.group([act1_1,act1_2])
-                let act2 = SKAction.run{
-                    self.comboLabel.isHidden = true
-                }
-                self.comboLabel.run(SKAction.sequence([act1,act2]))
+                let comboLabel = ComboLabel(self.combo)
+                comboLabel.position.x = 100
+                comboLabel.position.y = self.player.size.height/2
+                self.player.addChild(comboLabel)
                 //必殺技
                 if( ultraAttackState == .none )
                 {
@@ -1195,7 +1172,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 self.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
                 self.combo = 0
-                self.comboLabel.text = String( self.combo ) + "COMBO!"
             }
         }
         else
