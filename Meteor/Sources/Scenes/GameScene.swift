@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: - 基本構成
     //MARK: ノード
     let baseNode = SKNode()                                         //ゲームベースノード
-    let playerBaseNode = SKNode()                                   //プレイヤーベース
+    let playerBaseNode = Player()                                   //プレイヤーベース
     let backScrNode = SKNode()                                      //背景ノード
     let titleLogo = SKSpriteNode()                                  //タイトルロゴノード
     var player: SKSpriteNode!                                       //プレイヤーノード
