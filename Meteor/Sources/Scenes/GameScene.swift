@@ -64,7 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: フラグ
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var attackFlg : Bool = false                                    //攻撃フラグ
-    var moving: Bool = false                                        //移動中フラグ
     var centerPosFlg: Bool = true                                   //中央位置フラグ
     var leftPosFlg: Bool = false                                    //左位置フラグ
     var rightPosFlg: Bool = false                                   //右位置フラグ
@@ -770,7 +769,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.centerPosFlg = false
             self.leftPosFlg = false
             self.rightPosFlg = true
-            self.moving = true
+            self.player.moving = true
             self.player.attack()
             player.run(moveR)
             playSound(soundName: "move")
@@ -787,7 +786,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.centerPosFlg = true
             self.leftPosFlg = false
             self.rightPosFlg = false
-            self.moving = true
+            self.player.moving = true
             self.player.attack()
             player.run(moveC)
             playSound(soundName: "move")
@@ -855,7 +854,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: - 停止
     func moveStop() {
-        moving = false
+        player.moving = false
         if player.jumping == false {
             self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
@@ -865,7 +864,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - ジャンプ
     func jumpingAction() {
         if player.jumping == false {
-            moving = false
+            player.moving = false
             player.jumping = true
             player.velocity = pleyerJumpSpeed
             playSound(soundName: "jump")
@@ -1227,7 +1226,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.player.addChild(attackShape)
         //print("add ultra attackShape")
         //大ジャンプ
-        moving = false
+        player.moving = false
         player.jumping = true
         player.velocity = self.playerUltraAttackSpped
         //サウンド
