@@ -1480,12 +1480,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
-    //停止
-    func stopTextureAnimation(_ node: SKSpriteNode, name: String) {
-        node.removeAction(forKey: "textureAnimation")
-        node.texture = SKTexture(imageNamed: name)
-    }
-    
     func attackTextureAnimation(_ node: SKSpriteNode, names: [String]) {
         node.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
