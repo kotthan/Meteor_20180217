@@ -40,7 +40,7 @@ class Player: SKNode {
     }
     
     //立ちアニメ
-    func startStandTextureAnimation(names: [String]) {
+    func standAnimation(names: [String]) {
         sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
         for name in names {
@@ -50,7 +50,7 @@ class Player: SKNode {
         sprite.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
-    func attackTextureAnimation(names: [String]) {
+    func attackAnimation(names: [String]) {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
         for name in names {
@@ -60,7 +60,7 @@ class Player: SKNode {
         self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
-    func guardTextureAnimation(names: [String]) {
+    func guardAnimation(names: [String]) {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
         for name in names {

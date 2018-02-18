@@ -252,7 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
                 //アニメーション
                 let names = ["stand01","stand02"]
-                self.player.startStandTextureAnimation(names: names)
+                self.player.standAnimation(names: names)
             })
             if( debug ){ //デバッグ用
                 //addBodyFrame(node: player)  //枠表示
@@ -777,7 +777,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightPosFlg = true
             self.moving = true
             let names = ["attack01","attack02","player00"]
-            self.player.attackTextureAnimation(names: names)
+            self.player.attackAnimation(names: names)
             player.run(moveR)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -795,7 +795,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightPosFlg = false
             self.moving = true
             let names = ["attack01","attack02","player00"]
-            self.player.attackTextureAnimation(names: names)
+            self.player.attackAnimation(names: names)
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -824,7 +824,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = true
             self.rightPosFlg = false
             let names = ["attack01","attack02","player00"]
-            self.player.attackTextureAnimation(names: names)
+            self.player.attackAnimation(names: names)
             player.run(moveL)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -841,7 +841,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.leftPosFlg = false
             self.rightPosFlg = false
             let names = ["attack01","attack02","player00"]
-            self.player.attackTextureAnimation(names: names)
+            self.player.attackAnimation(names: names)
             player.run(moveC)
             playSound(soundName: "move")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1)
@@ -869,7 +869,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
         let names = ["stand01","stand02"]
-        self.player.startStandTextureAnimation(names: names)
+        self.player.standAnimation(names: names)
     }
     
     //MARK: - ジャンプ
@@ -937,7 +937,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if attackFlg == false{
                 let names = ["stand01","stand02"]
-                self.player.startStandTextureAnimation(names: names)
+                self.player.standAnimation(names: names)
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -1098,7 +1098,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---アタックフラグをON---")
             self.attackFlg = true
             let names = ["attack01","attack02","player00"]
-            self.player.attackTextureAnimation(names: names)
+            self.player.attackAnimation(names: names)
             playSound(soundName: "slash")
             if player.childNode(withName: attackShapeName) == nil {
                 self.player.addChild(attackShape)
@@ -1293,7 +1293,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             //アニメーション
             let names = ["guard01"]
-            self.player.guardTextureAnimation(names: names)
+            self.player.guardAnimation(names: names)
         case .guarding: //ガード中
             break
         case .disable:  //ガード不可
@@ -1308,7 +1308,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.guardPod.guardStatus = .enable
             //アニメーション
             let names = ["player00"]
-            self.player.guardTextureAnimation(names: names)
+            self.player.guardAnimation(names: names)
         }
     }
 
