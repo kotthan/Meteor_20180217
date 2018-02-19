@@ -48,7 +48,7 @@
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
-		B6DE6286203B15E100A1B13F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* File.swift */; };
+		B6DE6286203B15E100A1B13F /* GameOverView_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* GameOverView_0.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +72,7 @@
 		A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GillSansStd-ExtraBold.otf"; sourceTree = "<group>"; };
 		A3DBAE80203926C50025B9DD /* LandingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingEffect.swift; sourceTree = "<group>"; };
 		A3DBAE82203946960025B9DD /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComboLabel.swift; path = Meteor/Sources/Nodes/ComboLabel.swift; sourceTree = "<group>"; };
+		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboLabel.swift; sourceTree = "<group>"; };
 		B63CFD612037390800F0F90E /* Meteor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63CFD642037390800F0F90E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B63CFD6F2037390800F0F90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
-		B6DE6285203B15E100A1B13F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		B6DE6285203B15E100A1B13F /* GameOverView_0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView_0.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +147,6 @@
 		B63CFD582037390800F0F90E = {
 			isa = PBXGroup;
 			children = (
-				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				B63CFD632037390800F0F90E /* Meteor */,
 				B63CFD7E2037390800F0F90E /* MeteorTests */,
 				B63CFD892037390800F0F90E /* MeteorUITests */,
@@ -239,7 +238,7 @@
 				B63CFDC920373D2C00F0F90E /* GameOverView.swift */,
 				B63CFDC720373CF800F0F90E /* HUDView.swift */,
 				B63CFDCB20373D2C00F0F90E /* PauseView.swift */,
-				B6DE6285203B15E100A1B13F /* File.swift */,
+				B6DE6285203B15E100A1B13F /* GameOverView_0.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -315,6 +314,7 @@
 		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
@@ -510,7 +510,7 @@
 				B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */,
 				A3DBAE852039CA1C0025B9DD /* ComboLabel.swift in Sources */,
 				B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */,
-				B6DE6286203B15E100A1B13F /* File.swift in Sources */,
+				B6DE6286203B15E100A1B13F /* GameOverView_0.swift in Sources */,
 				A3DBAE83203946960025B9DD /* Player.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
