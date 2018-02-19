@@ -48,6 +48,7 @@
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
+		B6DE6286203B15E100A1B13F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
+		B6DE6285203B15E100A1B13F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				B63CFDC920373D2C00F0F90E /* GameOverView.swift */,
 				B63CFDC720373CF800F0F90E /* HUDView.swift */,
 				B63CFDCB20373D2C00F0F90E /* PauseView.swift */,
+				B6DE6285203B15E100A1B13F /* File.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */,
 				A3DBAE852039CA1C0025B9DD /* ComboLabel.swift in Sources */,
 				B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */,
+				B6DE6286203B15E100A1B13F /* File.swift in Sources */,
 				A3DBAE83203946960025B9DD /* Player.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
