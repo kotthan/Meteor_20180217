@@ -370,6 +370,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         //MARK: ゲームオーバー画面
         //===================
+        gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
         gameOverView.isHidden = true
         self.camera?.addChild(gameOverView)
         //===================
