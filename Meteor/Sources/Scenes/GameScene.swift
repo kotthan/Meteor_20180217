@@ -1201,13 +1201,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //墜落演出
             let circle = SKShapeNode(circleOfRadius:1)
             circle.position.x = self.meteores[0].position.x
-            circle.position.y = self.meteores[0].position.y - self.meteors[0].size.height / 2
+            circle.position.y = self.meteores[0].position.y - self.meteores[0].size.height / 2
             circle.zPosition = 1500.0
             circle.fillColor = UIColor.white
             self.addChild(circle)
             let actions = SKAction.sequence(
-                [ SKAction.scale(to: 1000, duration: 1.0),
-                  SKAction.wait(forDuration: 0.5),
+                [ SKAction.scale(to: 2000, duration: 2.0),
+                  //SKAction.wait(forDuration: 0.5),
                   SKAction.group(
                     [ SKAction.wait(forDuration: 0.2),
                       SKAction.run{
