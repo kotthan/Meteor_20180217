@@ -56,6 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	let oneScreenSize = CGSize(width: 375, height: 667)             //１画面サイズ
     static let ScreenSize = CGSize(width: 375, height: 667) //テスト
     var pauseView: PauseView!                                       //ポーズ画面
+    var gameOverView_0: GameOverView_0!
     var hudView = HUDView()                                         //HUD
     
     //MARK: タイマー
@@ -366,6 +367,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.hudView = HUDView(frame: self.frame)
         self.view!.addSubview(hudView)
         hudView.highScoreLabel.text = "BEST " + String(self.highScore)
+        //===================
+        //MARK: ゲームオーバー画面
+        //===================
+        gameOverView_0 = GameOverView_0(frame: self.frame, score:self.score, highScore:self.highScore)
+        gameOverView_0.isHidden = false
+        self.camera?.addChild(gameOverView_0)
         //===================
         //MARK: ポーズ画面
         //===================
