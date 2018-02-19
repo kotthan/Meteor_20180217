@@ -1200,7 +1200,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             stop()
             //墜落演出
             let circle = SKShapeNode(circleOfRadius:1)
-            circle.position = player.position
+            circle.position.x = self.meteores[0].position.x
+            circle.position.y = self.meteores[0].position.y - self.meteors[0].size.height / 2
             circle.zPosition = 1500.0
             circle.fillColor = UIColor.white
             self.addChild(circle)
