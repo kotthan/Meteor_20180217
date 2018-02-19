@@ -26,6 +26,13 @@ class PauseView: SKNode {
         //枠線の太さ
         background.lineWidth = 0
         self.addChild(background)
+        //ポーズの文字
+        let pauseLabel = SKLabelNode(fontNamed: "GillSansStd-ExtraBold")
+        pauseLabel.position.x = background.frame.size.width / 2
+        pauseLabel.position.y = background.frame.size.height * 0.65
+        pauseLabel.fontSize = 60
+        pauseLabel.text = "Pause"
+        background.addChild(pauseLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
