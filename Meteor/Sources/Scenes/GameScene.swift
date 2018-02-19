@@ -56,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	let oneScreenSize = CGSize(width: 375, height: 667)             //１画面サイズ
     static let ScreenSize = CGSize(width: 375, height: 667) //テスト
     var pauseView: PauseView!                                       //ポーズ画面
-    var gameOverView_0: GameOverView_0!
+    var gameOverView: GameOverView!
     var hudView = HUDView()                                         //HUD
     
     //MARK: タイマー
@@ -370,9 +370,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         //MARK: ゲームオーバー画面
         //===================
-        gameOverView_0 = GameOverView_0(frame: self.frame, score:self.score, highScore:self.highScore)
-        gameOverView_0.isHidden = false
-        self.camera?.addChild(gameOverView_0)
+        gameOverView.isHidden = true
+        self.camera?.addChild(gameOverView)
         //===================
         //MARK: ポーズ画面
         //===================
@@ -1287,30 +1286,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                   //SKAction.fadeOut(withDuration: 1),
                   //SKAction.removeFromParent(),
                   SKAction.run{self.isPaused = true},
-                  SKAction.run(gameOverViewCreate)])
+                  SKAction.run{self.gameOverView.isHidden = false},
+                  //SKAction.run(gameOverViewCreate)])
+                ])
             circle.run(actions)
         }
-    }
-    
-    var gameOverView: GameOverView!
-    func gameOverViewCreate(){
-        
-        //ゲームオーバー画面
-        gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
-        var buttonX:CGFloat = 10    //左端の余白
-        var buttonY = gameOverView.frame.size.height - 10    //下端の余白
-        //Titleボタン
-        let newGameBtn = IconButton(image:"home", color:UIColor(red: 0.1, green: 0.8, blue: 0.6, alpha: 1))
-        newGameBtn.layer.position = CGPoint(x: buttonX, y: buttonY )
-        newGameBtn.addTarget(self, action: #selector(self.newGameButtonAction), for: .touchUpInside)
-        gameOverView.addSubview(newGameBtn)
-        buttonX += newGameBtn.frame.size.width + 10
-        //Retryボタン
-        let retryBtn = IconButton(image: "restart", color: UIColor(red: 0.2, green: 0.6, blue: 0.8, alpha: 1))
-        retryBtn.layer.position = CGPoint(x: buttonX, y: buttonY)
-        retryBtn.addTarget(self, action: #selector(self.retryButtonAction), for: .touchUpInside)
-        gameOverView.addSubview(retryBtn)
-        self.view!.addSubview(gameOverView)
     }
 
     @objc func newGameButtonAction(_ sender: UIButton ){
