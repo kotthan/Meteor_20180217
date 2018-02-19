@@ -352,7 +352,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         pauseView = PauseView(frame: self.frame)
         pauseView.isHidden = true
-        self.view!.addSubview(pauseView)
+        self.camera?.addChild(pauseView)
         //　ポーズボタン
         pauseButton = PauseButton()
         pauseButton.layer.anchorPoint = CGPoint(x: 1, y: 0)//右上
