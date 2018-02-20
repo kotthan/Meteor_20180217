@@ -41,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShapeName: String = "guardShape"
     var guardPod: GuardPod!
     var start0Node: SKSpriteNode!
+    var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
     var score = 0                                                   //スコア
@@ -296,6 +297,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.start0Node.zPosition = 50
         self.baseNode.addChild(self.start0Node)
         scaleLoopAction(start0Node)                             //ふわふわアニメ実行
+        
+        //===================
+        //MARK: credit表示ボタン
+        //===================
+        self.creditButton.fontName = "GillSansStd-ExtraBold"
+        self.creditButton.fontSize = 30
+        self.creditButton.text = "Credits"
+        //右下に配置
+        self.creditButton.position.x = self.frame.size.width / 2
+        self.creditButton.position.y += 720 //適当
+        self.creditButton.zPosition = 50
+        self.baseNode.addChild(self.creditButton)
         
         //===================
         //MARK: cloud
@@ -870,9 +883,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.camera?.run(actionAll)
             }
             self.start0Node.run(SKAction.sequence([action1,action2]))
+            self.creditButton.run(SKAction.sequence([action1,SKAction.removeFromParent()]))
         }
         else{
             self.start0Node.isHidden = true
+            self.creditButton.isHidden = true
             gameFlg = true
             //pod回復スタート
             self.guardPod.startRecover()
