@@ -11,13 +11,13 @@ import SpriteKit
 class ComboLabel: SKNode {
     init(_ combo:Int) {
         super.init()
-        let value = SKLabelNode("GillSansStd-ExtraBold")
+        let value = SKLabelNode(fontNamed: "GillSansStd-ExtraBold")
         value.text = String(combo)
-        velue.fontSize = 50
-        let combo = SKLabelNode("GillSansStd-ExtraBold")
+        value.fontSize = 50
+        let combo = SKLabelNode(fontNamed: "GillSansStd-ExtraBold")
         combo.text = "COMBO!"
         combo.fontSize = 20
-        valur.position.y += combo.fontSize
+        value.position.y += combo.fontSize
         self.addChild(value)
         self.addChild(combo)
         //アクション
