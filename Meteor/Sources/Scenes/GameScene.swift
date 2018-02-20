@@ -303,10 +303,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.creditButton.fontName = "GillSansStd-ExtraBold"
         self.creditButton.fontSize = 30
         self.creditButton.text = "Credits"
-        //右下に配置
         self.creditButton.position.x = self.frame.size.width / 2
         self.creditButton.position.y += 720 //適当
         self.creditButton.zPosition = 50
+        //タッチ判定用SpriteNode
+        let creditButtonNode = SKSpriteNode(color: UIColor.clear, size: creditButton.frame.size)
+        creditButtonNode.position.y += creditButton.frame.size.height / 2
+        creditButtonNode.xScale = 1.2
+        creditButtonNode.yScale = 1.5
+        creditButtonNode.name = "credit"
+        creditButton.addChild(creditButtonNode)
         self.baseNode.addChild(self.creditButton)
         
         //===================
@@ -551,8 +557,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 touchPath.removeFromParent()
             }
             //タッチしたノードを記録しておく
-            //print("---タップをしたノード=\(String(describing: touchNode?.name))---")
             touchNode = self.atPoint(beganPos) as? SKSpriteNode
+            print("---タップをしたノード=\(String(describing: touchNode?.name))---")
+            if( touchNode?.name == "credit"  ){
+                let scale = SKAction.scale(to: 1.5, duration: 0.05)
+                let routate1 = SKAction.rotate(byAngle: CGFloat(10.0 / 180.0 * Double.pi), duration: 0.05)
+                let routate2 = SKAction.rotate(byAngle: CGFloat(-20.0 / 180.0 * Double.pi), duration: 0.05)
+                let routate3 = SKAction.rotate(byAngle: CGFloat(20.0 / 180.0 * Double.pi), duration: 0.05)
+                let routate4 = SKAction.rotate(byAngle: CGFloat(-10.0 / 180.0 * Double.pi), duration: 0.05)
+                self.creditButton.run( SKAction.sequence([scale,routate1,routate2,routate3,routate4]) )
+            }
         }
     }
 
@@ -586,6 +600,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break   //何もしない
             case .swipeRight://ジャンプしてない場合のみ
                 break   //何もしない
+            }
+            if( self.touchNode?.name == "credit" ){
+                if let node = self.atPoint(touch.location(in: self)) as? SKSpriteNode {
+                    if self.touchNode != node {
+                        self.creditButton.run( SKAction.scale(to: 1, duration: 0.05) )
+                        self.touchNode = nil
+                    }
+                }
             }
             /*
             let endedPos = touch.location(in: self)                          //タップを話した点を定義
