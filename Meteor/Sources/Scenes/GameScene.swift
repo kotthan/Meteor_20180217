@@ -683,6 +683,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     startButtonAction()
                 case let node where node == ultraOkButton :
                     ultraAttack()
+                case let node where node == creditButton.childNode(withName: "credit"):
+                    creditAction()
                 default:
                     buttonPushFlg = false
                 }
@@ -915,6 +917,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         back_wall.run(action1)
          */
         //playBgm(soundName: "bgmn")
+    }
+    
+    func creditAction(){
+        let credits = Credits()
+        credits.position.x = self.frame.size.width / 2
+        //credits.position.y =
+        self.addChild(credits)
+        self.meteorTimer?.invalidate()//タイマー止める
+        play()
+        let action1 = SKAction.fadeOut(withDuration: 1.0)
+        let action2 = SKAction.run{
+            let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 10)
+            let action2 = SKAction.run {
+                self.start0Node.isHidden = true
+                self.gameFlg = true
+                //pod回復スタート
+                self.guardPod.startRecover()
+            }
+            let actionAll = SKAction.sequence([action1,action2])
+            self.camera?.run(actionAll)
+        }
+        self.start0Node.run(SKAction.sequence([action1,action2]))
+        self.creditButton.run(SKAction.sequence([action1,SKAction.removeFromParent()]))
     }
     
     @objc func fallMeteor()
