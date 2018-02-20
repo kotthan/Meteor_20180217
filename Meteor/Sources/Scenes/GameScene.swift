@@ -41,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShapeName: String = "guardShape"
     var guardPod: GuardPod!
     var start0Node: SKSpriteNode!
+    var creditButton: SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
     var score = 0                                                   //スコア
@@ -295,6 +296,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.start0Node.zPosition = 50
         self.baseNode.addChild(self.start0Node)
         scaleLoopAction(start0Node)                             //ふわふわアニメ実行
+        
+        //===================
+        //MARK: credit表示ボタン
+        //===================
+        self.creditButton.font = UIFont(name: "GillSansStd-ExtraBold", size: 30)
+        self.creditButton.text = "Credits"
+        //右下に配置
+        self.creditButton.position.x -= self.creditButton.frame.size.width
+        self.creditButton.position.x += self.frame.size.width - 10
+        self.creditButton.position.x -= self.creditButton.frame.size.width
+        self.creditButton.position.y += 50 //適当な余白 
+        self.creditButton.zPosition = 50
+        self.baseNode.addChild(self.creditButton)
         
         //===================
         //MARK: cloud
