@@ -8,11 +8,18 @@
 
 import SpriteKit
 
-class ComboLabel: SKLabelNode {
+class ComboLabel: SKNode {
     init(_ combo:Int) {
         super.init()
-        self.text = String(combo) + "COMBO!"
-        self.fontName = "GillSansStd-ExtraBold"
+        let value = SKLabelNode("GillSansStd-ExtraBold")
+        value.text = String(combo)
+        velue.fontSize = 50
+        let combo = SKLabelNode("GillSansStd-ExtraBold")
+        combo.text = "COMBO!"
+        combo.fontSize = 20
+        valur.position.y += combo.fontSize
+        self.addChild(value)
+        self.addChild(combo)
         //アクション
         self.zPosition = 10
         let move = SKAction.moveBy(x: 0, y: +60, duration: 1)
