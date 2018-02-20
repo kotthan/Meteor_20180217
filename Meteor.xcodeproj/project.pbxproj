@@ -72,11 +72,16 @@
 		A3DBAE80203926C50025B9DD /* LandingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingEffect.swift; sourceTree = "<group>"; };
 		A3DBAE82203946960025B9DD /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboLabel.swift; sourceTree = "<group>"; };
 
 =======
 		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComboLabel.swift; path = Meteor/Sources/Nodes/ComboLabel.swift; sourceTree = "<group>"; };
 >>>>>>> parent of 1cd2e6c... クレジットクラス追加
+=======
+		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComboLabel.swift; path = Meteor/Sources/Nodes/ComboLabel.swift; sourceTree = "<group>"; };
+		A3DBAE86203B1CB50025B9DD /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
+>>>>>>> parent of eaae793... ComboLabel微調整
 		B63CFD612037390800F0F90E /* Meteor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63CFD642037390800F0F90E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B63CFD6F2037390800F0F90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -150,6 +155,7 @@
 		B63CFD582037390800F0F90E = {
 			isa = PBXGroup;
 			children = (
+				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				B63CFD632037390800F0F90E /* Meteor */,
 				B63CFD7E2037390800F0F90E /* MeteorTests */,
 				B63CFD892037390800F0F90E /* MeteorUITests */,
@@ -316,7 +322,6 @@
 		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,

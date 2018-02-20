@@ -17,7 +17,6 @@ class ComboLabel: SKNode {
         let combo = SKLabelNode(fontNamed: "GillSansStd-ExtraBold")
         combo.text = "COMBO!"
         combo.fontSize = 20
-        combo.xScale = 0.8
         value.position.y += combo.fontSize
         self.addChild(value)
         self.addChild(combo)
