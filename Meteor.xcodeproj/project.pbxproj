@@ -73,10 +73,7 @@
 		A3DBAE82203946960025B9DD /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 <<<<<<< HEAD
 		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboLabel.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		A3DBAE86203B1CB50025B9DD /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
->>>>>>> master
+
 =======
 		A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComboLabel.swift; path = Meteor/Sources/Nodes/ComboLabel.swift; sourceTree = "<group>"; };
 >>>>>>> parent of 1cd2e6c... クレジットクラス追加
