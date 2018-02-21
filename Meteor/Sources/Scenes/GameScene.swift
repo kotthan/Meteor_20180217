@@ -27,10 +27,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: - 基本構成
     //MARK: ノード
     let baseNode = SKNode()                                         //ゲームベースノード
-    let player = Player()                                   //プレイヤーベース
+    let player = Player()                                           //プレイヤーベース
     let backScrNode = SKNode()                                      //背景ノード
     let titleLogo = SKSpriteNode()                                  //タイトルロゴノード
-    //var player: SKSpriteNode!                                       //プレイヤーノード
+    //var player: SKSpriteNode!                                     //プレイヤーノード
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
     var ground: SKSpriteNode!                                       //地面
@@ -41,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShapeName: String = "guardShape"
     var guardPod: GuardPod!
     var start0Node: SKSpriteNode!
+    var homeButton: SKSpriteNode!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -692,6 +693,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
+                case let node where node == homeButton :
+                    newGame()
                 default:
                     buttonPushFlg = false
                 }

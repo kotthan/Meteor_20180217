@@ -18,8 +18,8 @@ class GameOverView: SKNode {
         let background = SKSpriteNode(imageNamed: "gameOverPanel")
         background.name = "backgound"
         background.zPosition = 1000
-        background.xScale = 1/2
-        background.yScale = 1/2
+        background.xScale = 1/2.3
+        background.yScale = 1/2.3
         self.addChild(background)
         //スコアラベル
         let scoreLabel = SKLabelNode()
@@ -43,10 +43,12 @@ class GameOverView: SKNode {
         self.addChild(highScoreLabel)
         //ホームボタン
         let homeButton = SKSpriteNode(imageNamed: "home")
-        homeButton.name = "homeButton"
+        homeButton.name = "HomeButton"
         homeButton.size.width = 75.0
         homeButton.size.height = 75.0
         homeButton.zPosition = 1010
+        homeButton.position.x = 0 - background.size.width/2
+        homeButton.position.y = 0 + background.size.height/2
         homeButton.xScale = 1
         homeButton.yScale = 1
         self.addChild(homeButton)
