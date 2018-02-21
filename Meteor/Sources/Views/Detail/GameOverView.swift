@@ -42,16 +42,27 @@ class GameOverView: SKNode {
         highScoreLabel.position.y = self.frame.size.height/4 + scoreLabel.frame.size.height + 20
         self.addChild(highScoreLabel)
         //ホームボタン
-        let homeButton = SKSpriteNode(imageNamed: "home")
-        homeButton.name = "HomeButton"
-        homeButton.size.width = 75.0
-        homeButton.size.height = 75.0
-        homeButton.zPosition = 1010
-        homeButton.position.x = 0 - background.size.width/2
-        homeButton.position.y = 0 + background.size.height/2
-        homeButton.xScale = 1
-        homeButton.yScale = 1
-        self.addChild(homeButton)
+        let HomeButton = SKSpriteNode(imageNamed: "home")
+        HomeButton.name = "HomeButton"
+        HomeButton.size.width = 75.0
+        HomeButton.size.height = 75.0
+        HomeButton.zPosition = 1010
+        HomeButton.position.x = 0 - background.size.width/2
+        HomeButton.position.y = 0 + background.size.height/2
+        HomeButton.xScale = 1
+        HomeButton.yScale = 1
+        self.addChild(HomeButton)
+        //リスタートボタン
+        let ReStartButton = SKSpriteNode(imageNamed: "restart")
+        ReStartButton.name = "ReStartButton"
+        ReStartButton.size.width = 75.0
+        ReStartButton.size.height = 75.0
+        ReStartButton.zPosition = 1010
+        ReStartButton.position.x = 0 - background.size.width/3
+        ReStartButton.position.y = 0 - background.size.height/3
+        ReStartButton.xScale = 1
+        ReStartButton.yScale = 1
+        self.addChild(ReStartButton)
     }
     
 
