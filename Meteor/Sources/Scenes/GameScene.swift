@@ -690,7 +690,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let endPos = touch.location(in: self)
             //ボタンタップ判定
             let node:SKSpriteNode? = self.atPoint(endPos) as? SKSpriteNode;
-            if( node == touchNode ) { // タッチ開始時と同じノードで離した
+            if( touchNode != nil ) && ( node == touchNode ) { // タッチ開始時と同じノードで離した
                 //print("---タップを離したノード=\(String(describing: node?.name))---")
                 var buttonPushFlg = true
                 switch node{ //押したボタン別処理
