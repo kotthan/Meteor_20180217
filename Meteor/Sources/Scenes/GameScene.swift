@@ -1258,6 +1258,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             guardPod.subCount()
             //ガードシェイプ削除
             guardNode.removeFromParent()
+            self.player.guardEnd()
             for i in meteores
             {
                 i.removeAllActions()
