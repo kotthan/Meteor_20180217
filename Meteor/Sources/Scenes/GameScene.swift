@@ -1313,7 +1313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.presentScene(scene)
     }
     
-    func newGame()
+    @objc func newGame()
     {
         let scene = GameScene(size: self.scene!.size)
         scene.scaleMode = SKSceneScaleMode.aspectFill

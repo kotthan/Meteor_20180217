@@ -65,28 +65,6 @@ class GameOverView: SKNode {
         self.addChild(ReStartButton)
     }
     
-
-    /*
-    func gameOverViewCreate(){
-     //ゲームオーバー画面
-     gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
-        var buttonX:CGFloat = 10    //左端の余白
-        var buttonY = gameOverView.frame.size.height - 10    //下端の余白
-        //Titleボタン
-        let newGameBtn = IconButton(image:"home", color:UIColor(red: 0.1, green: 0.8, blue: 0.6, alpha: 1))
-        newGameBtn.layer.position = CGPoint(x: buttonX, y: buttonY )
-        newGameBtn.addTarget(self, action: #selector(self.newGameButtonAction), for: .touchUpInside)
-        gameOverView.addSubview(newGameBtn)
-        buttonX += newGameBtn.frame.size.width + 10
-        //Retryボタン
-        let retryBtn = IconButton(image: "restart", color: UIColor(red: 0.2, green: 0.6, blue: 0.8, alpha: 1))
-        retryBtn.layer.position = CGPoint(x: buttonX, y: buttonY)
-        retryBtn.addTarget(self, action: #selector(self.retryButtonAction), for: .touchUpInside)
-        gameOverView.addSubview(retryBtn)
-        self.view!.addSubview(gameOverView)
-    }
- */
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
