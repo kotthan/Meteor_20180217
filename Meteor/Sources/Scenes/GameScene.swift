@@ -70,6 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var buildFlg:Bool = true
     var gameFlg:Bool = false
     var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
+    var creditFlg = false
     var meteorCollisionFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
     enum UAState{ //必殺技の状態
@@ -139,18 +140,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: シーンが表示されたときに呼ばれる関数
 	override func didMove(to view: SKView)
     {
-        //MARK: カメラ
-        let camera = SKCameraNode()
-        self.addChild(camera)
-        self.camera = camera
-        print("camera : \(self.camera!.position)")
-        /*
-        //画面上で動かさないものはcamaraにaddChiledすればよさそう
-        let lbl = SKLabelNode.init()
-        lbl.text = "UI"
-        self.camera?.addChild(lbl)
-         */
-        
         //MARK: 設定関係
         self.backgroundColor = SKColor.clear                           //背景色
         self.physicsWorld.contactDelegate = self                       //接触デリゲート
@@ -161,9 +150,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(self.player)                 //プレイヤーベース追加
         self.addChild(self.backScrNode)                             //背景追加
  
-        //MARK: ゲーム進行関係
-        self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
-        
         //MARK: 音楽
         let soundFilePath: String = Bundle.main.path(forResource: "shining_star", ofType: "mp3")!
         let fileURL: URL = URL(fileURLWithPath: soundFilePath)
@@ -299,6 +285,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.start0Node.zPosition = 50
         self.baseNode.addChild(self.start0Node)
         scaleLoopAction(start0Node)                             //ふわふわアニメ実行
+        
+        //MARK: カメラ
+        let camera = SKCameraNode()
+        camera.position = CGPoint(x: self.oneScreenSize.width/2,y: start0Node.position.y)
+        self.addChild(camera)
+        self.camera = camera
         
         //===================
         //MARK: credit表示ボタン
@@ -520,13 +512,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (gameFlg == false)
         {
-            self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.start0Node.position.y)
+            //始めはmoveで動かすので初期値だけ設定しておき、ここでは動かさない
+            //self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.start0Node.position.y)
         }
         else if (player.jumping == true) && (self.player.position.y + 200 > self.oneScreenSize.height/2)
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
                 self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.player.position.y + 200 );
+                if ( self.creditFlg == true ) && ( self.ultraAttackState == .attacking ) &&
+                    ( self.player.velocity < 0 ){
+                    self.start0Node.isHidden = false
+                    self.start0Node.alpha = 1.0
+                    self.childNode(withName: "credits")?.removeFromParent()
+                    self.creditButton.isHidden = false
+                    self.creditButton.alpha = 1.0
+                    if( self.camera!.position.y < start0Node.position.y ){
+                        self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: start0Node.position.y)
+                        self.gameFlg = false
+                        self.creditFlg = false
+                    }
+                }
             }
         }
         else
@@ -691,6 +697,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 case let node where node == start0Node :
                     startButtonAction()
                 case let node where node == ultraOkButton :
+                    if self.creditButton.childNode(withName: "credit") != nil {
+                        gameFlg = true
+                    }
                     ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
@@ -897,6 +906,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func startButtonAction()
     {
+        //MARK: ゲーム進行関係
+        self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
         play()
         hudView.scoreLabel.isHidden = false
         hudView.highScoreLabel.isHidden = false
@@ -943,25 +954,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func creditAction(){
         let credits = Credits()
+        credits.name = "credits"
         credits.position.x = self.frame.size.width / 2
         //credits.position.y =
         self.addChild(credits)
-        self.meteorTimer?.invalidate()//タイマー止める
+        self.creditFlg = true
         play()
+        self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
             let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 10)
             let action2 = SKAction.run {
                 self.start0Node.isHidden = true
-                self.gameFlg = true
-                //pod回復スタート
-                self.guardPod.startRecover()
             }
             let actionAll = SKAction.sequence([action1,action2])
             self.camera?.run(actionAll)
         }
         self.start0Node.run(SKAction.sequence([action1,action2]))
-        self.creditButton.run(SKAction.sequence([action1,SKAction.removeFromParent()]))
+        self.creditButton.run(SKAction.sequence([action1,SKAction.hide()]))
     }
     
     @objc func fallMeteor()
