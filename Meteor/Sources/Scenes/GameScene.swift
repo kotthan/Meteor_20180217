@@ -953,22 +953,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func creditAction(){
-        let credits = Credits()
+        let credits = Credits(frame: self.frame)
         credits.name = "credits"
         credits.position.x = self.frame.size.width / 2
-        //credits.position.y =
+        credits.position.y -= ( credits.height - self.frame.height )
         self.addChild(credits)
         self.creditFlg = true
         play()
         self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
-            let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 10)
-            let action2 = SKAction.run {
-                self.start0Node.isHidden = true
+            let moveCredit = SKAction.moveBy(x: 0, y: credits.height - self.frame.height, duration: 10)
+            let cameraAct = SKAction.run {
+                let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 5)
+                let action2 = SKAction.run {
+                    self.start0Node.isHidden = true
+                }
+                let actionAll = SKAction.sequence([action1,action2])
+                self.camera?.run(actionAll)
             }
-            let actionAll = SKAction.sequence([action1,action2])
-            self.camera?.run(actionAll)
+            self.childNode(withName: "credits")?.run(SKAction.sequence([moveCredit,cameraAct]))
         }
         self.start0Node.run(SKAction.sequence([action1,action2]))
         self.creditButton.run(SKAction.sequence([action1,SKAction.hide()]))
