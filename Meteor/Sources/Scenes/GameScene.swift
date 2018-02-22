@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var firstBuildFlg: Bool = true
     var buildFlg:Bool = true
     var gameFlg:Bool = false
+    var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
     var meteorCollisionFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
     enum UAState{ //必殺技の状態
@@ -816,6 +817,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             //print("---Playerと地面が接触しました---")
             self.player.landing()
+            if( gameWaitFlag == true ){
+                gameWaitFlag = false
+                gameFlg = true
+                //pod回復スタート
+                self.guardPod.startRecover()
+            }
             switch ( ultraAttackState )
             {
             case .landing:
@@ -902,9 +909,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
                     self.start0Node.isHidden = true
-                    self.gameFlg = true
-                    //pod回復スタート
-                    self.guardPod.startRecover()
+                    if( self.player.jumping == true ){
+                        self.gameWaitFlag = true
+                    }
+                    else{
+                        self.gameFlg = true
+                        //pod回復スタート
+                        self.guardPod.startRecover()
+                    }
                 }
                 let actionAll = SKAction.sequence([action1,action2])
                 self.camera?.run(actionAll)
