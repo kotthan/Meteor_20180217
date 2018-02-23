@@ -64,6 +64,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var meteorTimer: Timer?                                         //隕石用タイマー
     
     //MARK: フラグ
+    enum SceneState {
+        case Title      //タイトル表示
+        case Prologue   //スタートアニメーション
+        case Credits    //credit表示
+        case GameWait   //ゲーム開始待ち
+        case Game       //ゲーム中
+        case Pause      //ポーズ
+        case GameOver   //ゲームオーバー
+    }
+    var sceneState:SceneState = .Title
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var attackFlg : Bool = false                                    //攻撃フラグ
     var firstBuildFlg: Bool = true
