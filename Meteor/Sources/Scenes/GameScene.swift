@@ -564,9 +564,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard ( ultraAttackState == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
-        guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
+        /*guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
             return
-        }
+        }*/
         //ポーズでなければ次の処理に進む
         guard ( self.view!.scene?.isPaused == false ) else {
             return
@@ -634,48 +634,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
-            /*
-            let endedPos = touch.location(in: self)                          //タップを話した点を定義
-            let cameraMoveY = ( (camera?.position.y)! -  self.beganPyPos )   //前回からのカメラの移動量を求める
-            self.beganPyPos = (camera?.position.y)!                          //次回計算時のために現在位置を覚える
-            self.beganPos.y += cameraMoveY                                   //カメラが動いた分だけタッチ開始点も動かす
-            let xPos = beganPos.x - endedPos.x
-            let yPos = beganPos.y - endedPos.y
-            if( touchPath != nil )                                           //すでにタッチの軌跡が描かれていれば削除
-            {
-                touchPath.removeFromParent()
-            }
-            var points = [beganPos,endedPos]
-            touchPath = SKShapeNode(points: &points, count: points.count)   //デバッグ用に始点から現在地を線で結ぶ
-            if fabs(yPos) > fabs(xPos)
-            {
-                if yPos > 0                                                 //下スワイプ
-                {
-                    guardPower -= 100
-                    guardAction(endFlg: false)
-                    touchPath.strokeColor = UIColor.blue
-                }
-                else if yPos < 0                                           //上スワイプ
-                {
-                    touchPath.strokeColor = UIColor.white
-                }
-            }
-            else
-            {
-                if xPos > 100                                             //左スワイプ
-                {
-                    touchPath.strokeColor = UIColor.white
-                }
-                else if xPos < -100                                       //右スワイプ
-                {
-                    touchPath.strokeColor = UIColor.white
-                }
-            }
-            if( debug )
-            {
-                baseNode.addChild(touchPath)
-            }
-            */
          }
     }
     
