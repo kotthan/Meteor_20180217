@@ -62,9 +62,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 
     func showAd() {
         // Define custom GADAdSize of 250x250 for DFPBannerView.
-        let customAdSize = GADAdSizeFromCGSize(CGSize(width: 200, height: 200))
-        adBanner = GADBannerView(adSize: customAdSize)
-        //adBanner = GADBannerView(adSize: kGADAdSizeMediumRectangle)
+        //let customAdSize = GADAdSizeFromCGSize(CGSize(width: 300, height: 300))
+        //adBanner = GADBannerView(adSize: customAdSize)
+        adBanner = GADBannerView(adSize: kGADAdSizeMediumRectangle)//300×250
         adBanner.adUnitID = "ca-app-pub-2945918043757109/9447056281"
         adBanner.delegate = self
         adBanner.rootViewController = self
