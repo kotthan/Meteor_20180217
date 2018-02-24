@@ -925,7 +925,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
-            let moveCredit = SKAction.moveBy(x: 0, y: credits.height - self.frame.height, duration: 10)
+            let moveCredit = SKAction.moveTo(y: credits.height - self.frame.size.height, duration: 10)
             let cameraAct = SKAction.run {
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 5)
                 let action2 = SKAction.run {
@@ -948,7 +948,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if firstBuildFlg == true
         {
-            buildMeteor(size: 0.3, meteorString: "meteor_meteor_20180128", meteorZ: 20.0)
+            buildMeteor(size: 0.3, meteorString: "normal_meteor", meteorZ: 20.0)
         }
         else if buildFlg == false
         {

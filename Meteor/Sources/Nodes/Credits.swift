@@ -61,10 +61,14 @@ class Credits: SKNode {
             self.addChild(label)
         }
         //ロゴほか
-        let logo = SKSpriteNode(imageNamed: "AppIcon")
+        let logo = SKSpriteNode(imageNamed: "otlogo")
         logo.position.y = frame.height * 0.75
-        logo.setScale(3.0)
+        logo.setScale(0.8)
         self.addChild(logo)
+        let soundLogo = SKSpriteNode(imageNamed: "hurt-logo")
+        soundLogo.position.y = frame.height * 0.9
+        soundLogo.setScale(1.0)
+        self.addChild(soundLogo)
         let copyRight = SKLabelNode(fontNamed: "GillSansStd-ExtraBold")
         copyRight.fontSize = 20
         copyRight.text = "©︎ 2018 OTUTAMA STUDIO"
