@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3A0DA09204142EE0044D397 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA08204142ED0044D397 /* AdSupport.framework */; };
+		A3A0DA14204143500044D397 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */; };
+		A3A0DA15204143500044D397 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0B2041434F0044D397 /* EventKit.framework */; };
+		A3A0DA16204143500044D397 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0C2041434F0044D397 /* EventKitUI.framework */; };
+		A3A0DA17204143500044D397 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0D2041434F0044D397 /* StoreKit.framework */; };
+		A3A0DA18204143500044D397 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0E2041434F0044D397 /* AudioToolbox.framework */; };
+		A3A0DA19204143500044D397 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0F2041434F0044D397 /* AVFoundation.framework */; };
+		A3A0DA1A204143500044D397 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA10204143500044D397 /* CoreMedia.framework */; };
+		A3A0DA1B204143500044D397 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA11204143500044D397 /* CoreTelephony.framework */; };
+		A3A0DA1C204143500044D397 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA12204143500044D397 /* MessageUI.framework */; };
+		A3A0DA1D204143500044D397 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA13204143500044D397 /* SystemConfiguration.framework */; };
+		A3A0DA1F204143750044D397 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA1E204143750044D397 /* GoogleMobileAds.framework */; };
 		A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */; };
 		A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBAE80203926C50025B9DD /* LandingEffect.swift */; };
 		A3DBAE83203946960025B9DD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBAE82203946960025B9DD /* Player.swift */; };
@@ -69,6 +81,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3A0DA08204142ED0044D397 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A3A0DA0B2041434F0044D397 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		A3A0DA0C2041434F0044D397 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		A3A0DA0D2041434F0044D397 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A3A0DA0E2041434F0044D397 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A3A0DA0F2041434F0044D397 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A3A0DA10204143500044D397 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A3A0DA11204143500044D397 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		A3A0DA12204143500044D397 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		A3A0DA13204143500044D397 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A3A0DA1E204143750044D397 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GillSansStd-ExtraBold.otf"; sourceTree = "<group>"; };
 		A3DBAE80203926C50025B9DD /* LandingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingEffect.swift; sourceTree = "<group>"; };
 		A3DBAE82203946960025B9DD /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -124,6 +148,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A0DA1F204143750044D397 /* GoogleMobileAds.framework in Frameworks */,
+				A3A0DA14204143500044D397 /* CoreGraphics.framework in Frameworks */,
+				A3A0DA15204143500044D397 /* EventKit.framework in Frameworks */,
+				A3A0DA16204143500044D397 /* EventKitUI.framework in Frameworks */,
+				A3A0DA17204143500044D397 /* StoreKit.framework in Frameworks */,
+				A3A0DA18204143500044D397 /* AudioToolbox.framework in Frameworks */,
+				A3A0DA19204143500044D397 /* AVFoundation.framework in Frameworks */,
+				A3A0DA1A204143500044D397 /* CoreMedia.framework in Frameworks */,
+				A3A0DA1B204143500044D397 /* CoreTelephony.framework in Frameworks */,
+				A3A0DA1C204143500044D397 /* MessageUI.framework in Frameworks */,
+				A3A0DA1D204143500044D397 /* SystemConfiguration.framework in Frameworks */,
+				A3A0DA09204142EE0044D397 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +180,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A3A0DA07204142ED0044D397 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A3A0DA1E204143750044D397 /* GoogleMobileAds.framework */,
+				A3A0DA0E2041434F0044D397 /* AudioToolbox.framework */,
+				A3A0DA0F2041434F0044D397 /* AVFoundation.framework */,
+				A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */,
+				A3A0DA10204143500044D397 /* CoreMedia.framework */,
+				A3A0DA11204143500044D397 /* CoreTelephony.framework */,
+				A3A0DA0B2041434F0044D397 /* EventKit.framework */,
+				A3A0DA0C2041434F0044D397 /* EventKitUI.framework */,
+				A3A0DA12204143500044D397 /* MessageUI.framework */,
+				A3A0DA0D2041434F0044D397 /* StoreKit.framework */,
+				A3A0DA13204143500044D397 /* SystemConfiguration.framework */,
+				A3A0DA08204142ED0044D397 /* AdSupport.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B63CFD582037390800F0F90E = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +206,7 @@
 				B63CFD7E2037390800F0F90E /* MeteorTests */,
 				B63CFD892037390800F0F90E /* MeteorUITests */,
 				B63CFD622037390800F0F90E /* Products */,
+				A3A0DA07204142ED0044D397 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -688,6 +744,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5L6RZ6S9L7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Meteor/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = otutama.jp.Meteor;
@@ -703,6 +763,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5L6RZ6S9L7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Meteor/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = otutama.jp.Meteor;

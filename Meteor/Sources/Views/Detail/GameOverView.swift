@@ -65,6 +65,10 @@ class GameOverView: SKNode {
         ReStartButton.xScale = 1
         ReStartButton.yScale = 1
         self.addChild(ReStartButton)
+        //広告
+        adBanner.frame.origin.x = frame.size.width / 2 - adBanner.frame.size.width / 2
+        adBanner.frame.origin.y = frame.size.height / 2 - adBanner.frame.size.height / 2
+        adBanner.isHidden = false
     }
     
     required init?(coder aDecoder: NSCoder) {

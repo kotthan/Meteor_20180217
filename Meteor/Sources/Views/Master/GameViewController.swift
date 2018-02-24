@@ -4,9 +4,12 @@
 
 import UIKit
 import SpriteKit
+import GoogleMobileAds
 
 @available(iOS 9.0, *)
-class GameViewController: UIViewController {
+
+var adBanner: GADBannerView!
+class GameViewController: UIViewController, GADBannerViewDelegate {
 
 	var gameView: GameView!
 	var gameScene: GameScene!
@@ -46,6 +49,8 @@ class GameViewController: UIViewController {
 		self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
 		// ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
+        //広告の表示
+        self.showAd()
     }
 
 	override func viewDidAppear(_ animated: Bool)
@@ -55,4 +60,16 @@ class GameViewController: UIViewController {
         return true
     }
 
+    func showAd() {
+        adBanner = GADBannerView(adSize: kGADAdSizeMediumRectangle)
+        adBanner.adUnitID = "ca-app-pub-2945918043757109/9447056281"
+        adBanner.delegate = self
+        adBanner.rootViewController = self
+        let gadRequest:GADRequest = GADRequest()
+        // テスト用の広告を表示する時のみ使用（申請時に削除）
+        gadRequest.testDevices = ["12345678abcdefgh"]
+        adBanner.load(gadRequest)
+        adBanner.isHidden = true
+        self.view.addSubview(adBanner)
+    }
 }
