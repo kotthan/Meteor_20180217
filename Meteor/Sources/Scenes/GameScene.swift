@@ -901,13 +901,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.guardPod.startRecover()
         }
         pauseButton.isHidden = false //ポーズボタンを表示する
-        /*
-        //メニュー背景を動かすアクションを作成する。
-        let action1 = SKAction.moveTo(y: -3000, duration: 1.0)
-        //アクションを実行する。
-        back_wall.run(action1)
-         */
-        //playBgm(soundName: "bgmn")
     }
     
     func creditAction(){
