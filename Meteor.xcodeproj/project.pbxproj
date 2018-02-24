@@ -61,6 +61,8 @@
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
 		B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBB204141A700A9AB0D /* Launch Screen.storyboard */; };
+		B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */; };
+		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
 		B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* GameOverView.swift */; };
 /* End PBXBuildFile section */
 
@@ -142,6 +144,8 @@
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
 		B6A4CEBC204141A700A9AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yabusaka.mp3; sourceTree = "<group>"; };
+		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
 		B6DE6285203B15E100A1B13F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -347,6 +351,8 @@
 		B63CFDA220373B8400F0F90E /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */,
+				B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */,
 				B63CFDA320373B9B00F0F90E /* enter.wav */,
 				B63CFDAE20373BF700F0F90E /* gorogoro.wav */,
 				B63CFDAB20373BF700F0F90E /* iwa.wav */,
@@ -516,11 +522,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */,
 				B63CFDDC20373DC100F0F90E /* jump.wav in Resources */,
 				B63CFDB120373BF700F0F90E /* kaminari.wav in Resources */,
 				B63CFDB420373BF700F0F90E /* select.wav in Resources */,
 				B63CFDDD20373DC100F0F90E /* hakai.wav in Resources */,
 				B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */,
+				B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */,
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
 				B63CFDE120373DC100F0F90E /* bgmn.mp3 in Resources */,
 				B63CFDE020373DC100F0F90E /* slash.wav in Resources */,

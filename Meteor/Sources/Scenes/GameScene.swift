@@ -56,6 +56,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverView: GameOverView!
     var hudView = HUDView()                                         //HUD
     
+    var mainBgmPlayer: AVAudioPlayer!
+    var titleBgmPlayer: AVAudioPlayer!
+    
     //MARK: タイマー
     var meteorTimer: Timer?                                         //隕石用タイマー
     
@@ -136,9 +139,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var pCamera: SKCameraNode?
     
-    //MARK: BGM
-    var audioPlayer: AVAudioPlayer!
-    
     //MARK: データ保存
     var keyHighScore = "highScore"
     
@@ -156,12 +156,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(self.player)                 //プレイヤーベース追加
         self.addChild(self.backScrNode)                             //背景追加
  
-        //MARK: 音楽
-        let soundFilePath: String = Bundle.main.path(forResource: "shining_star", ofType: "mp3")!
-        let fileURL: URL = URL(fileURLWithPath: soundFilePath)
-        try! audioPlayer = AVAudioPlayer(contentsOf: fileURL)
-        audioPlayer.numberOfLoops = -1
-        audioPlayer.prepareToPlay()
+        //MARK: BGM
+        //MainBGM
+        let MainSoundFilePath: String = Bundle.main.path(forResource: "crasy", ofType: "mp3")!
+        let MainfileURL: URL = URL(fileURLWithPath: MainSoundFilePath)
+        try! mainBgmPlayer = AVAudioPlayer(contentsOf: MainfileURL)
+        mainBgmPlayer.numberOfLoops = -1
+        mainBgmPlayer.prepareToPlay()
+        //TitleBGM
+        let TitleSoundFilePath: String = Bundle.main.path(forResource: "yabusaka", ofType: "mp3")!
+        let TitlefileURL: URL = URL(fileURLWithPath: TitleSoundFilePath)
+        try! titleBgmPlayer = AVAudioPlayer(contentsOf: TitlefileURL)
+        titleBgmPlayer.numberOfLoops = -1
+        titleBgmPlayer.prepareToPlay()
+        titleBgmPlayer.play()
 
 		//MARK: SKSファイルを読み込み
 		if let scene = SKScene(fileNamed: "GameScene.sks")
@@ -381,13 +389,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.sliderHidden = !self.sliderHidden
             self.pauseView.isHidden = self.sliderHidden
             self.view!.scene?.isPaused = !self.sliderHidden
-            self.pause()
+            self.mainBgmPlayer.pause()
         }
         pauseButton.setResumeFunc{
             self.sliderHidden = !self.sliderHidden
             self.pauseView.isHidden = self.sliderHidden
             self.view!.scene?.isPaused = !self.sliderHidden
-            self.play()
+            self.mainBgmPlayer.play()
         }
         pauseButton.isHidden = true     //タイトル画面では非表示
         self.view!.addSubview(pauseButton)
@@ -866,7 +874,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         //MARK: ゲーム進行関係
         self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
-        play()
+        self.titleBgmPlayer.stop()
+        self.mainBgmPlayer.play()
         hudView.scoreLabel.isHidden = false
         hudView.highScoreLabel.isHidden = false
         //start0Node.zPosition = -50
@@ -911,7 +920,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         credits.position.y -= self.frame.height
         self.addChild(credits)
         self.creditFlg = true
-        play()
+        self.titleBgmPlayer.stop()
+        self.mainBgmPlayer.play()
         self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
@@ -1248,7 +1258,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 UserDefaults.standard.set(self.highScore, forKey: self.keyHighScore) //データの保存
             }
             print("------------gameover------------")
-            stop()
+            self.mainBgmPlayer.stop()
             //墜落演出
             let circle = SKShapeNode(circleOfRadius:1)
             circle.position.x = self.meteores[0].position.x
@@ -1326,21 +1336,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.run(actionLoop, withKey: "actionLoop")
     }
     
-    func play()
+    func TitleStop()
     {
-        audioPlayer.play()
+        titleBgmPlayer.stop()
+        titleBgmPlayer.currentTime = 0
     }
     
-    func pause()
+    func MainStop()
     {
-        audioPlayer.pause()
+        mainBgmPlayer.stop()
+        mainBgmPlayer.currentTime = 0
     }
     
-    func stop()
-    {
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
-    }
     
     func vibrate() {
         //AudioServicesPlaySystemSound(1519)
