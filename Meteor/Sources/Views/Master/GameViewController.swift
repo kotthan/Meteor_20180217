@@ -61,10 +61,14 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
     }
 
     func showAd() {
-        adBanner = GADBannerView(adSize: kGADAdSizeMediumRectangle)
+        // Define custom GADAdSize of 250x250 for DFPBannerView.
+        let customAdSize = GADAdSizeFromCGSize(CGSize(width: 200, height: 200))
+        adBanner = GADBannerView(adSize: customAdSize)
+        //adBanner = GADBannerView(adSize: kGADAdSizeMediumRectangle)
         adBanner.adUnitID = "ca-app-pub-2945918043757109/9447056281"
         adBanner.delegate = self
         adBanner.rootViewController = self
+        
         let gadRequest:GADRequest = GADRequest()
         // テスト用の広告を表示する時のみ使用（申請時に削除）
         gadRequest.testDevices = ["12345678abcdefgh"]
