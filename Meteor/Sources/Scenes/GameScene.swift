@@ -41,7 +41,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShapeName: String = "guardShape"
     var guardPod: GuardPod!
     var start0Node: SKSpriteNode!
-    var homeButton: SKSpriteNode!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -372,12 +371,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view!.addSubview(hudView)
         hudView.highScoreLabel.text = "BEST " + String(self.highScore)
         //===================
-        //MARK: ゲームオーバー画面
-        //===================
-        gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
-        gameOverView.isHidden = true
-        self.camera?.addChild(gameOverView)
-        //===================
         //MARK: ポーズ画面
         //===================
         pauseView = PauseView(frame: self.frame)
@@ -568,9 +561,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }*/
         //ポーズでなければ次の処理に進む
-        guard ( self.view!.scene?.isPaused == false ) else {
+        /*guard ( self.view!.scene?.isPaused == false ) else {
             return
-        }
+        }*/
         
         if let touch = touches.first as UITouch?
         {
@@ -643,13 +636,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard ( ultraAttackState == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
-        guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
-            return
-        }
+        /*guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
+            
+           // return
+        }*/
         //ポーズでなければ次の処理に進む
-        guard ( self.view!.scene?.isPaused == false ) else {
+        /*guard ( self.view!.scene?.isPaused == false ) else {
             return
-        }
+        }*/
         
         for touch: AnyObject in touches
         {
@@ -659,7 +653,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //ボタンタップ判定
             let node:SKSpriteNode? = self.atPoint(endPos) as? SKSpriteNode;
             if( touchNode != nil ) && ( node == touchNode ) { // タッチ開始時と同じノードで離した
-                //print("---タップを離したノード=\(String(describing: node?.name))---")
+                print("---タップを離したノード=\(String(describing: node?.name))---")
                 var buttonPushFlg = true
                 switch node{ //押したボタン別処理
                 case let node where node == start0Node :
@@ -671,8 +665,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
-                case let node where node == homeButton :
-                    newGame()
+                case let node where node == gameOverView?.HomeButton :
+                    homeButtonAction()
+                case let node where node ==  gameOverView?.ReStartButton :
+                    reStartButtonAction()
                 default:
                     buttonPushFlg = false
                 }
@@ -1282,11 +1278,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         self.meteorBase.isHidden = true
                         },
                       ]),
-                  //SKAction.fadeOut(withDuration: 1),
-                  //SKAction.removeFromParent(),
+                  SKAction.run {
+                    self.gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
+                    self.camera?.addChild(self.gameOverView)
+                    },
                   SKAction.run{self.isPaused = true},
                   SKAction.run{self.gameOverView.isHidden = false},
-                  //SKAction.run(gameOverViewCreate)])
+
                 ])
             circle.run(actions)
         }
@@ -1297,6 +1295,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             view.removeFromSuperview()
         }
         newGame()
+    }
+    func homeButtonAction(){
+        newGame()
+    }
+    func reStartButtonAction(){
+        let scene = GameScene(size: self.scene!.size)
+        scene.scaleMode = SKSceneScaleMode.aspectFill
+        scene.retryFlg = true
+        self.view!.presentScene(scene)
     }
     @objc func retryButtonAction(_ sender: UIButton ){
         for view in self.view!.subviews {
@@ -1379,9 +1386,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let loopAction = SKAction.repeatForever(actions)
         node.run(loopAction)
     }
-    
-   
-    
+
     //MARK:デバッグ用
     //SKShapeNodeのサイズの四角を追加する
     func addBodyFrame(node: SKSpriteNode){
