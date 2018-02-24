@@ -52,8 +52,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var ultraOkButton: SKSpriteNode!
     var pauseButton: PauseButton!                                   //ポーズボタン
     //MARK: 画面
-	let oneScreenSize = CGSize(width: 375, height: 667)             //１画面サイズ
-    static let ScreenSize = CGSize(width: 375, height: 667) //テスト
     var pauseView: PauseView!                                       //ポーズ画面
     var gameOverView: GameOverView!
     var hudView = HUDView()                                         //HUD
