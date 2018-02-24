@@ -1289,7 +1289,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         newGame()
     }
     func reStartButtonAction(){
-        adBanner.isHidden = true
         let scene = GameScene(size: self.scene!.size)
         scene.scaleMode = SKSceneScaleMode.aspectFill
         scene.retryFlg = true
