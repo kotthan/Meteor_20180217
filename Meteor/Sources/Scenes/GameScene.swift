@@ -52,7 +52,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var ultraOkButton: SKSpriteNode!
     var pauseButton: PauseButton!                                   //ポーズボタン
     //MARK: 画面
-    var allScreenSize = CGSize(width: 0, height: 0)                 //全画面サイズ
 	let oneScreenSize = CGSize(width: 375, height: 667)             //１画面サイズ
     static let ScreenSize = CGSize(width: 375, height: 667) //テスト
     var pauseView: PauseView!                                       //ポーズ画面
@@ -230,8 +229,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //===================
 			//MARK: プレイヤー
 			//===================
-            self.charXOffset = self.oneScreenSize.width * 0.5
-			self.charYOffset = self.oneScreenSize.height * 0.5
+            self.charXOffset = self.frame.size.width * 0.5
+			self.charYOffset = self.frame.size.height * 0.5
 			scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
 				let player = node as! SKSpriteNode
                 self.player.setSprite(sprite: player)
@@ -297,7 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //MARK: カメラ
         let camera = SKCameraNode()
-        camera.position = CGPoint(x: self.oneScreenSize.width/2,y: start0Node.position.y)
+        camera.position = CGPoint(x: self.frame.size.width/2,y: start0Node.position.y)
         self.addChild(camera)
         self.camera = camera
         
@@ -514,15 +513,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if (gameFlg == false)
-        {
-            //始めはmoveで動かすので初期値だけ設定しておき、ここでは動かさない
-            //self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.start0Node.position.y)
-        }
-        else if (player.jumping == true) && (self.player.position.y + 200 > self.oneScreenSize.height/2)
+        { }
+        else if (player.jumping == true) && (self.player.position.y + 200 > self.frame.size.height/2)
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
-                self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.player.position.y + 200 );
+                self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 200 );
                 if ( self.creditFlg == true ) && ( self.ultraAttackState == .attacking ) &&
                     ( self.player.velocity < 0 ){
                     self.start0Node.isHidden = false
@@ -531,7 +527,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.creditButton.isHidden = false
                     self.creditButton.alpha = 1.0
                     if( self.camera!.position.y < start0Node.position.y ){
-                        self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: start0Node.position.y)
+                        self.camera!.position = CGPoint(x: self.frame.size.width/2,y: start0Node.position.y)
                         self.gameFlg = false
                         self.creditFlg = false
                     }
@@ -540,7 +536,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else
         {
-            self.camera!.position = CGPoint(x: self.oneScreenSize.width/2,y: self.oneScreenSize.height/2)
+            self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.frame.size.height/2)
         }
         if( debug )
         {
@@ -734,8 +730,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             touchPath.removeFromParent()
         }
         //カメラの移動分平行移動する
-        let moveX = camera.position.x - oneScreenSize.width / 2
-        let moveY = camera.position.y - oneScreenSize.height / 2
+        let moveX = camera.position.x - frame.size.width / 2
+        let moveY = camera.position.y - frame.size.height / 2
         var points = [ CGPoint( x: begin.x + moveX, y: begin.y + moveY ),
                        CGPoint( x: end.x + moveX, y: end.y + moveY ) ]
         //線の作成
@@ -880,7 +876,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //リトライ時はアニメーションはしない
             let action1 = SKAction.fadeOut(withDuration: 1.0)
             let action2 = SKAction.run{
-                let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 2)
+                let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 2)
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
                     self.start0Node.isHidden = true
@@ -929,7 +925,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let action2 = SKAction.run{
             let moveCredit = SKAction.moveBy(x: 0, y: credits.height - self.frame.height, duration: 10)
             let cameraAct = SKAction.run {
-                let action1 = SKAction.moveTo(y: self.oneScreenSize.height / 2, duration: 5)
+                let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 5)
                 let action2 = SKAction.run {
                     self.start0Node.isHidden = true
                 }
