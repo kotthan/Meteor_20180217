@@ -10,8 +10,10 @@ import SpriteKit
 
 class GuardPod: SKNode {
     
-    var podSprite:SKSpriteNode!
-    var podGaugeSprite:SKSpriteNode!
+    let podTop = SKCropNode()
+    let podMiddle = SKCropNode()
+    var middleMask: SKShapeNode!
+    let podBottom = SKCropNode()
     let gaugeMask = SKCropNode()
     enum guardState{    //ガード状態
         case enable     //ガード可
@@ -28,23 +30,60 @@ class GuardPod: SKNode {
     let countLabel = SKLabelNode()  //テスト表示用
     override init() {
         super.init()
-        //マスク
+        //ゲージ部分をマスクするノードの定義
         self.gaugeMaskShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 20, height: 20))
         self.gaugeMaskShape.position.x -= 10
         self.gaugeMaskShape.position.y -= 10
         self.gaugeMaskShape.fillColor = UIColor.white
+        //cropNodeのマスクに設定
         self.gaugeMask.maskNode = self.gaugeMaskShape
         self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         self.addChild(gaugeMask)
-        //画像作成
-        podGaugeSprite = SKSpriteNode(imageNamed: "Pod3")
+        //cropNodeにゲージのspriteNodeを追加
+        let podGaugeSprite = SKSpriteNode(imageNamed: "Pod3")
         podGaugeSprite.xScale /= 5
         podGaugeSprite.yScale /= 5
         self.gaugeMask.addChild(podGaugeSprite)
-        podSprite = SKSpriteNode(imageNamed: "Pod0")
-        podSprite.xScale /= 5
-        podSprite.yScale /= 5
-        self.addChild(podSprite)
+        //ベース
+        let podSprite1 = SKSpriteNode(imageNamed: "Pod0")
+        podSprite1.xScale /= 5
+        podSprite1.yScale /= 5
+        //下マスク
+        var bottomPoints = [CGPoint(x: -15, y: -30),
+                      CGPoint(x: -15, y: -11),
+                      CGPoint(x: 15, y: -11),
+                      CGPoint(x: 15, y: -30)]
+        let bottomMask = SKShapeNode(points: &bottomPoints, count: bottomPoints.count)
+        bottomMask.fillColor = UIColor.red
+        self.podBottom.maskNode = bottomMask
+        self.podBottom.addChild(podSprite1)
+        self.addChild(podBottom)
+        //上マスク
+        var topPoints = [CGPoint(x: -15, y: 10.5),
+                         CGPoint(x: -15, y: 30),
+                         CGPoint(x: 15, y: 30),
+                         CGPoint(x: 15, y: 10.5),
+                         CGPoint(x: 2.2,  y: 10.5),
+                         CGPoint(x: 2.2,  y: 8),
+                         CGPoint(x: -2.5,  y: 8),
+                         CGPoint(x: -2.5,  y: 10.5)]
+        let topMask = SKShapeNode(points: &topPoints, count: topPoints.count)
+        topMask.fillColor = UIColor.red
+        self.podTop.maskNode = topMask
+        let podSprite2 = SKSpriteNode(imageNamed: "Pod0")
+        podSprite2.xScale /= 5
+        podSprite2.yScale /= 5
+        self.podTop.addChild(podSprite2)
+        self.addChild(podTop)
+        //あいだマスク
+        middleMask = SKShapeNode(rect: CGRect(x: -10, y: -9, width: 19, height: 19))
+        middleMask.fillColor = UIColor.red
+        self.podMiddle.maskNode = middleMask
+        let podSprite3 = SKSpriteNode(imageNamed: "Pod0")
+        podSprite3.xScale /= 5
+        podSprite3.yScale /= 5
+        self.podMiddle.addChild(podSprite3)
+        self.addChild(podMiddle)
         //ふわふわ
         let act1 = SKAction.moveBy(x: 0, y: 20, duration: 2)
         act1.timingMode = .easeInEaseOut
@@ -78,12 +117,26 @@ class GuardPod: SKNode {
             self.count = self.maxCount
             //ガード可とする
             self.guardStatus = .enable
+            //ふわふわ
+            let act1 = SKAction.moveBy(x: 0, y: 20, duration: 2)
+            act1.timingMode = .easeInEaseOut
+            let acts = SKAction.sequence([act1,act1.reversed()])
+            self.run(SKAction.repeatForever(acts))
+            //
+            self.middleMask.run( SKAction.scale(to: 1/5, duration: 1.0) )
+            self.podTop.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
+            self.podBottom.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
+            self.gaugeMaskShape.run( SKAction.scale(to: 1.0, duration: 1.0) )
             stopRecover()
         }
         else{
-            startRecover()
+            if( self.action(forKey: self.actionKey) == nil ){
+                startRecover()
+            }
         }
-        self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
+        if( self.guardStatus != .disable ){
+            self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
+        }
     }
     
     //ガード
@@ -117,6 +170,14 @@ class GuardPod: SKNode {
     func broken(){
         self.count = 0
         countLabel.text = String(describing: self.count)
+        //アニメーション
+        self.removeAllActions()
+        self.run( SKAction.group( [SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0),
+                                  SKAction.moveTo(y: 0, duration: 1.0)] ))
+        self.middleMask.run( SKAction.scale(to: 0, duration: 1.0) )
+        self.podTop.run( SKAction.move(to: CGPoint(x: 0, y:-11), duration: 1.0) )
+        self.podBottom.run( SKAction.move(to: CGPoint(x: 0, y:11), duration: 1.0) )
+        //self.gaugeMask.isHidden = true
         //ガード不可状態にする
         self.guardStatus = .disable
     }
