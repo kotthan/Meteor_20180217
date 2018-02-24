@@ -914,7 +914,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let credits = Credits(frame: self.frame)
         credits.name = "credits"
         credits.position.x = self.frame.size.width / 2
-        credits.position.y -= ( credits.height - self.frame.height )
+        //credits.position.y -= ( credits.height - self.frame.height )
+        credits.position.y -= self.frame.height
         self.addChild(credits)
         self.creditFlg = true
         play()
