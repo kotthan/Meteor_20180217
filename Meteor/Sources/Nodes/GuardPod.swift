@@ -172,7 +172,8 @@ class GuardPod: SKNode {
         countLabel.text = String(describing: self.count)
         //アニメーション
         self.removeAllActions()
-        self.run( SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0) )
+        self.run( SKAction.group( [SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0),
+                                  SKAction.moveTo(y: 0, duration: 1.0)] ))
         self.middleMask.run( SKAction.scale(to: 0, duration: 1.0) )
         self.podTop.run( SKAction.move(to: CGPoint(x: 0, y:-11), duration: 1.0) )
         self.podBottom.run( SKAction.move(to: CGPoint(x: 0, y:11), duration: 1.0) )
