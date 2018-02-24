@@ -10,6 +10,8 @@ import SpriteKit
 
 @available(iOS 9.0, *)
 class GameOverView: SKNode {
+    var HomeButton: SKSpriteNode!
+    var ReStartButton: SKSpriteNode!
     
     init(frame: CGRect, score:Int, highScore:Int) {
         super.init()
@@ -42,7 +44,7 @@ class GameOverView: SKNode {
         highScoreLabel.position.y = self.frame.size.height/4 + scoreLabel.frame.size.height + 20
         self.addChild(highScoreLabel)
         //ホームボタン
-        let HomeButton = SKSpriteNode(imageNamed: "home")
+        HomeButton = SKSpriteNode(imageNamed: "home")
         HomeButton.name = "HomeButton"
         HomeButton.size.width = 75.0
         HomeButton.size.height = 75.0
@@ -53,7 +55,7 @@ class GameOverView: SKNode {
         HomeButton.yScale = 1
         self.addChild(HomeButton)
         //リスタートボタン
-        let ReStartButton = SKSpriteNode(imageNamed: "restart")
+        ReStartButton = SKSpriteNode(imageNamed: "restart")
         ReStartButton.name = "ReStartButton"
         ReStartButton.size.width = 75.0
         ReStartButton.size.height = 75.0
