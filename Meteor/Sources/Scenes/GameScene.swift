@@ -920,8 +920,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         credits.position.y -= self.frame.height
         self.addChild(credits)
         self.creditFlg = true
-        self.titleBgmPlayer.stop()
-        self.mainBgmPlayer.play()
+        //self.titleBgmPlayer.stop()
+        //self.mainBgmPlayer.play()
         self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
