@@ -456,7 +456,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if ( !meteores.isEmpty ){
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                let playerMaxY = player.position.y + (player.size.height/2)
+                _ = player.position.y + (player.size.height/2)
                 if( meteorCollisionFlg ){ //衝突する
                     self.player.position.y = meteorMinY - player.halfSize
                     self.player.velocity -= self.meteorSpeed / 60
@@ -765,8 +765,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print("---didBeginで衝突しました---")
         let nodeA = contact.bodyA.node
         let nodeB = contact.bodyB.node
-        let nameA = nodeA?.name
-        let nameB = nodeB?.name
+        _ = nodeA?.name
+        _ = nodeB?.name
         let bitA = contact.bodyA.categoryBitMask
         let bitB = contact.bodyB.categoryBitMask
         //print("---接触したノードは\(String(describing: nameA))と\(String(describing: nameB))です---")
