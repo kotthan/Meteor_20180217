@@ -32,6 +32,7 @@ class Player: SKNode {
         case right = 281.25
     }
     var posStatus = PosState.center
+    var meteorCollisionFlg = false  /* 隕石衝突フラグ */
     
     override init() {
         super.init()

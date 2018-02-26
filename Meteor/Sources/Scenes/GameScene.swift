@@ -80,7 +80,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameFlg:Bool = false
     var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
     var creditFlg = false
-    var meteorCollisionFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
     enum UAState{ //必殺技の状態
         case none       //未発動
@@ -457,13 +456,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                 _ = player.position.y + (player.size.height/2)
-                if( meteorCollisionFlg ){ //衝突する
+                if( self.player.meteorCollisionFlg ){ //衝突する
                     self.player.position.y = meteorMinY - player.halfSize
                     self.player.velocity -= self.meteorSpeed / 60
                     if( self.player.velocity < self.meteorSpeed ){
                         //playerが上昇中にfalseにすると何度も衝突がおきてplayeerがぶれるので
                         //落下速度が隕石より早くなってからfalseにする
-                        self.meteorCollisionFlg = false
+                        self.player.meteorCollisionFlg = false
                     }
                     if( debug )
                     {
@@ -502,7 +501,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                 if( self.player.position.y < meteorMinY - player.halfSize ){
-                    meteorCollisionFlg = false
+                    self.player.meteorCollisionFlg = false
                     if( collisionLine != nil ){
                         collisionLine.removeFromParent()
                         collisionLine = nil
@@ -510,7 +509,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             else{
-                meteorCollisionFlg = false
+                self.player.meteorCollisionFlg = false
                 if( collisionLine != nil ){
                     collisionLine.removeFromParent()
                     collisionLine = nil
@@ -819,7 +818,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
         {
             //print("---Playerとmeteorが接触しました---")
-            meteorCollisionFlg = true;
+            self.player.meteorCollisionFlg = true;
         }
     }
 
@@ -1084,9 +1083,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 playSound(soundName: "hakai")
                 vibrate()
                 //隕石と接触していたら速度を0にする
-                if( meteorCollisionFlg )
+                if( self.player.meteorCollisionFlg )
                 {
-                    self.meteorCollisionFlg = false
+                    self.player.meteorCollisionFlg = false
                     player.velocity = 0;
                 }
             }
