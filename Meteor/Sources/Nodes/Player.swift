@@ -185,6 +185,11 @@ class Player: SKNode {
         self.stand()
     }
     
+    //隕石との衝突
+    func collisionMeteor(){
+        self.meteorCollisionFlg = true
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
