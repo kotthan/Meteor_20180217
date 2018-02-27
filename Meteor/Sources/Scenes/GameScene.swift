@@ -1009,7 +1009,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---アタックフラグをON---")
             self.attackFlg = true
             self.player.attack()
-            playSound(soundName: "slash")
+            playSound(soundName: "attack03")
             if player.childNode(withName: attackShapeName) == nil {
                 self.player.addChild(attackShape)
                 //print("add attackShape")
@@ -1085,7 +1085,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         ultraOkButton.isHidden = false
                     }
                 }
-                playSound(soundName: "hakai")
+                playSound(soundName: "broken1")
                 vibrate()
                 //隕石と接触していたら速度を0にする
                 if( self.player.meteorCollisionFlg )
@@ -1143,7 +1143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.actionStatus = .Jumping
         player.velocity = self.playerUltraAttackSpped
         //サウンド
-        playSound(soundName: "jump")
+        playSound(soundName: "jump10")
     }
     func ultraAttackEnd(){
         self.attackFlg = false
@@ -1221,7 +1221,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (self.guardPod.guardStatus == .guarding)
         {
-            playSound(soundName: "bougyo")
+            playSound(soundName: "bougyo01")
             guardPod.subCount()
             //ガードシェイプ削除
             guardNode.removeFromParent()
@@ -1272,7 +1272,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             circle.fillColor = UIColor.white
             self.addChild(circle)
             let actions = SKAction.sequence(
-                [ SKAction.scale(to: 2000, duration: 2.0),
+                [   SKAction.run{self.playSound(soundName: "explore16")},
+                    SKAction.scale(to: 2000, duration: 2.5),
                   //SKAction.wait(forDuration: 0.5),
                   SKAction.group(
                     [ SKAction.wait(forDuration: 0.2),

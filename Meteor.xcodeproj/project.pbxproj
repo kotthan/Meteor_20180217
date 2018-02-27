@@ -29,17 +29,8 @@
 		B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD732037390800F0F90E /* LaunchScreen.storyboard */; };
 		B63CFD802037390800F0F90E /* MeteorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFD7F2037390800F0F90E /* MeteorTests.swift */; };
 		B63CFD8B2037390800F0F90E /* MeteorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFD8A2037390800F0F90E /* MeteorUITests.swift */; };
-		B63CFDA420373B9B00F0F90E /* enter.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDA320373B9B00F0F90E /* enter.wav */; };
 		B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDA520373BA400F0F90E /* GameScene.sks */; };
 		B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDA720373BAC00F0F90E /* GameScene.swift */; };
-		B63CFDB120373BF700F0F90E /* kaminari.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDA920373BF700F0F90E /* kaminari.wav */; };
-		B63CFDB220373BF700F0F90E /* slash2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAA20373BF700F0F90E /* slash2.wav */; };
-		B63CFDB320373BF700F0F90E /* iwa.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAB20373BF700F0F90E /* iwa.wav */; };
-		B63CFDB420373BF700F0F90E /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAC20373BF700F0F90E /* select.wav */; };
-		B63CFDB520373BF700F0F90E /* tubure.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAD20373BF700F0F90E /* tubure.wav */; };
-		B63CFDB620373BF700F0F90E /* gorogoro.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAE20373BF700F0F90E /* gorogoro.wav */; };
-		B63CFDB720373BF700F0F90E /* slash3.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDAF20373BF700F0F90E /* slash3.wav */; };
-		B63CFDB820373BF700F0F90E /* sibire.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDB020373BF700F0F90E /* sibire.wav */; };
 		B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDBD20373C9400F0F90E /* IconButton.swift */; };
 		B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC120373CB800F0F90E /* PauseButton.swift */; };
 		B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC520373CEF00F0F90E /* GuardPod.swift */; };
@@ -48,18 +39,17 @@
 		B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCB20373D2C00F0F90E /* PauseView.swift */; };
 		B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCC20373D2C00F0F90E /* GameViewController.swift */; };
 		B63CFDD220373D2C00F0F90E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCD20373D2C00F0F90E /* ViewController.swift */; };
-		B63CFDDC20373DC100F0F90E /* jump.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD320373DBF00F0F90E /* jump.wav */; };
-		B63CFDDD20373DC100F0F90E /* hakai.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD420373DBF00F0F90E /* hakai.wav */; };
-		B63CFDDE20373DC100F0F90E /* bougyo.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD520373DC000F0F90E /* bougyo.wav */; };
-		B63CFDDF20373DC100F0F90E /* bgm.mid in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD620373DC000F0F90E /* bgm.mid */; };
-		B63CFDE020373DC100F0F90E /* slash.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD720373DC000F0F90E /* slash.wav */; };
-		B63CFDE120373DC100F0F90E /* bgmn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD820373DC000F0F90E /* bgmn.mp3 */; };
 		B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD920373DC000F0F90E /* shining_star.mp3 */; };
-		B63CFDE320373DC100F0F90E /* move.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDDA20373DC000F0F90E /* move.wav */; };
-		B63CFDE420373DC100F0F90E /* tyakuti.wav in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDDB20373DC000F0F90E /* tyakuti.wav */; };
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
+		B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAA2045885E00573D8D /* explore16.mp3 */; };
+		B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAC20459D0400573D8D /* attack03.mp3 */; };
+		B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAE20459D2F00573D8D /* broken1.mp3 */; };
+		B6958AB120459D6500573D8D /* jump10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AB020459D6500573D8D /* jump10.mp3 */; };
+		B6958AB320459D8000573D8D /* bougyo01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AB220459D8000573D8D /* bougyo01.mp3 */; };
+		B6958AB520459DBE00573D8D /* tyakuti1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AB420459DBE00573D8D /* tyakuti1.mp3 */; };
+		B6958AB720459DE000573D8D /* move1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AB620459DE000573D8D /* move1.mp3 */; };
 		B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBB204141A700A9AB0D /* Launch Screen.storyboard */; };
 		B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */; };
 		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
@@ -112,17 +102,8 @@
 		B63CFD862037390800F0F90E /* MeteorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeteorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63CFD8A2037390800F0F90E /* MeteorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorUITests.swift; sourceTree = "<group>"; };
 		B63CFD8C2037390800F0F90E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B63CFDA320373B9B00F0F90E /* enter.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = enter.wav; sourceTree = "<group>"; };
 		B63CFDA520373BA400F0F90E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B63CFDA720373BAC00F0F90E /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		B63CFDA920373BF700F0F90E /* kaminari.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kaminari.wav; sourceTree = "<group>"; };
-		B63CFDAA20373BF700F0F90E /* slash2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash2.wav; sourceTree = "<group>"; };
-		B63CFDAB20373BF700F0F90E /* iwa.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = iwa.wav; sourceTree = "<group>"; };
-		B63CFDAC20373BF700F0F90E /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
-		B63CFDAD20373BF700F0F90E /* tubure.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tubure.wav; sourceTree = "<group>"; };
-		B63CFDAE20373BF700F0F90E /* gorogoro.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gorogoro.wav; sourceTree = "<group>"; };
-		B63CFDAF20373BF700F0F90E /* slash3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash3.wav; sourceTree = "<group>"; };
-		B63CFDB020373BF700F0F90E /* sibire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sibire.wav; sourceTree = "<group>"; };
 		B63CFDBD20373C9400F0F90E /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		B63CFDC120373CB800F0F90E /* PauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
 		B63CFDC520373CEF00F0F90E /* GuardPod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuardPod.swift; sourceTree = "<group>"; };
@@ -131,18 +112,17 @@
 		B63CFDCB20373D2C00F0F90E /* PauseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		B63CFDCC20373D2C00F0F90E /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B63CFDCD20373D2C00F0F90E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B63CFDD320373DBF00F0F90E /* jump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jump.wav; sourceTree = "<group>"; };
-		B63CFDD420373DBF00F0F90E /* hakai.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hakai.wav; sourceTree = "<group>"; };
-		B63CFDD520373DC000F0F90E /* bougyo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bougyo.wav; sourceTree = "<group>"; };
-		B63CFDD620373DC000F0F90E /* bgm.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = bgm.mid; sourceTree = "<group>"; };
-		B63CFDD720373DC000F0F90E /* slash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash.wav; sourceTree = "<group>"; };
-		B63CFDD820373DC000F0F90E /* bgmn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmn.mp3; sourceTree = "<group>"; };
 		B63CFDD920373DC000F0F90E /* shining_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shining_star.mp3; sourceTree = "<group>"; };
-		B63CFDDA20373DC000F0F90E /* move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = move.wav; sourceTree = "<group>"; };
-		B63CFDDB20373DC000F0F90E /* tyakuti.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tyakuti.wav; sourceTree = "<group>"; };
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
+		B6958AAA2045885E00573D8D /* explore16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explore16.mp3; sourceTree = "<group>"; };
+		B6958AAC20459D0400573D8D /* attack03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = attack03.mp3; sourceTree = "<group>"; };
+		B6958AAE20459D2F00573D8D /* broken1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = broken1.mp3; sourceTree = "<group>"; };
+		B6958AB020459D6500573D8D /* jump10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jump10.mp3; sourceTree = "<group>"; };
+		B6958AB220459D8000573D8D /* bougyo01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bougyo01.mp3; sourceTree = "<group>"; };
+		B6958AB420459DBE00573D8D /* tyakuti1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tyakuti1.mp3; sourceTree = "<group>"; };
+		B6958AB620459DE000573D8D /* move1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = move1.mp3; sourceTree = "<group>"; };
 		B6A4CEBC204141A700A9AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yabusaka.mp3; sourceTree = "<group>"; };
 		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
@@ -351,26 +331,16 @@
 		B63CFDA220373B8400F0F90E /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B6958AB620459DE000573D8D /* move1.mp3 */,
+				B6958AB420459DBE00573D8D /* tyakuti1.mp3 */,
+				B6958AAA2045885E00573D8D /* explore16.mp3 */,
+				B6958AB220459D8000573D8D /* bougyo01.mp3 */,
+				B6958AB020459D6500573D8D /* jump10.mp3 */,
+				B6958AAE20459D2F00573D8D /* broken1.mp3 */,
+				B6958AAC20459D0400573D8D /* attack03.mp3 */,
 				B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */,
 				B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */,
-				B63CFDA320373B9B00F0F90E /* enter.wav */,
-				B63CFDAE20373BF700F0F90E /* gorogoro.wav */,
-				B63CFDAB20373BF700F0F90E /* iwa.wav */,
-				B63CFDA920373BF700F0F90E /* kaminari.wav */,
-				B63CFDD620373DC000F0F90E /* bgm.mid */,
-				B63CFDD820373DC000F0F90E /* bgmn.mp3 */,
-				B63CFDD520373DC000F0F90E /* bougyo.wav */,
-				B63CFDD420373DBF00F0F90E /* hakai.wav */,
-				B63CFDD320373DBF00F0F90E /* jump.wav */,
-				B63CFDDA20373DC000F0F90E /* move.wav */,
 				B63CFDD920373DC000F0F90E /* shining_star.mp3 */,
-				B63CFDD720373DC000F0F90E /* slash.wav */,
-				B63CFDDB20373DC000F0F90E /* tyakuti.wav */,
-				B63CFDAC20373BF700F0F90E /* select.wav */,
-				B63CFDB020373BF700F0F90E /* sibire.wav */,
-				B63CFDAA20373BF700F0F90E /* slash2.wav */,
-				B63CFDAF20373BF700F0F90E /* slash3.wav */,
-				B63CFDAD20373BF700F0F90E /* tubure.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -522,32 +492,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6958AB320459D8000573D8D /* bougyo01.mp3 in Resources */,
 				B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */,
-				B63CFDDC20373DC100F0F90E /* jump.wav in Resources */,
-				B63CFDB120373BF700F0F90E /* kaminari.wav in Resources */,
-				B63CFDB420373BF700F0F90E /* select.wav in Resources */,
-				B63CFDDD20373DC100F0F90E /* hakai.wav in Resources */,
 				B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */,
 				B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */,
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
-				B63CFDE120373DC100F0F90E /* bgmn.mp3 in Resources */,
-				B63CFDE020373DC100F0F90E /* slash.wav in Resources */,
+				B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */,
 				A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */,
-				B63CFDDE20373DC100F0F90E /* bougyo.wav in Resources */,
-				B63CFDE420373DC100F0F90E /* tyakuti.wav in Resources */,
 				B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */,
-				B63CFDB320373BF700F0F90E /* iwa.wav in Resources */,
 				B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */,
 				B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */,
-				B63CFDE320373DC100F0F90E /* move.wav in Resources */,
-				B63CFDDF20373DC100F0F90E /* bgm.mid in Resources */,
+				B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
-				B63CFDB620373BF700F0F90E /* gorogoro.wav in Resources */,
-				B63CFDB720373BF700F0F90E /* slash3.wav in Resources */,
-				B63CFDB520373BF700F0F90E /* tubure.wav in Resources */,
-				B63CFDA420373B9B00F0F90E /* enter.wav in Resources */,
-				B63CFDB220373BF700F0F90E /* slash2.wav in Resources */,
-				B63CFDB820373BF700F0F90E /* sibire.wav in Resources */,
+				B6958AB520459DBE00573D8D /* tyakuti1.mp3 in Resources */,
+				B6958AB720459DE000573D8D /* move1.mp3 in Resources */,
+				B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */,
+				B6958AB120459D6500573D8D /* jump10.mp3 in Resources */,
 				B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
