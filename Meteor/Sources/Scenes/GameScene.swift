@@ -1194,6 +1194,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //アニメーション
             self.player.guardStart()
         case .guarding: //ガード中
+            self.guardPod.subCount(0.1)
             break
         case .disable:  //ガード不可
             return
