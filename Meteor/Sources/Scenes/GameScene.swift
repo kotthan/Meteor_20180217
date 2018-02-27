@@ -1267,7 +1267,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             circle.fillColor = UIColor.white
             self.addChild(circle)
             let actions = SKAction.sequence(
-                [ SKAction.scale(to: 2000, duration: 2.0),
+                [   SKAction.run{self.playSound(soundName: "explore16")},
+                    SKAction.scale(to: 2000, duration: 2.5),
                   //SKAction.wait(forDuration: 0.5),
                   SKAction.group(
                     [ SKAction.wait(forDuration: 0.2),

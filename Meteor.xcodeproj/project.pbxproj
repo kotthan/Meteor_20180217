@@ -60,6 +60,7 @@
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B63CFDFA2037E88000F0F90E /* StartLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDF92037E88000F0F90E /* StartLogo.swift */; };
+		B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAA2045885E00573D8D /* explore16.mp3 */; };
 		B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBB204141A700A9AB0D /* Launch Screen.storyboard */; };
 		B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */; };
 		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
@@ -143,6 +144,7 @@
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B63CFDF92037E88000F0F90E /* StartLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLogo.swift; sourceTree = "<group>"; };
+		B6958AAA2045885E00573D8D /* explore16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explore16.mp3; sourceTree = "<group>"; };
 		B6A4CEBC204141A700A9AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yabusaka.mp3; sourceTree = "<group>"; };
 		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 		B63CFDA220373B8400F0F90E /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B6958AAA2045885E00573D8D /* explore16.mp3 */,
 				B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */,
 				B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */,
 				B63CFDA320373B9B00F0F90E /* enter.wav */,
@@ -539,6 +542,7 @@
 				B63CFDB320373BF700F0F90E /* iwa.wav in Resources */,
 				B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */,
 				B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */,
+				B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */,
 				B63CFDE320373DC100F0F90E /* move.wav in Resources */,
 				B63CFDDF20373DC100F0F90E /* bgm.mid in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
