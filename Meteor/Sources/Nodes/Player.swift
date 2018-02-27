@@ -22,9 +22,9 @@ class Player: SKNode {
     var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
     var moving: Bool = false                                        //移動中フラグ
-    let moveSound = SKAction.playSoundFileNamed("move", waitForCompletion: true)
-    let jumpSound = SKAction.playSoundFileNamed("jump", waitForCompletion: true)
-    let landingSound = SKAction.playSoundFileNamed("tyakuti", waitForCompletion: true)
+    let moveSound = SKAction.playSoundFileNamed("move1", waitForCompletion: true)
+    let jumpSound = SKAction.playSoundFileNamed("jump10", waitForCompletion: true)
+    let landingSound = SKAction.playSoundFileNamed("tyakuti1", waitForCompletion: true)
     //横位置
     enum PosState: Double {
         case left = 93.75
