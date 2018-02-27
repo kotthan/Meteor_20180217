@@ -33,6 +33,11 @@ class Player: SKNode {
     }
     var posStatus = PosState.center
     var meteorCollisionFlg = false  /* 隕石衝突フラグ */
+    enum ActionState{
+        case Standing
+        case Jumping
+    }
+    var actionStatus = .Standing
     
     override init() {
         super.init()
@@ -66,9 +71,9 @@ class Player: SKNode {
     
     //MARK: - ジャンプ
     func jump() {
-        if self.jumping == false {
+        if self.actionStatus == .Standing {
             self.moving = false
-            self.jumping = true
+            self.actionStatus = .Jumping
             self.velocity = self.jumpVelocity
             self.run(self.jumpSound)
         }
@@ -76,7 +81,7 @@ class Player: SKNode {
     
     //着地
     func landing(){
-        self.jumping = false
+        self.actionStatus = .Standing
         self.velocity = 0.0
         self.position.y = self.defaultYPosition
         //SE
@@ -106,7 +111,7 @@ class Player: SKNode {
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
         let stand = SKAction.run{
-            if( self.jumping == false ){
+            if( self.actionStatus == .Standing ){
                 self.stand()
             }
         }
@@ -127,7 +132,7 @@ class Player: SKNode {
     func guardEnd() {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
-        if( self.jumping == true ){
+        if( self.actionStatus != .Standing ){
             for name in guardEndAnimationTextureNames {
                 ary.append(SKTexture(imageNamed: name))
             }
@@ -166,7 +171,7 @@ class Player: SKNode {
     }
     
     func moveTo(_ pos: PosState){
-        guard self.jumping == false else{return}
+        guard self.actionStatus == .Standing else{return}
         guard self.moving == false else{return}
         
         self.posStatus = pos
@@ -179,7 +184,7 @@ class Player: SKNode {
     //MARK: - 停止
     func moveStop() {
         self.moving = false
-        if self.jumping == false {
+        if self.actionStatus == .Standing {
             self.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
         }
         self.stand()

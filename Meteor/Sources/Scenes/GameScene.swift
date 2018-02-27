@@ -447,7 +447,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 m.position.y += self.meteorSpeed / 60
             }
         }
-        if player.jumping == true
+        if player.actionStatus != .Standing
         {
             // 次の位置を計算する
             self.player.velocity += self.gravity * self.playerGravityCoefficient / 60   // [pixcel/s^2] / 60[fps]
@@ -519,7 +519,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (gameFlg == false)
         { }
-        else if (player.jumping == true) && (self.player.position.y + 200 > self.frame.size.height/2)
+        else if (player.actionStatus != .Standing) && (self.player.position.y + 200 > self.frame.size.height/2)
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
@@ -686,11 +686,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 attackAction()
             case .swipeDown:
                 guardAction(endFlg: true)
-            case .swipeUp where player.jumping == false: //ジャンプしてない場合のみ
+            case .swipeUp where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.jump()
-            case .swipeLeft where player.jumping == false: //ジャンプしてない場合のみ
+            case .swipeLeft where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.moveToLeft()
-            case .swipeRight where player.jumping == false://ジャンプしてない場合のみ
+            case .swipeRight where player.actionStatus == .Standing://ジャンプしてない場合のみ
                 self.player.moveToRight()
             default:
                 break   //何もしない
@@ -886,7 +886,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
                     self.start0Node.isHidden = true
-                    if( self.player.jumping == true ){
+                    if( self.player.actionStatus != .Standing ){
                         self.gameWaitFlag = true
                     }
                     else{
@@ -1110,7 +1110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //入力を受け付けないようにフラグを立てる
         ultraAttackState = .landing
         //print(ultraAttackState)
-        if( player.jumping ) //空中にいる場合
+        if( player.actionStatus != Standing ) //空中にいる場合
         {
             //地面に戻る
             player.velocity = -2000
@@ -1135,7 +1135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print("add ultra attackShape")
         //大ジャンプ
         player.moving = false
-        player.jumping = true
+        player.actionStatus = .Jumping
         player.velocity = self.playerUltraAttackSpped
         //サウンド
         playSound(soundName: "jump")
@@ -1223,7 +1223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for i in meteores
             {
                 i.removeAllActions()
-                if player.jumping == true {
+                if player.actionStatus != .Standing {
                     self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
                     let meteor = self.meteores.first
                     let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
