@@ -874,11 +874,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         //MARK: ゲーム進行関係
         self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
+        playSound(soundName: "button01")
         self.titleBgmPlayer.stop()
         self.mainBgmPlayer.play()
-        hudView.scoreLabel.isHidden = false
-        hudView.highScoreLabel.isHidden = false
-        //start0Node.zPosition = -50
         if( retryFlg == false ){
             //リトライ時はアニメーションはしない
             let action1 = SKAction.fadeOut(withDuration: 1.0)
@@ -1297,6 +1295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func homeButtonAction(){
         adBanner.isHidden = true
+        gameOverView.audioPlayer.stop()
         newGame()
     }
     func reStartButtonAction(){
@@ -1304,6 +1303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.scaleMode = SKSceneScaleMode.aspectFill
         scene.retryFlg = true
         adBanner.isHidden = true
+        gameOverView.audioPlayer.stop()
         self.view!.presentScene(scene)
     }
     @objc func retryButtonAction(_ sender: UIButton ){

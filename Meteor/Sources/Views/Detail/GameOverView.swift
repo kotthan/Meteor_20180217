@@ -7,14 +7,27 @@
 //
 
 import SpriteKit
+import AVFoundation
+import AudioToolbox
 
 @available(iOS 9.0, *)
 class GameOverView: SKNode {
     var HomeButton: SKSpriteNode!
     var ReStartButton: SKSpriteNode!
-    
+    var audioPlayer: AVAudioPlayer!
+
     init(frame: CGRect, score:Int, highScore:Int) {
         super.init()
+        
+        do {
+            let filePath = Bundle.main.path(forResource: "piano31",ofType: "mp3")
+            let musicPath = URL(fileURLWithPath: filePath!)
+            audioPlayer = try AVAudioPlayer(contentsOf: musicPath)
+        } catch {
+            print("error")
+        }
+        audioPlayer.play()
+
         self.position.x = -frame.size.width/2
         self.position.y = -frame.size.height/2
         self.zPosition = 1000
