@@ -62,9 +62,13 @@ class Credits: SKNode {
         }
         //ロゴほか
         let logo = SKSpriteNode(imageNamed: "otlogo")
-        logo.position.y = frame.height * 0.75
+        logo.position.y = frame.height * 0.6
         logo.setScale(0.8)
         self.addChild(logo)
+        let imageLogo = SKSpriteNode(imageNamed: "maou")
+        imageLogo.position.y = frame.height * 0.8
+        imageLogo.setScale(1.0)
+        self.addChild(imageLogo)
         let soundLogo = SKSpriteNode(imageNamed: "hurt-logo")
         soundLogo.position.y = frame.height * 0.9
         soundLogo.setScale(1.0)
