@@ -36,6 +36,7 @@ class Player: SKNode {
     enum ActionState{
         case Standing
         case Jumping
+        case Falling
     }
     var actionStatus = .Standing
     
