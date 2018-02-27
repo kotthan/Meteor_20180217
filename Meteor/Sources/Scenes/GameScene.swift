@@ -80,7 +80,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameFlg:Bool = false
     var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
     var creditFlg = false
-    var meteorCollisionFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
     enum UAState{ //必殺技の状態
         case none       //未発動
@@ -448,7 +447,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 m.position.y += self.meteorSpeed / 60
             }
         }
-        if player.jumping == true
+        if player.actionStatus != .Standing
         {
             // 次の位置を計算する
             self.player.velocity += self.gravity * self.playerGravityCoefficient / 60   // [pixcel/s^2] / 60[fps]
@@ -457,13 +456,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                 _ = player.position.y + (player.size.height/2)
-                if( meteorCollisionFlg ){ //衝突する
+                if( self.player.meteorCollisionFlg ){ //衝突する
                     self.player.position.y = meteorMinY - player.halfSize
                     self.player.velocity -= self.meteorSpeed / 60
                     if( self.player.velocity < self.meteorSpeed ){
                         //playerが上昇中にfalseにすると何度も衝突がおきてplayeerがぶれるので
                         //落下速度が隕石より早くなってからfalseにする
-                        self.meteorCollisionFlg = false
+                        self.player.meteorCollisionFlg = false
                     }
                     if( debug )
                     {
@@ -502,7 +501,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let meteor = self.meteores.first
                 let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                 if( self.player.position.y < meteorMinY - player.halfSize ){
-                    meteorCollisionFlg = false
+                    self.player.meteorCollisionFlg = false
                     if( collisionLine != nil ){
                         collisionLine.removeFromParent()
                         collisionLine = nil
@@ -510,17 +509,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             else{
-                meteorCollisionFlg = false
+                self.player.meteorCollisionFlg = false
                 if( collisionLine != nil ){
                     collisionLine.removeFromParent()
                     collisionLine = nil
                 }
             }
         }
+        /* なんやかんや計算した結果、隕石と衝突してなくて速度が-ならFallingとする */
+        if( self.player.meteorCollisionFlg != false ) &&
+          ( self.player.velocity < 0 ){
+            self.player.actionStatus = .Falling
+        }
         
         if (gameFlg == false)
         { }
-        else if (player.jumping == true) && (self.player.position.y + 200 > self.frame.size.height/2)
+        else if (player.actionStatus != .Standing) && (self.player.position.y + 200 > self.frame.size.height/2)
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
@@ -613,7 +617,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .tap:
                 break   //何もしない
             case .swipeDown:
-                guardAction(endFlg: false)
+                if gameFlg == true{
+                    guardAction(endFlg: false)
+                }
             case .swipeUp: //ジャンプしてない場合のみ
                 break   //何もしない
             case .swipeLeft: //ジャンプしてない場合のみ
@@ -686,12 +692,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .tap:
                 attackAction()
             case .swipeDown:
-                guardAction(endFlg: true)
-            case .swipeUp where player.jumping == false: //ジャンプしてない場合のみ
+                if gameFlg == true{
+                    guardAction(endFlg: true)
+                }
+            case .swipeUp where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.jump()
-            case .swipeLeft where player.jumping == false: //ジャンプしてない場合のみ
+            case .swipeLeft where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.moveToLeft()
-            case .swipeRight where player.jumping == false://ジャンプしてない場合のみ
+            case .swipeRight where player.actionStatus == .Standing://ジャンプしてない場合のみ
                 self.player.moveToRight()
             default:
                 break   //何もしない
@@ -819,7 +827,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
         {
             //print("---Playerとmeteorが接触しました---")
-            meteorCollisionFlg = true;
+            self.player.collisionMeteor()
         }
     }
 
@@ -885,7 +893,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
                     self.start0Node.isHidden = true
-                    if( self.player.jumping == true ){
+                    if( self.player.actionStatus != .Standing ){
                         self.gameWaitFlag = true
                     }
                     else{
@@ -1082,9 +1090,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 playSound(soundName: "broken1")
                 vibrate()
                 //隕石と接触していたら速度を0にする
-                if( meteorCollisionFlg )
+                if( self.player.meteorCollisionFlg )
                 {
-                    self.meteorCollisionFlg = false
+                    self.player.meteorCollisionFlg = false
                     player.velocity = 0;
                 }
             }
@@ -1109,7 +1117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //入力を受け付けないようにフラグを立てる
         ultraAttackState = .landing
         //print(ultraAttackState)
-        if( player.jumping ) //空中にいる場合
+        if( player.actionStatus != .Standing ) //空中にいる場合
         {
             //地面に戻る
             player.velocity = -2000
@@ -1134,7 +1142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print("add ultra attackShape")
         //大ジャンプ
         player.moving = false
-        player.jumping = true
+        player.actionStatus = .Jumping
         player.velocity = self.playerUltraAttackSpped
         //サウンド
         playSound(soundName: "jump10")
@@ -1188,6 +1196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //アニメーション
             self.player.guardStart()
         case .guarding: //ガード中
+            self.guardPod.subCount(0.4)
             break
         case .disable:  //ガード不可
             return
@@ -1222,7 +1231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for i in meteores
             {
                 i.removeAllActions()
-                if player.jumping == true {
+                if player.actionStatus != .Standing {
                     self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
                     let meteor = self.meteores.first
                     let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
