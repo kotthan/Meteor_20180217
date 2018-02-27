@@ -519,7 +519,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* なんやかんや計算した結果、隕石と衝突してなくて速度が-ならFallingとする */
         if( self.player.meteorCollisionFlg != false ) &&
           ( self.player.velocity < 0 ){
-            self.player.ActionState = .Falling
+            self.player.actionStatus = .Falling
         }
         
         if (gameFlg == false)
@@ -1115,7 +1115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //入力を受け付けないようにフラグを立てる
         ultraAttackState = .landing
         //print(ultraAttackState)
-        if( player.actionStatus != Standing ) //空中にいる場合
+        if( player.actionStatus != .Standing ) //空中にいる場合
         {
             //地面に戻る
             player.velocity = -2000
@@ -1194,7 +1194,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //アニメーション
             self.player.guardStart()
         case .guarding: //ガード中
-            self.guardPod.subCount(0.1)
+            self.guardPod.subCount(0.2)
             break
         case .disable:  //ガード不可
             return

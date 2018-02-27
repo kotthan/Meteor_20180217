@@ -38,7 +38,7 @@ class Player: SKNode {
         case Jumping
         case Falling
     }
-    var actionStatus = .Standing
+    var actionStatus = ActionState.Standing
     
     override init() {
         super.init()
