@@ -617,7 +617,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .tap:
                 break   //何もしない
             case .swipeDown:
-                guardAction(endFlg: false)
+                if gameFlg == true{
+                    guardAction(endFlg: false)
+                }
             case .swipeUp: //ジャンプしてない場合のみ
                 break   //何もしない
             case .swipeLeft: //ジャンプしてない場合のみ
@@ -690,7 +692,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .tap:
                 attackAction()
             case .swipeDown:
-                guardAction(endFlg: true)
+                if gameFlg == true{
+                    guardAction(endFlg: true)
+                }
             case .swipeUp where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.jump()
             case .swipeLeft where player.actionStatus == .Standing: //ジャンプしてない場合のみ
@@ -1192,7 +1196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //アニメーション
             self.player.guardStart()
         case .guarding: //ガード中
-            self.guardPod.subCount(0.2)
+            self.guardPod.subCount(0.4)
             break
         case .disable:  //ガード不可
             return
