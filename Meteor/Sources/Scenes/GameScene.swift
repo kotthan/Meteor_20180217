@@ -852,7 +852,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if meteores.isEmpty
         {
             //meteor.position = CGPoint(x: 187, y: self.meteorPos + (meteor.size.height)/2)
-            meteor.position = CGPoint(x:187, y: self.player.position.y + 700 + (meteor.size.height) / 2)
+            meteor.position = CGPoint(x:187, y: self.player.position.y + 760 + (meteor.size.height) / 2)
         } else
         {
             meteor.position = CGPoint(x: 187, y: (meteores.first?.position.y)!)
