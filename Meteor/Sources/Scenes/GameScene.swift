@@ -655,8 +655,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("---タップを離したノード=\(String(describing: node?.name))---")
                 var buttonPushFlg = true
                 switch node{ //押したボタン別処理
+                case let node where node == titleNode?.TitleMeteorNode :
+                    let actions = SKAction.sequence(
+                        [ SKAction.run {
+                            TitleNode.TapAction(self.titleNode.TitleNode, node2: self.titleNode.TitleMeteorNode)
+                            },
+                          SKAction.wait(forDuration: 1.5),
+                          SKAction.run {
+                            self.startButtonAction()
+                            }
+                        ])
+                    run(actions)
                 case let node where node == titleNode?.TitleNode :
-                    startButtonAction()
+                    let actions = SKAction.sequence(
+                        [ SKAction.run {
+                            TitleNode.TapAction(self.titleNode.TitleNode, node2: self.titleNode.TitleMeteorNode)
+                            },
+                          SKAction.wait(forDuration: 1.5),
+                          SKAction.run {
+                            self.startButtonAction()
+                            }
+                        ])
+                    run(actions)
                 case let node where node == ultraOkButton :
                     if self.creditButton.childNode(withName: "credit") != nil {
                         gameFlg = true
@@ -878,12 +898,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.mainBgmPlayer.play()
         if( retryFlg == false ){
             //リトライ時はアニメーションはしない
-            let action1 = SKAction.fadeOut(withDuration: 1.0)
+            //let action1 = SKAction.fadeOut(withDuration: 1.0)
             let action2 = SKAction.run{
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 2)
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
-                    self.titleNode.isHidden = true
+                    //self.titleNode.isHidden = true
                     if( self.player.actionStatus != .Standing ){
                         self.gameWaitFlag = true
                     }
@@ -896,7 +916,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let actionAll = SKAction.sequence([action1,action2])
                 self.camera?.run(actionAll)
             }
-            self.titleNode.run(SKAction.sequence([action1,action2]))
+            self.titleNode.run(action2)
+            //self.titleNode.run(SKAction.sequence([action1,action2]))
             let action_1 = SKAction.fadeOut(withDuration: 1.0)
             self.creditButton.run(SKAction.sequence([action_1,SKAction.removeFromParent()]))
         }
