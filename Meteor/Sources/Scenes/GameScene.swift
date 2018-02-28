@@ -29,7 +29,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let baseNode = SKNode()                                         //ゲームベースノード
     let player = Player()                                           //プレイヤーベース
     let backScrNode = SKNode()                                      //背景ノード
-    let titleLogo = SKSpriteNode()                                  //タイトルロゴノード
     //var player: SKSpriteNode!                                     //プレイヤーノード
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
@@ -40,7 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
     var guardPod: GuardPod!
-    var start0Node: SKSpriteNode!
+    var titleNode: TitleNode!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -287,21 +286,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ガード判定用シェイプ
         guardShapeMake()
         
-        //===================
-        //MARK: start0Node
-        //===================
-        start0Node = SKSpriteNode(imageNamed: "logo_312")
-        self.start0Node.position = CGPoint(
-            x: 189.836,
-            y: 1003.673
-        )
-        self.start0Node.zPosition = 50
-        self.baseNode.addChild(self.start0Node)
-        scaleLoopAction(start0Node)                             //ふわふわアニメ実行
+        //MARK: TitleNode
+        titleNode = TitleNode()
+        self.baseNode.addChild(titleNode)
         
         //MARK: カメラ
         let camera = SKCameraNode()
-        camera.position = CGPoint(x: self.frame.size.width/2,y: start0Node.position.y)
+        camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(camera)
         self.camera = camera
         
@@ -531,13 +522,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 200 );
                 if ( self.creditFlg == true ) && ( self.ultraAttackState == .attacking ) &&
                     ( self.player.velocity < 0 ){
-                    self.start0Node.isHidden = false
-                    self.start0Node.alpha = 1.0
+                    self.titleNode.isHidden = false
+                    self.titleNode.alpha = 1.0
                     self.childNode(withName: "credits")?.removeFromParent()
                     self.creditButton.isHidden = false
                     self.creditButton.alpha = 1.0
-                    if( self.camera!.position.y < start0Node.position.y ){
-                        self.camera!.position = CGPoint(x: self.frame.size.width/2,y: start0Node.position.y)
+                    if( self.camera!.position.y < titleNode.position.y ){
+                        self.camera!.position = CGPoint(x: self.frame.size.width/2,y: titleNode.position.y)
                         self.gameFlg = false
                         self.creditFlg = false
                     }
@@ -664,7 +655,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("---タップを離したノード=\(String(describing: node?.name))---")
                 var buttonPushFlg = true
                 switch node{ //押したボタン別処理
-                case let node where node == start0Node :
+                case let node where node == titleNode?.TitleNode :
                     startButtonAction()
                 case let node where node == ultraOkButton :
                     if self.creditButton.childNode(withName: "credit") != nil {
@@ -892,7 +883,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 2)
                 action1.timingMode = .easeInEaseOut
                 let action2 = SKAction.run {
-                    self.start0Node.isHidden = true
+                    self.titleNode.isHidden = true
                     if( self.player.actionStatus != .Standing ){
                         self.gameWaitFlag = true
                     }
@@ -905,11 +896,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let actionAll = SKAction.sequence([action1,action2])
                 self.camera?.run(actionAll)
             }
-            self.start0Node.run(SKAction.sequence([action1,action2]))
-            self.creditButton.run(SKAction.sequence([action1,SKAction.removeFromParent()]))
+            self.titleNode.run(SKAction.sequence([action1,action2]))
+            let action_1 = SKAction.fadeOut(withDuration: 1.0)
+            self.creditButton.run(SKAction.sequence([action_1,SKAction.removeFromParent()]))
         }
         else{
-            self.start0Node.isHidden = true
+            self.titleNode.isHidden = true
             self.creditButton.isHidden = true
             gameFlg = true
             //pod回復スタート
@@ -917,7 +909,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         pauseButton.isHidden = false //ポーズボタンを表示する
     }
-    
     func creditAction(){
         let credits = Credits(frame: self.frame)
         credits.name = "credits"
@@ -935,14 +926,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let cameraAct = SKAction.run {
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 5)
                 let action2 = SKAction.run {
-                    self.start0Node.isHidden = true
+                    self.titleNode.isHidden = true
                 }
                 let actionAll = SKAction.sequence([action1,action2])
                 self.camera?.run(actionAll)
             }
             self.childNode(withName: "credits")?.run(SKAction.sequence([moveCredit,cameraAct]))
         }
-        self.start0Node.run(SKAction.sequence([action1,action2]))
+        self.titleNode.run(SKAction.sequence([action1,action2]))
         self.creditButton.run(SKAction.sequence([action1,SKAction.hide()]))
     }
     
@@ -1367,21 +1358,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //==========================================================
     //MARK: - アクション
     //==========================================================
-    func scaleLoopAction(_ node: SKSpriteNode){
-        let actions = SKAction.sequence(
-            [ SKAction.scale(to: 1.03, duration: 0.3),
-              //SKAction.wait(forDuration: 0.1),
-              SKAction.scale(to: 1.0, duration: 0.3),
-              //SKAction.wait(forDuration: 0.1),
-              SKAction.scale(to: 0.97, duration: 0.3),
-              //SKAction.wait(forDuration: 0.1),
-              SKAction.scale(to: 1.0, duration: 0.3)
-              //SKAction.run{self.isPaused = true},
-            ])
-        let loopAction = SKAction.repeatForever(actions)
-        node.run(loopAction)
-    }
-    
+
     func cloudLoopAction(_ node: SKSpriteNode){
         let actions = SKAction.sequence(
             [ SKAction.moveTo(x: -1000, duration: 3000.0),
