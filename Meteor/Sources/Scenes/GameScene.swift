@@ -29,7 +29,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let baseNode = SKNode()                                         //ゲームベースノード
     let player = Player()                                           //プレイヤーベース
     let backScrNode = SKNode()                                      //背景ノード
-    //var player: SKSpriteNode!                                     //プレイヤーノード
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
     var ground: SKSpriteNode!                                       //地面
@@ -38,6 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
+    var ground1: Ground!
     var guardPod: GuardPod!
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
@@ -197,6 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.backScrNode.addChild(back_wall_main)
                     //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
             })
+            /*
 			//===================
 			//MARK: 地面
 			//===================
@@ -212,6 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.ground = ground
                 //print("---SKSファイルより地面＝\(ground)を読み込みました---")
 			})
+             */
             //===================
             //MARK: 落下判定シェイプノード
             //===================
@@ -303,6 +305,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //MARK: ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
         self.camera!.addChild(gaugeview)
+        
+        //MARK: 地面
+        ground1 = Ground(frame: self.frame)
+        self.baseNode.addChild(ground1)
         
         //===================
         //MARK: credit表示ボタン
@@ -527,7 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
-                self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 200 );
+                self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 150 );
                 if ( self.creditFlg == true ) && ( self.ultraAttackState == .attacking ) &&
                     ( self.player.velocity < 0 ){
                     self.titleNode.isHidden = false
