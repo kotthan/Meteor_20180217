@@ -32,13 +32,11 @@ class GameOverView: SKNode {
         self.position.y = -frame.size.height/2
         self.zPosition = 1000
         //背景ノード追加
-        let background = SKSpriteNode(imageNamed: "IMG_0399")
+        let background = SKSpriteNode(imageNamed: "gameover_kari")
         background.name = "backgound"
         background.position.x = +frame.size.width/2
         background.position.y = +frame.size.height/2
         background.zPosition = 1000
-        background.size.width = frame.size.width
-        background.size.height = frame.size.height
         self.addChild(background)
         //広告
         adBanner.frame.origin.x = frame.size.width / 2 - adBanner.frame.size.width / 2
@@ -78,7 +76,7 @@ class GameOverView: SKNode {
         //リスタートボタン
         ReStartButton = SKSpriteNode(imageNamed: "restart")
         ReStartButton.name = "ReStartButton"
-        ReStartButton.size.width = 100.0
+        ReStartButton.size.width = 75.0
         ReStartButton.size.height = 75.0
         ReStartButton.zPosition = 1010
         ReStartButton.position.x = +frame.size.width/2 + 100

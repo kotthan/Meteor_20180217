@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShapeName: String = "guardShape"
     var guardPod: GuardPod!
     var titleNode: TitleNode!
+    var gaugeview: GaugeView!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -279,22 +280,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			wallFrameNode.physicsBody!.categoryBitMask = 0b0000             //接触判定用マスク設定
 			wallFrameNode.physicsBody!.usesPreciseCollisionDetection = true //詳細物理判定
 		}
-        //隕石ベース
-        self.addChild(self.meteorBase)
-        //攻撃判定用シェイプ
-        attackShapeMake()
-        //ガード判定用シェイプ
-        guardShapeMake()
-        
-        //MARK: TitleNode
-        titleNode = TitleNode()
-        self.baseNode.addChild(titleNode)
         
         //MARK: カメラ
         let camera = SKCameraNode()
         camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(camera)
         self.camera = camera
+        
+        //隕石ベース
+        self.addChild(self.meteorBase)
+        
+        //攻撃判定用シェイプ
+        attackShapeMake()
+        
+        //ガード判定用シェイプ
+        guardShapeMake()
+        
+        //MARK: タイトルノード
+        titleNode = TitleNode()
+        self.baseNode.addChild(titleNode)
+        
+        //MARK: ゲージ関係
+        gaugeview = GaugeView(frame: self.frame)
+        self.camera!.addChild(gaugeview)
         
         //===================
         //MARK: credit表示ボタン
