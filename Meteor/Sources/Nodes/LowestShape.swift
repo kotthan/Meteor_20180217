@@ -2,14 +2,15 @@
 //  File.swift
 //  Meteor
 //
-//  Created by Kazuaki Oe on 2018/03/02.
+//  Created by Kazuaki Oe on 2018/03/03.
 //  Copyright © 2018年 Kazuaki Oe. All rights reserved.
 //
+
 
 import SpriteKit
 
 @available(iOS 9.0, *)
-class Ground: SKNode
+class LowestShape: SKNode
 {
     var Ground: SKShapeNode!
     init(frame: CGRect)
@@ -17,11 +18,11 @@ class Ground: SKNode
         super.init()
         let GroundY: CGFloat = 139.125
         Ground = SKShapeNode(rect: CGRect(x: 0, y: GroundY, width: frame.size.width, height: 1))
-        Ground.fillColor = UIColor.clear
+        Ground.fillColor = UIColor.red
         Ground.name = "ground"
         Ground.position.x = 0
         Ground.position.y = 0
-        Ground.zPosition = -10000
+        Ground.zPosition = 1000
         Ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: Ground.frame.size.width, height: Ground.frame.size.height),center: CGPoint(x: 0 + frame.size.width/2, y: GroundY))
         Ground.physicsBody?.isDynamic = false
         Ground.physicsBody?.categoryBitMask = 0b0001
@@ -34,3 +35,4 @@ class Ground: SKNode
         fatalError("init(coder:) has not been implemented")
     }
 }
+
