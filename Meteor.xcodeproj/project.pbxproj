@@ -44,6 +44,8 @@
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
 		B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661083E2046A8B0008B3767 /* TitleNode.swift */; };
+		B6610841204829AA008B3767 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6610840204829AA008B3767 /* GaugeView.swift */; };
+		B661084320484ECA008B3767 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661084220484ECA008B3767 /* Ground.swift */; };
 		B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAA2045885E00573D8D /* explore16.mp3 */; };
 		B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAC20459D0400573D8D /* attack03.mp3 */; };
 		B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAE20459D2F00573D8D /* broken1.mp3 */; };
@@ -120,6 +122,8 @@
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B661083E2046A8B0008B3767 /* TitleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleNode.swift; sourceTree = "<group>"; };
+		B6610840204829AA008B3767 /* GaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
+		B661084220484ECA008B3767 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		B6958AAA2045885E00573D8D /* explore16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explore16.mp3; sourceTree = "<group>"; };
 		B6958AAC20459D0400573D8D /* attack03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = attack03.mp3; sourceTree = "<group>"; };
 		B6958AAE20459D2F00573D8D /* broken1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = broken1.mp3; sourceTree = "<group>"; };
@@ -284,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDC720373CF800F0F90E /* HUDView.swift */,
+				B6610840204829AA008B3767 /* GaugeView.swift */,
 				B63CFDCB20373D2C00F0F90E /* PauseView.swift */,
 				B6DE6285203B15E100A1B13F /* GameOverView.swift */,
 			);
@@ -358,6 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
+				B661084220484ECA008B3767 /* Ground.swift */,
 				B661083E2046A8B0008B3767 /* TitleNode.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
@@ -552,10 +558,12 @@
 				B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */,
 				B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */,
 				A3DBAE83203946960025B9DD /* Player.swift in Sources */,
+				B661084320484ECA008B3767 /* Ground.swift in Sources */,
 				A3DBAE87203B1CB50025B9DD /* Credits.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
 				B63CFDD220373D2C00F0F90E /* ViewController.swift in Sources */,
+				B6610841204829AA008B3767 /* GaugeView.swift in Sources */,
 				B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */,
 				B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */,
 				B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */,

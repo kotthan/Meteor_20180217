@@ -29,17 +29,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let baseNode = SKNode()                                         //ゲームベースノード
     let player = Player()                                           //プレイヤーベース
     let backScrNode = SKNode()                                      //背景ノード
-    //var player: SKSpriteNode!                                     //プレイヤーノード
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
-    var ground: SKSpriteNode!                                       //地面
+    //var ground: SKSpriteNode!                                       //地面
     var lowestShape: SKShapeNode!                                   //落下判定シェイプノード
     var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
+    var ground: Ground!
     var guardPod: GuardPod!
     var titleNode: TitleNode!
+    var gaugeview: GaugeView!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -196,6 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.backScrNode.addChild(back_wall_main)
                     //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
             })
+            /*
 			//===================
 			//MARK: 地面
 			//===================
@@ -211,6 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.ground = ground
                 //print("---SKSファイルより地面＝\(ground)を読み込みました---")
 			})
+             */
             //===================
             //MARK: 落下判定シェイプノード
             //===================
@@ -279,22 +282,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			wallFrameNode.physicsBody!.categoryBitMask = 0b0000             //接触判定用マスク設定
 			wallFrameNode.physicsBody!.usesPreciseCollisionDetection = true //詳細物理判定
 		}
-        //隕石ベース
-        self.addChild(self.meteorBase)
-        //攻撃判定用シェイプ
-        attackShapeMake()
-        //ガード判定用シェイプ
-        guardShapeMake()
-        
-        //MARK: TitleNode
-        titleNode = TitleNode()
-        self.baseNode.addChild(titleNode)
         
         //MARK: カメラ
         let camera = SKCameraNode()
         camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(camera)
         self.camera = camera
+        
+        //隕石ベース
+        self.addChild(self.meteorBase)
+        
+        //攻撃判定用シェイプ
+        attackShapeMake()
+        
+        //ガード判定用シェイプ
+        guardShapeMake()
+        
+        //MARK: タイトルノード
+        titleNode = TitleNode()
+        self.baseNode.addChild(titleNode)
+        
+        //MARK: ゲージ関係
+        gaugeview = GaugeView(frame: self.frame)
+        self.camera!.addChild(gaugeview)
+        
+        //MARK: 地面
+        ground = Ground(frame: self.frame)
+        self.baseNode.addChild(ground)
         
         //===================
         //MARK: credit表示ボタン
@@ -519,7 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
-                self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 200 );
+                self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 150 );
                 if ( self.creditFlg == true ) && ( self.ultraAttackState == .attacking ) &&
                     ( self.player.velocity < 0 ){
                     self.titleNode.isHidden = false
@@ -789,6 +803,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bitA = contact.bodyA.categoryBitMask
         let bitB = contact.bodyB.categoryBitMask
         //print("---接触したノードは\(String(describing: nameA))と\(String(describing: nameB))です---")
+        print("\(nodeA):\(nodeB)")
         
         if (bitA == 0b10000 || bitB == 0b10000) && (bitA == 0b1000 || bitB == 0b1000)
         {

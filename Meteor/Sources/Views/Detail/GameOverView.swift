@@ -30,15 +30,13 @@ class GameOverView: SKNode {
 
         self.position.x = -frame.size.width/2
         self.position.y = -frame.size.height/2
-        self.zPosition = 1000
+        self.zPosition = 10000
         //背景ノード追加
-        let background = SKSpriteNode(imageNamed: "IMG_0399")
+        let background = SKSpriteNode(imageNamed: "gameover_back")
         background.name = "backgound"
         background.position.x = +frame.size.width/2
         background.position.y = +frame.size.height/2
-        background.zPosition = 1000
-        background.size.width = frame.size.width
-        background.size.height = frame.size.height
+        background.zPosition = 10000
         self.addChild(background)
         //広告
         adBanner.frame.origin.x = frame.size.width / 2 - adBanner.frame.size.width / 2
@@ -46,7 +44,7 @@ class GameOverView: SKNode {
         adBanner.isHidden = false
         //スコアラベル
         let scoreLabel = SKLabelNode()
-        scoreLabel.zPosition = 1010
+        scoreLabel.zPosition = 10001
         scoreLabel.fontName = "GillSansStd-ExtraBold"
         scoreLabel.fontSize = 50
         scoreLabel.text = "Score: " + String( score )
@@ -56,7 +54,7 @@ class GameOverView: SKNode {
         self.addChild(scoreLabel)
         //ハイスコアラベル
         let highScoreLabel = SKLabelNode()
-        highScoreLabel.zPosition = 1010
+        highScoreLabel.zPosition = 100001
         highScoreLabel.fontName = "GillSansStd-ExtraBold"
         highScoreLabel.fontSize = 30
         highScoreLabel.text = "High Score: " + String( highScore )
@@ -69,7 +67,7 @@ class GameOverView: SKNode {
         HomeButton.name = "HomeButton"
         HomeButton.size.width = 75.0
         HomeButton.size.height = 75.0
-        HomeButton.zPosition = 1010
+        HomeButton.zPosition = 100001
         HomeButton.position.x = +frame.size.width/2 - 100
         HomeButton.position.y = frame.size.height/2 - 50
         HomeButton.xScale = 1
@@ -78,9 +76,9 @@ class GameOverView: SKNode {
         //リスタートボタン
         ReStartButton = SKSpriteNode(imageNamed: "restart")
         ReStartButton.name = "ReStartButton"
-        ReStartButton.size.width = 100.0
+        ReStartButton.size.width = 75.0
         ReStartButton.size.height = 75.0
-        ReStartButton.zPosition = 1010
+        ReStartButton.zPosition = 100001
         ReStartButton.position.x = +frame.size.width/2 + 100
         ReStartButton.position.y = frame.size.height/2 - 50
         ReStartButton.xScale = 1
