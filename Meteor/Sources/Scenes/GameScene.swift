@@ -1344,63 +1344,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var paramSliders = [UISlider]()
     var paramLabals = [SKLabelNode]()
     var collisionLine : SKShapeNode!
-    //追加
-    func addParamSlider(){
-        /*
-        //デバッグ表示関連はすべてdebugViewに追加する
-        debugView.frame.size = self.frame.size
-        debugView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-        self.view!.addSubview(debugView)
-        //
-        params.append(&gravity)
-        params.append(&meteorPos)
-        params.append(&meteorGravityCoefficient)
-        params.append(&pleyer.jumpVeloctiy)
-        params.append(&playerGravityCoefficient)
-        params.append(&meteorSpeedAtGuard)
-        params.append(&speedFromMeteorAtGuard)
-        //パラメータ調整用スライダー
-        var ix = 0;
-        for p in paramNames {
-            let slider = UISlider()
-            slider.center = CGPoint(x: 100, y: frame.midY - 50 + (CGFloat(ix)*50) )
-            slider.frame.size.width = frame.size.width - 100
-            slider.sizeToFit()
-            slider.addTarget(self, action: #selector(self.sliderOnChange), for: .valueChanged)
-            slider.minimumValue = paramMin[ix]     // 最小値
-            slider.maximumValue = paramMax[ix]    // 最大値
-            slider.setValue( paramInv[ix](params[ix].pointee), animated: true)  // デフォルト値の設定
-            paramSliders.append(slider)     //検索につかうので配列にも入れておく
-            debugView.addSubview(slider)
-            //値表示用ラベル
-            let label = UILabel()
-            label.text = p + ": " + String( describing: params[ix].pointee )
-            label.sizeToFit()
-            label.textColor = UIColor.white
-            label.layer.position.y -= 10
-            slider.addSubview(label)
-            ix += 1
-        }
-        //プレイヤー座標
-        playerPosLabel.layer.position = CGPoint(x: 10, y:30)
-        playerPosLabel.numberOfLines = 10
-        playerPosLabel.textColor = UIColor.white
-        playerPosLabel.frame.size.width = frame.size.width
-        playerPosLabel.frame.size.height = 50
-        debugView.addSubview(playerPosLabel)
-        //デフォルトボタン
-        let btn = UIButton(type: UIButtonType.roundedRect)
-        btn.setTitle("Default", for: .normal)
-        btn.sizeToFit()
-        btn.backgroundColor = UIColor.green
-        btn.layer.position = CGPoint(x: btn.frame.size.width,
-                                     y: frame.maxY - btn.frame.size.height)
-        btn.addTarget(self, action: #selector(self.setDefaultParam), for: .touchUpInside)
-        debugView.addSubview(btn)
-         */
-        //デフォルト非表示
-        debugView.isHidden = true
-    }
+
     //削除
     func removeParamSlider(){
         debugView.removeFromSuperview()
