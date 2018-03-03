@@ -581,7 +581,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             }
                         ])
                     run(actions)
-                case let node where node == ultraOkButton :
+                case let node where node == gaugeview.ultraAttackIcon :
                     if self.creditButton.childNode(withName: "credit") != nil {
                         gameFlg = true
                     }
