@@ -213,24 +213,30 @@ class GuardPod: SKNode {
         self.count = 0
         countLabel.text = String(describing: self.count)
         //アニメーション
-        let duration = 1.0
         self.removeAllActions()
         self.run( SKAction.group( [SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0),
                                   SKAction.moveTo(y: 0, duration: 1.0)] ))
         self.middleMask.run( SKAction.scale(to: 0, duration: 1.0) )
         self.pod2Top.run( SKAction.move(to: CGPoint(x: 0, y:-11), duration: 1.0) )
         self.pod2Bottom.run( SKAction.move(to: CGPoint(x: 0, y:11), duration: 1.0) )
-        top.run(SKAction.moveTo(y: 0, duration: duration))
-        let animate = SKAction.animate(with: [top_default,top_broken],
-                                       timePerFrame: 0.1,
-                                       resize: false,
-                                       restore: false)
-        top.run(SKAction.repeat(animate, count: 5))
-        bottom.run(SKAction.moveTo(y: 0, duration: duration))
-        glass.run(SKAction.scaleY(to: 0, duration: duration))
+        brokenAnimation(duration: 1.0)
         //self.gaugeMask.isHidden = true
         //ガード不可状態にする
         self.guardStatus = .disable
+    }
+    
+    private func brokenAnimation(duration: TimeInterval){
+        let flashCount = 10
+        //topの画像を入れ替える
+        let animate = SKAction.animate(with: [top_default,top_broken],
+                                       timePerFrame: duration / Double(flashCount),
+                                       resize: false,
+                                       restore: false)
+        top.run(SKAction.repeat(animate, count: flashCount))
+        //閉じる
+        top.run(SKAction.moveTo(y: 0, duration: duration))
+        bottom.run(SKAction.moveTo(y: 0, duration: duration))
+        glass.run(SKAction.scaleY(to: 0, duration: duration))
     }
 
     required init?(coder aDecoder: NSCoder) {
