@@ -23,7 +23,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 @available(iOS 9.0, *)
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    let debug = false   //デバッグフラグ
+    let debug = false  //デバッグフラグ
 	//MARK: - 基本構成
     //MARK: ノード
     let baseNode = SKNode()                                         //ゲームベースノード
@@ -197,23 +197,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.backScrNode.addChild(back_wall_main)
                     //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
             })
-            /*
-			//===================
-			//MARK: 地面
-			//===================
-			scene.enumerateChildNodes(withName: "ground", using: { (node, stop) -> Void in
-				let ground = node as! SKSpriteNode
-				ground.name = "ground"
-                ground.physicsBody?.categoryBitMask = 0b0001                //接触判定用マスク設定
-                ground.physicsBody?.collisionBitMask = 0b0000 | 0b0000      //接触対象をplayer|meteorに設定
-                ground.physicsBody?.contactTestBitMask = 0b0100             //接触対象をplayer|meteorに設定
-				//シーンから削除して再配置
-				ground.removeFromParent()
-				self.baseNode.addChild(ground)
-                self.ground = ground
-                //print("---SKSファイルより地面＝\(ground)を読み込みました---")
-			})
-             */
             //===================
             //MARK: 落下判定シェイプノード
             //===================
@@ -409,6 +392,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                                selector: #selector(becomeActive(_:)),
                                                name: .UIApplicationDidBecomeActive,
                                                object: nil)
+        
+        self.view?.showsPhysics = true
         
         if(debug)
         {
@@ -911,7 +896,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.mainBgmPlayer.play()
         if( retryFlg == false ){
             //リトライ時はアニメーションはしない
-            //let action1 = SKAction.fadeOut(withDuration: 1.0)
             let action2 = SKAction.run{
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 2)
                 action1.timingMode = .easeInEaseOut
@@ -930,7 +914,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.camera?.run(actionAll)
             }
             self.titleNode.run(action2)
-            //self.titleNode.run(SKAction.sequence([action1,action2]))
             let action_1 = SKAction.fadeOut(withDuration: 1.0)
             self.creditButton.run(SKAction.sequence([action_1,SKAction.removeFromParent()]))
         }
@@ -1352,23 +1335,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOverView.audioPlayer.stop()
         self.view!.presentScene(scene)
     }
-    @objc func retryButtonAction(_ sender: UIButton ){
-        for view in self.view!.subviews {
-            view.removeFromSuperview()
-        }
-        let scene = GameScene(size: self.scene!.size)
-        scene.scaleMode = SKSceneScaleMode.aspectFill
-        scene.retryFlg = true
-        self.view?.presentScene(scene)
-    }
-    
-    @objc func newGame()
-    {
-        let scene = GameScene(size: self.scene!.size)
-        scene.scaleMode = SKSceneScaleMode.aspectFill
-        self.view?.presentScene(scene)
-    }
-    
     //MARK: 音楽
     func playSound(soundName: String)
     {
