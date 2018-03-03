@@ -25,6 +25,7 @@ class GuardPod: SKNode {
     private let gaugeMask: SKShapeNode
     private let podScale: CGFloat = 1 / 4
     private let gaugeHeight: CGFloat
+    private let gaugeView: GaugeView
     
     var guardStatus = guardState.enable //ガード状態
     let maxCount:CGFloat = 90.0   //最大値
@@ -33,8 +34,9 @@ class GuardPod: SKNode {
     let recoverBrokenTime:Double = 5.0  //破壊状態から回復するまでの時間
     let actionKey = "recover"
     
-    override init() {
+    init(gaugeView: GaugeView) {
         //初期化
+        self.gaugeView = gaugeView
         top_default = SKTexture(imageNamed: "podTop_green")
         top_broken = SKTexture(imageNamed: "podTop_red")
         top = SKSpriteNode(texture: top_default)
@@ -67,6 +69,7 @@ class GuardPod: SKNode {
         bottom.zPosition = zPosition + 0.1
         top.zPosition = zPosition + 0.2
         gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
+        gaugeView.guardGaugeMask.xScale = CGFloat(self.count) / CGFloat(self.maxCount)
         //追加
         addChild(top)
         glass.addChild(gauge)
@@ -114,6 +117,7 @@ class GuardPod: SKNode {
         }
         if( self.guardStatus != .disable ){
             self.gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
+            gaugeView.guardGaugeMask.xScale = CGFloat(self.count) / CGFloat(self.maxCount)
         }
     }
     
@@ -149,6 +153,7 @@ class GuardPod: SKNode {
             startRecover()
         }
         self.gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
+        gaugeView.guardGaugeMask.xScale = CGFloat(self.count) / CGFloat(self.maxCount)
     }
     
     //ガード破損
