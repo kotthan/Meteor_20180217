@@ -45,6 +45,7 @@
 		B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661083E2046A8B0008B3767 /* TitleNode.swift */; };
 		B6610841204829AA008B3767 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6610840204829AA008B3767 /* GaugeView.swift */; };
 		B661084320484ECA008B3767 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661084220484ECA008B3767 /* Ground.swift */; };
+		B6610845204A6101008B3767 /* push_45.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6610844204A6101008B3767 /* push_45.mp3 */; };
 		B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAA2045885E00573D8D /* explore16.mp3 */; };
 		B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAC20459D0400573D8D /* attack03.mp3 */; };
 		B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAE20459D2F00573D8D /* broken1.mp3 */; };
@@ -122,6 +123,7 @@
 		B661083E2046A8B0008B3767 /* TitleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleNode.swift; sourceTree = "<group>"; };
 		B6610840204829AA008B3767 /* GaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
 		B661084220484ECA008B3767 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		B6610844204A6101008B3767 /* push_45.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = push_45.mp3; sourceTree = "<group>"; };
 		B6958AAA2045885E00573D8D /* explore16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explore16.mp3; sourceTree = "<group>"; };
 		B6958AAC20459D0400573D8D /* attack03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = attack03.mp3; sourceTree = "<group>"; };
 		B6958AAE20459D2F00573D8D /* broken1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = broken1.mp3; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				B6958ABA2045A49C00573D8D /* piano31.mp3 */,
+				B6610844204A6101008B3767 /* push_45.mp3 */,
 				B6958AB620459DE000573D8D /* move1.mp3 */,
 				B6958AB82045A0FA00573D8D /* button01.mp3 */,
 				B6958AB420459DBE00573D8D /* tyakuti1.mp3 */,
@@ -517,6 +520,7 @@
 				B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */,
 				B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
+				B6610845204A6101008B3767 /* push_45.mp3 in Resources */,
 				B6958AB520459DBE00573D8D /* tyakuti1.mp3 in Resources */,
 				B6958ABB2045A49C00573D8D /* piano31.mp3 in Resources */,
 				B6958AB720459DE000573D8D /* move1.mp3 in Resources */,

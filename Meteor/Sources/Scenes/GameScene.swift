@@ -802,8 +802,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         _ = nodeB?.name
         let bitA = contact.bodyA.categoryBitMask
         let bitB = contact.bodyB.categoryBitMask
-        //print("---接触したノードは\(String(describing: nameA))と\(String(describing: nameB))です---")
-        print("\(nodeA):\(nodeB)")
         
         if (bitA == 0b10000 || bitB == 0b10000) && (bitA == 0b1000 || bitB == 0b1000)
         {
@@ -1323,18 +1321,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    @objc func newGameButtonAction(_ sender: UIButton ){
-        for view in self.view!.subviews {
-            view.removeFromSuperview()
-        }
-        newGame()
-    }
     func homeButtonAction(){
-        adBanner.isHidden = true
-        gameOverView.audioPlayer.stop()
-        newGame()
+        playSound(soundName: "push_45")
+        //adBanner.isHidden = true
+        //gameOverView.audioPlayer.stop()
+        //newGame()
+        /*let actions = SKAction.sequence(
+            [ /*SKAction.run {
+                self.playSound(soundName: "push_45")
+                },*/
+              SKAction.run {
+                adBanner.isHidden = true
+                },
+              SKAction.run {
+                self.gameOverView.audioPlayer.stop()
+                },
+              SKAction.run {
+                self.newGame()
+                }
+            ])
+ */
+        //run(actions)
     }
     func reStartButtonAction(){
+        playSound(soundName: "push_45")
         let scene = GameScene(size: self.scene!.size)
         scene.scaleMode = SKSceneScaleMode.aspectFill
         scene.retryFlg = true

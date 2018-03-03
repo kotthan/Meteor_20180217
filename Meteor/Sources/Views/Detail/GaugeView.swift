@@ -17,8 +17,8 @@ class GaugeView: SKNode {
         //ゲージベース追加
         let base = SKSpriteNode(imageNamed: "base")
         base.name = "base"
-        base.xScale = 0.39
-        base.yScale = 0.39
+        base.xScale = 0.58
+        base.yScale = 0.58
         base.position.x = 0
         base.position.y =  0 - frame.size.height / 2 + base.size.height / 2 
         base.zPosition = 1000

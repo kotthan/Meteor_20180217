@@ -40,17 +40,17 @@ class GameOverView: SKNode {
         self.addChild(background)
         //広告
         adBanner.frame.origin.x = frame.size.width / 2 - adBanner.frame.size.width / 2
-        adBanner.frame.origin.y = 0 + frame.size.height - adBanner.frame.size.height
+        adBanner.frame.origin.y = 0 + frame.size.height - adBanner.frame.size.height - 20
         adBanner.isHidden = false
         //スコアラベル
         let scoreLabel = SKLabelNode()
         scoreLabel.zPosition = 10001
         scoreLabel.fontName = "GillSansStd-ExtraBold"
-        scoreLabel.fontSize = 50
+        scoreLabel.fontSize = 60
         scoreLabel.text = "Score: " + String( score )
-        scoreLabel.color = UIColor.black
+        scoreLabel.fontColor = UIColor.black
         scoreLabel.position.x = +frame.size.width/2
-        scoreLabel.position.y = frame.size.height/2
+        scoreLabel.position.y = frame.size.height/2 - 30
         self.addChild(scoreLabel)
         //ハイスコアラベル
         let highScoreLabel = SKLabelNode()
@@ -58,7 +58,7 @@ class GameOverView: SKNode {
         highScoreLabel.fontName = "GillSansStd-ExtraBold"
         highScoreLabel.fontSize = 30
         highScoreLabel.text = "High Score: " + String( highScore )
-        highScoreLabel.color = UIColor.black
+        highScoreLabel.fontColor = UIColor.black
         highScoreLabel.position.x = +frame.size.width/2
         highScoreLabel.position.y = scoreLabel.position.y + scoreLabel.frame.size.height + 20
         self.addChild(highScoreLabel)
@@ -69,7 +69,7 @@ class GameOverView: SKNode {
         HomeButton.size.height = 75.0
         HomeButton.zPosition = 100001
         HomeButton.position.x = +frame.size.width/2 - 100
-        HomeButton.position.y = frame.size.height/2 - 50
+        HomeButton.position.y = scoreLabel.position.y + scoreLabel.frame.size.height + 20 + 100
         HomeButton.xScale = 1
         HomeButton.yScale = 1
         self.addChild(HomeButton)
@@ -80,7 +80,7 @@ class GameOverView: SKNode {
         ReStartButton.size.height = 75.0
         ReStartButton.zPosition = 100001
         ReStartButton.position.x = +frame.size.width/2 + 100
-        ReStartButton.position.y = frame.size.height/2 - 50
+        ReStartButton.position.y = scoreLabel.position.y + scoreLabel.frame.size.height + 20 + 100
         ReStartButton.xScale = 1
         ReStartButton.yScale = 1
         self.addChild(ReStartButton)
