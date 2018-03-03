@@ -39,8 +39,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
     var creditButton = SKLabelNode()
-    var cloud_1: SKSpriteNode!
-    var cloud_2: SKSpriteNode!
     var score = 0                                                   //スコア
     var combo = 0                                                   //スコア
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
@@ -95,12 +93,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var charYOffset: CGFloat = 0                                    //Y位置のオフセット
     var guardPower : CGFloat = 4500.0                               //ガード可否判定用
     var UltraPower : Int = 0                                        //必殺技可否判定用
-    
-    //MARK: ポジションプロパティ
-    let centerPosition = CGPoint(x: 187.5, y: 243.733)              //中央位置
-    let leftPosition = CGPoint(x: 93.75, y: 243.733)                //左位置
-    let rightPosition = CGPoint(x: 281.25, y: 243.733)              //右位置
-    
     //MARK: 隕石・プレイヤー動作プロパティ
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
@@ -850,8 +842,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         credits.position.y -= self.frame.height
         self.addChild(credits)
         self.creditFlg = true
-        //self.titleBgmPlayer.stop()
-        //self.mainBgmPlayer.play()
         self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
