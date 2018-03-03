@@ -321,11 +321,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //アプリがバックグラウンドから復帰した際に呼ばれる関数
     //起動時にも呼ばれる
     @objc func becomeActive(_ notification: Notification) {
-        if( gameFlg == false )
-        {
-            //ゲームが始まっていなければなにもしない
-            return
-        }
+        guard gameFlg == true else{ return } // ゲーム中でなければなにもせず抜ける
         isPaused = true     //ポーズ状態にする
         if( sliderHidden == true ){ //ポーズボタンが押されていなかった
             if( gameoverFlg == false ){ //ゲームオーバになっていない時
@@ -1166,6 +1162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         if( !gameoverFlg ){ //既にGameOverの場合はなにもしない
             self.gameoverFlg = true
+            self.gameFlg = false
             self.meteorTimer?.invalidate()
             pauseButton.isHidden = true//ポーズボタンを非表示にする
             hudView.scoreLabel.isHidden = true
