@@ -10,16 +10,27 @@ import SpriteKit
 
 class GuardPod: SKNode {
     
-    let podTop = SKCropNode()
-    let podMiddle = SKCropNode()
-    var middleMask: SKShapeNode!
-    let podBottom = SKCropNode()
-    let gaugeMask = SKCropNode()
     enum guardState{    //ガード状態
         case enable     //ガード可
         case disable    //ガード不可
         case guarding   //ガード中
     }
+    
+    private let top: SKSpriteNode
+    private let top_default: SKTexture
+    private let top_broken: SKTexture
+    private let glass: SKSpriteNode
+    private let bottom: SKSpriteNode
+    private let gauge = SKCropNode()
+    private let podScale: CGFloat = 1 / 5
+    private var podHeight: CGFloat
+    
+    let pod2Top = SKCropNode()
+    let pod2Middle = SKCropNode()
+    var middleMask: SKShapeNode!
+    let pod2Bottom = SKCropNode()
+    let gaugeMask = SKCropNode()
+
     var guardStatus = guardState.enable //ガード状態
     let maxCount:CGFloat = 90.0   //最大値
     var count:CGFloat = 0.0
@@ -28,8 +39,38 @@ class GuardPod: SKNode {
     let actionKey = "recover"
     var gaugeMaskShape: SKShapeNode!
     let countLabel = SKLabelNode()  //テスト表示用
+    
     override init() {
+        //初期化
+        top_default = SKTexture(imageNamed: "podTop_green")
+        top_broken = SKTexture(imageNamed: "podTop_red")
+        top = SKSpriteNode(texture: top_default)
+        glass = SKSpriteNode(imageNamed: "podGlass")
+        bottom = SKSpriteNode(imageNamed: "podBottom")
+        podHeight = glass.size.height / 2 - 12 //上下の枠は隠す
         super.init()
+        //縮小
+        top.xScale *= podScale
+        top.yScale *= podScale
+        glass.xScale *= podScale
+        glass.yScale *= podScale
+        bottom.xScale *= podScale
+        bottom.yScale *= podScale
+        podHeight *= podScale
+        //アンカーポイント
+        top.anchorPoint.y = 18 / 167 //中央の丸を除いた下端あたり
+        bottom.anchorPoint.y = 1.0
+        //グラスを中心に位置調整
+        top.position.y += podHeight
+        bottom.position.y -= podHeight
+        //z座標
+        glass.zPosition = zPosition
+        bottom.zPosition = zPosition + 0.1
+        top.zPosition = zPosition + 0.2
+        //追加
+        self.addChild(self.top)
+        self.addChild(self.glass)
+        self.addChild(self.bottom)
         //ゲージ部分をマスクするノードの定義
         self.gaugeMaskShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 20, height: 20))
         self.gaugeMaskShape.position.x -= 10
@@ -39,6 +80,7 @@ class GuardPod: SKNode {
         self.gaugeMask.maskNode = self.gaugeMaskShape
         self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         self.addChild(gaugeMask)
+        //
         //cropNodeにゲージのspriteNodeを追加
         let podGaugeSprite = SKSpriteNode(imageNamed: "Pod3")
         podGaugeSprite.xScale /= 5
@@ -55,9 +97,9 @@ class GuardPod: SKNode {
                       CGPoint(x: 15, y: -30)]
         let bottomMask = SKShapeNode(points: &bottomPoints, count: bottomPoints.count)
         bottomMask.fillColor = UIColor.red
-        self.podBottom.maskNode = bottomMask
-        self.podBottom.addChild(podSprite1)
-        self.addChild(podBottom)
+        self.pod2Bottom.maskNode = bottomMask
+        self.pod2Bottom.addChild(podSprite1)
+        self.addChild(pod2Bottom)
         //上マスク
         var topPoints = [CGPoint(x: -15, y: 10.5),
                          CGPoint(x: -15, y: 30),
@@ -69,21 +111,21 @@ class GuardPod: SKNode {
                          CGPoint(x: -2.5,  y: 10.5)]
         let topMask = SKShapeNode(points: &topPoints, count: topPoints.count)
         topMask.fillColor = UIColor.red
-        self.podTop.maskNode = topMask
+        self.pod2Top.maskNode = topMask
         let podSprite2 = SKSpriteNode(imageNamed: "Pod0")
         podSprite2.xScale /= 5
         podSprite2.yScale /= 5
-        self.podTop.addChild(podSprite2)
-        self.addChild(podTop)
+        self.pod2Top.addChild(podSprite2)
+        self.addChild(pod2Top)
         //あいだマスク
         middleMask = SKShapeNode(rect: CGRect(x: -10, y: -9, width: 19, height: 19))
         middleMask.fillColor = UIColor.red
-        self.podMiddle.maskNode = middleMask
+        self.pod2Middle.maskNode = middleMask
         let podSprite3 = SKSpriteNode(imageNamed: "Pod0")
         podSprite3.xScale /= 5
         podSprite3.yScale /= 5
-        self.podMiddle.addChild(podSprite3)
-        self.addChild(podMiddle)
+        self.pod2Middle.addChild(podSprite3)
+        self.addChild(pod2Middle)
         //ふわふわ
         let act1 = SKAction.moveBy(x: 0, y: 20, duration: 2)
         act1.timingMode = .easeInEaseOut
@@ -124,8 +166,8 @@ class GuardPod: SKNode {
             self.run(SKAction.repeatForever(acts))
             //
             self.middleMask.run( SKAction.scale(to: 1/5, duration: 1.0) )
-            self.podTop.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
-            self.podBottom.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
+            self.pod2Top.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
+            self.pod2Bottom.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
             self.gaugeMaskShape.run( SKAction.scale(to: 1.0, duration: 1.0) )
             stopRecover()
         }
@@ -175,11 +217,26 @@ class GuardPod: SKNode {
         self.run( SKAction.group( [SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0),
                                   SKAction.moveTo(y: 0, duration: 1.0)] ))
         self.middleMask.run( SKAction.scale(to: 0, duration: 1.0) )
-        self.podTop.run( SKAction.move(to: CGPoint(x: 0, y:-11), duration: 1.0) )
-        self.podBottom.run( SKAction.move(to: CGPoint(x: 0, y:11), duration: 1.0) )
+        self.pod2Top.run( SKAction.move(to: CGPoint(x: 0, y:-11), duration: 1.0) )
+        self.pod2Bottom.run( SKAction.move(to: CGPoint(x: 0, y:11), duration: 1.0) )
+        brokenAnimation(duration: 1.0)
         //self.gaugeMask.isHidden = true
         //ガード不可状態にする
         self.guardStatus = .disable
+    }
+    
+    private func brokenAnimation(duration: TimeInterval){
+        let flashCount = 10
+        //topの画像を入れ替える
+        let animate = SKAction.animate(with: [top_default,top_broken],
+                                       timePerFrame: duration / Double(flashCount),
+                                       resize: false,
+                                       restore: false)
+        top.run(SKAction.repeat(animate, count: flashCount))
+        //閉じる
+        top.run(SKAction.moveTo(y: 0, duration: duration))
+        bottom.run(SKAction.moveTo(y: 0, duration: duration))
+        glass.run(SKAction.scaleY(to: 0, duration: duration))
     }
 
     required init?(coder aDecoder: NSCoder) {
