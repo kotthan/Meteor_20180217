@@ -18,9 +18,8 @@ class Ground: SKNode
         let GroundY: CGFloat = 139.125
         Ground = SKShapeNode(rect: CGRect(x: 0, y: GroundY, width: frame.size.width, height: 1))
         Ground.fillColor = UIColor.clear
+        Ground.strokeColor = UIColor.clear
         Ground.name = "ground"
-        Ground.position.x = 0
-        Ground.position.y = 0
         Ground.zPosition = -10000
         Ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: Ground.frame.size.width, height: Ground.frame.size.height),center: CGPoint(x: 0 + frame.size.width/2, y: GroundY))
         Ground.physicsBody?.isDynamic = false

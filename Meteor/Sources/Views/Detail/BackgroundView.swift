@@ -11,7 +11,7 @@ import AVFoundation
 import AudioToolbox
 
 @available(iOS 9.0, *)
-class GameOverView: SKNode {
+class BackgroundView: SKNode {
     var HomeButton: SKSpriteNode!
     var ReStartButton: SKSpriteNode!
     var audioPlayer: AVAudioPlayer!

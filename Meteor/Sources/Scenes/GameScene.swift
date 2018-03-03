@@ -26,21 +26,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let debug = false  //デバッグフラグ
 	//MARK: - 基本構成
     //MARK: ノード
-    let baseNode = SKNode()                                         //ゲームベースノード
-    let player = Player()                                           //プレイヤーベース
-    let backScrNode = SKNode()                                      //背景ノード
+    let baseNode = SKNode()
+    let backScrNode = SKNode()
+    let player = Player()
+    var ground: Ground!
+    var lowestShape: LowestShape!
+    var guardPod: GuardPod!
+    var titleNode: TitleNode!
+    var gaugeview: GaugeView!
+    
+    
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
-    //var ground: SKSpriteNode!                                       //地面
-    var lowestShape: SKShapeNode!                                   //落下判定シェイプノード
     var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
-    var ground: Ground!
-    var guardPod: GuardPod!
-    var titleNode: TitleNode!
-    var gaugeview: GaugeView!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -198,25 +199,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
             })
             //===================
-            //MARK: 落下判定シェイプノード
-            //===================
-            scene.enumerateChildNodes(withName: "lowestShape", using: { (node, stop) -> Void in
-                let lowestShape = node as! SKShapeNode
-                lowestShape.name = "lowestShape"
-                let physicsBody = SKPhysicsBody(rectangleOf: lowestShape.frame.size)
-                lowestShape.physicsBody = physicsBody
-                lowestShape.physicsBody?.affectedByGravity = false      //重力判定を無視
-                lowestShape.physicsBody?.isDynamic = false              //固定物に設定
-                lowestShape.physicsBody?.categoryBitMask = 0b0010       //接触判定用マスク設定
-                lowestShape.physicsBody?.collisionBitMask = 0b0000      //接触対象をなしに設定
-                lowestShape.physicsBody?.contactTestBitMask = 0b1000    //接触対象をmeteorに設定
-                //シーンから削除して再配置
-                lowestShape.removeFromParent()
-                self.baseNode.addChild(lowestShape)
-                self.lowestShape = lowestShape
-                //print("---SKSファイルより落下判定シェイプノード＝\(lowestShape)を読み込みました---")
-            })
-            //===================
 			//MARK: プレイヤー
 			//===================
             self.charXOffset = self.frame.size.width * 0.5
@@ -271,27 +253,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(camera)
         self.camera = camera
-        
         //隕石ベース
         self.addChild(self.meteorBase)
-        
         //攻撃判定用シェイプ
         attackShapeMake()
-        
         //ガード判定用シェイプ
         guardShapeMake()
-        
-        //MARK: タイトルノード
+        //タイトルノード
         titleNode = TitleNode()
         self.baseNode.addChild(titleNode)
-        
-        //MARK: ゲージ関係
+        //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
         self.camera!.addChild(gaugeview)
-        
-        //MARK: 地面
+        //地面
         ground = Ground(frame: self.frame)
         self.baseNode.addChild(ground)
+        //LowestShape（ゲームオーバー判定用）
+        lowestShape = LowestShape(frame: self.frame)
+        self.baseNode.addChild(lowestShape)
         
         //===================
         //MARK: credit表示ボタン

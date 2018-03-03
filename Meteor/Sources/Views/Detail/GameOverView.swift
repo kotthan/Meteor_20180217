@@ -18,7 +18,6 @@ class GameOverView: SKNode {
 
     init(frame: CGRect, score:Int, highScore:Int) {
         super.init()
-        
         do {
             let filePath = Bundle.main.path(forResource: "piano31",ofType: "mp3")
             let musicPath = URL(fileURLWithPath: filePath!)
