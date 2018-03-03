@@ -44,6 +44,7 @@
 		B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD920373DC000F0F90E /* shining_star.mp3 */; };
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
+		B6511693204ACEB7008C6571 /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6511692204ACEB7008C6571 /* Player.xcassets */; };
 		B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661083E2046A8B0008B3767 /* TitleNode.swift */; };
 		B6610841204829AA008B3767 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6610840204829AA008B3767 /* GaugeView.swift */; };
 		B661084320484ECA008B3767 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661084220484ECA008B3767 /* Ground.swift */; };
@@ -128,6 +129,7 @@
 		B63CFDD920373DC000F0F90E /* shining_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shining_star.mp3; sourceTree = "<group>"; };
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B6511692204ACEB7008C6571 /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
 		B661083E2046A8B0008B3767 /* TitleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleNode.swift; sourceTree = "<group>"; };
 		B6610840204829AA008B3767 /* GaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
 		B661084220484ECA008B3767 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDF32037E28D00F0F90E /* Assets.xcassets */,
+				B6511692204ACEB7008C6571 /* Player.xcassets */,
 				B661084C204A777E008B3767 /* BackgroundView.xcassets */,
 				A3DCB55A204A2AE2008C8262 /* pod.xcassets */,
 				B6610846204A67F0008B3767 /* GameOverView.xcassets */,
@@ -530,6 +533,7 @@
 				B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */,
 				B6958AB92045A0FA00573D8D /* button01.mp3 in Resources */,
 				B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */,
+				B6511693204ACEB7008C6571 /* Player.xcassets in Resources */,
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
 				B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */,
 				A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */,

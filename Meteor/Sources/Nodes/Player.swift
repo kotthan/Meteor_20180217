@@ -15,9 +15,10 @@ class Player: SKNode {
     var size: CGSize!
     let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
     let standAnimationTextureNames = ["stand01","stand02"]
-    let attackAnimationTextureNames = ["attack01","attack02","player00"]
+    let attackAnimationTextureNames = ["attack01","attack02","stand01"]
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
+    let jumpAnimationTextureNames = ["jump00","jump01"]
     var jumpVelocity:CGFloat = 9.8 * 150 * 1.2  //プレイヤーのジャンプ時の初速
     var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
@@ -70,14 +71,25 @@ class Player: SKNode {
         
     }
     
-    //MARK: - ジャンプ
+    //ジャンプ
     func jump() {
         if self.actionStatus == .Standing {
+            self.jumpAnimation()
             self.moving = false
             self.actionStatus = .Jumping
             self.velocity = self.jumpVelocity
             self.run(self.jumpSound)
         }
+    }
+    
+    func jumpAnimation() {
+        self.sprite.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in self.jumpAnimationTextureNames {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
     //着地
