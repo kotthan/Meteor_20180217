@@ -23,7 +23,7 @@ class GuardPod: SKNode {
     private let bottom: SKSpriteNode
     private let gauge = SKCropNode()
     private let gaugeMask: SKShapeNode
-    private let podScale: CGFloat = 1 / 5
+    private let podScale: CGFloat = 1 / 4
     private let gaugeHeight: CGFloat
     
     var guardStatus = guardState.enable //ガード状態
@@ -51,6 +51,9 @@ class GuardPod: SKNode {
         gaugeMask.fillColor = UIColor.black
         gauge.maskNode = gaugeMask
         gauge.addChild(gaugeSprite)
+        //縮小
+        xScale = podScale
+        yScale = podScale
         //アンカーポイント
         top.anchorPoint.y = 18 / 167 //中央の丸を除いた下端あたり
         bottom.anchorPoint.y = 1.0
@@ -63,7 +66,7 @@ class GuardPod: SKNode {
         glass.zPosition = zPosition
         bottom.zPosition = zPosition + 0.1
         top.zPosition = zPosition + 0.2
-        gaugeMask.zPosition = zPosition + 0.99
+        gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         //追加
         addChild(top)
         glass.addChild(gauge)
@@ -156,7 +159,6 @@ class GuardPod: SKNode {
         self.run( SKAction.group( [SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0),
                                   SKAction.moveTo(y: 0, duration: 1.0)] ))
         brokenAnimation(duration: 1.0)
-        //self.gauge2Mask.isHidden = true
         //ガード不可状態にする
         self.guardStatus = .disable
     }
