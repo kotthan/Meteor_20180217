@@ -13,6 +13,7 @@ class GaugeView: SKSpriteNode {
     let guardGaugeMask: SKShapeNode
     let podIcon: SKSpriteNode
     let ultraAttackIcon: SKSpriteNode
+    let ultraAttackPush: SKSpriteNode
     
     init(frame: CGRect) {
         //ゲージベース枠
@@ -69,6 +70,12 @@ class GaugeView: SKSpriteNode {
         ultraAttackIcon.position.x += 219
         ultraAttackIcon.position.y -= 0.5
         ultraAttackIcon.isHidden = true
+        //必殺技Push
+        ultraAttackPush = SKSpriteNode(imageNamed: "ultraAttackPush")
+        ultraAttackPush.xScale = 2.0
+        ultraAttackPush.yScale = 2.0
+        ultraAttackPush.position.x += 0
+        ultraAttackPush.position.y -= 46
         //継承元クラスの初期化
         super.init(texture: nil, color: UIColor.clear, size:base.size)
         //ノード追加
@@ -78,6 +85,7 @@ class GaugeView: SKSpriteNode {
         addChild(base)
         addChild(podIcon)
         addChild(ultraAttackIcon)
+        addChild(ultraAttackPush)
         //zPosion設定
         zPosition = 1000
         back.zPosition = zPosition + 0.1
@@ -86,6 +94,7 @@ class GaugeView: SKSpriteNode {
         guardGauge.zPosition = zPosition + 0.4
         podIcon.zPosition = zPosition + 0.5
         ultraAttackIcon.zPosition = zPosition + 0.6
+        ultraAttackPush.zPosition = zPosition + 0.7
         //スケール調整
         xScale = 0.58
         yScale = 0.58
@@ -97,11 +106,13 @@ class GaugeView: SKSpriteNode {
         if to < 1 {
             meteorGaugeMask.run(SKAction.scaleX(to: to * 0.69 / 0.9, duration: 0.5))
             ultraAttackIcon.isHidden = true
+            ultraAttackPush.isHidden = true
         }
         else{
             meteorGaugeMask.removeAllActions()
             meteorGaugeMask.xScale = 1.0
             ultraAttackIcon.isHidden = false
+            ultraAttackPush.isHidden = false
         }
     }
     
