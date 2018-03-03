@@ -11,12 +11,14 @@ import AVFoundation
 import AudioToolbox
 
 @available(iOS 9.0, *)
-class GameOverView: SKNode {
+class GameOverView: SKNode
+{
     var HomeButton: SKSpriteNode!
     var ReStartButton: SKSpriteNode!
     var audioPlayer: AVAudioPlayer!
 
-    init(frame: CGRect, score:Int, highScore:Int) {
+    init(frame: CGRect, score:Int, highScore:Int)
+    {
         super.init()
         do {
             let filePath = Bundle.main.path(forResource: "piano31",ofType: "mp3")
@@ -85,7 +87,8 @@ class GameOverView: SKNode {
         self.addChild(ReStartButton)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
 }

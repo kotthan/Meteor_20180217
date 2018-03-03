@@ -1212,7 +1212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
                     self.camera?.addChild(self.gameOverView)
                     },
-                  SKAction.run{self.isPaused = true},
+                  //SKAction.run{self.isPaused = true},
                   SKAction.run{self.gameOverView.isHidden = false},
 
                 ])
@@ -1220,36 +1220,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    func homeButtonAction(){
-        playSound(soundName: "push_45")
-        //adBanner.isHidden = true
-        //gameOverView.audioPlayer.stop()
-        //newGame()
-        /*let actions = SKAction.sequence(
-            [ /*SKAction.run {
-                self.playSound(soundName: "push_45")
-                },*/
-              SKAction.run {
-                adBanner.isHidden = true
-                },
-              SKAction.run {
-                self.gameOverView.audioPlayer.stop()
-                },
-              SKAction.run {
-                self.newGame()
-                }
-            ])
- */
-        //run(actions)
+    func newGame()
+    {
+        let scene = GameScene(size: self.scene!.size)
+        scene.scaleMode = SKSceneScaleMode.aspectFill
+        self.view?.presentScene(scene)
     }
-    func reStartButtonAction(){
-        playSound(soundName: "push_45")
+    
+    func homeButtonAction()
+    {
+        let actions = SKAction.sequence([
+            SKAction.run { self.playSound(soundName: "push_45") },
+            SKAction.run { self.gameOverView.audioPlayer.stop() },
+            SKAction.run { adBanner.isHidden = true },
+            SKAction.run { self.newGame() }
+            ])
+        run(actions)
+    }
+    func reStartButtonAction()
+    {
         let scene = GameScene(size: self.scene!.size)
         scene.scaleMode = SKSceneScaleMode.aspectFill
         scene.retryFlg = true
-        adBanner.isHidden = true
-        gameOverView.audioPlayer.stop()
-        self.view!.presentScene(scene)
+        let actions = SKAction.sequence([
+            SKAction.run { self.playSound(soundName: "push_45") },
+            SKAction.run { self.gameOverView.audioPlayer.stop() },
+            SKAction.run { adBanner.isHidden = true },
+            SKAction.run { self.view!.presentScene(scene)}
+            ])
+        run(actions)
     }
     //MARK: 音楽
     func playSound(soundName: String)
