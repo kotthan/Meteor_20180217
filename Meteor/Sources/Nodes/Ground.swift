@@ -22,7 +22,7 @@ class Ground: SKNode
         Ground.position.y = 0
         Ground.zPosition = 1000
         Ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.size.width,
-                                                               height: 1g),
+                                                               height: 1),
                                            center: CGPoint(x: 0, y: 139.135))
         Ground.physicsBody?.categoryBitMask = 0b0001
         Ground.physicsBody?.collisionBitMask = 0b0000 | 0b0000
