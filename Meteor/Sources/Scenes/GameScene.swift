@@ -27,17 +27,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: - 基本構成
     //MARK: ノード
     let baseNode = SKNode()
-    let backScrNode = SKNode()
+    var backgroundView: BackgroundView!
     let player = Player()
     var ground: Ground!
     var lowestShape: LowestShape!
     var guardPod: GuardPod!
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
-    
-    
-    var back_wall_main: SKSpriteNode!                               //メイン背景
-    var back_wall: SKSpriteNode!                                    //メニュー画面背景
     var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
@@ -154,7 +150,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//MARK: 背景
         self.addChild(self.baseNode)                                //ベース追加
         self.baseNode.addChild(self.player)                 //プレイヤーベース追加
-        self.addChild(self.backScrNode)                             //背景追加
  
         //MARK: BGM
         //MainBGM
@@ -174,30 +169,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//MARK: SKSファイルを読み込み
 		if let scene = SKScene(fileNamed: "GameScene.sks")
         {
-            //===================
-			//MARK: メニュー背景
-			//===================
-			scene.enumerateChildNodes(withName: "back_wall", using:
-            { (node, stop) -> Void in
-				let back_wall = node as! SKSpriteNode
-				back_wall.name = "backGround"
-				//シーンから削除して再配置
-				back_wall.removeFromParent()
-				self.backScrNode.addChild(back_wall)
-                //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
-			})
-            //===================
-            //MARK: メイン背景
-            //===================
-            scene.enumerateChildNodes(withName: "back_wall_main", using:
-                { (node, stop) -> Void in
-                    let back_wall_main = node as! SKSpriteNode
-                    back_wall_main.name = "back_wall_main"
-                    //シーンから削除して再配置
-                    back_wall_main.removeFromParent()
-                    self.backScrNode.addChild(back_wall_main)
-                    //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
-            })
             //===================
 			//MARK: プレイヤー
 			//===================
@@ -236,16 +207,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             ultraOkButton.removeFromParent()
             self.player.addChild(self.ultraOkButton)             //playerにaddchiledすることでplayerに追従させる
             self.ultraOkButton.isHidden = true
-            
-            //===================
-			//MARK: 壁あたり
-			//===================
-			let wallFrameNode = SKNode()
-			self.baseNode.addChild(wallFrameNode)
-			//読み込んだシーンのサイズから外周のあたりを作成する
-			wallFrameNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: scene.size.width, height: scene.size.height))
-			wallFrameNode.physicsBody!.categoryBitMask = 0b0000             //接触判定用マスク設定
-			wallFrameNode.physicsBody!.usesPreciseCollisionDetection = true //詳細物理判定
 		}
         
         //MARK: カメラ
@@ -253,6 +214,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(camera)
         self.camera = camera
+        //背景
+        backgroundView = BackgroundView(frame: self.frame)
+        self.baseNode.addChild(backgroundView)
+        //地面
+        ground = Ground(frame: self.frame)
+        self.baseNode.addChild(ground)
+        //LowestShape（ゲームオーバー判定用）
+        lowestShape = LowestShape(frame: self.frame)
+        self.baseNode.addChild(lowestShape)
         //隕石ベース
         self.addChild(self.meteorBase)
         //攻撃判定用シェイプ
@@ -265,12 +235,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
         self.camera!.addChild(gaugeview)
-        //地面
-        ground = Ground(frame: self.frame)
-        self.baseNode.addChild(ground)
-        //LowestShape（ゲームオーバー判定用）
-        lowestShape = LowestShape(frame: self.frame)
-        self.baseNode.addChild(lowestShape)
         
         //===================
         //MARK: credit表示ボタン
@@ -371,9 +335,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                                selector: #selector(becomeActive(_:)),
                                                name: .UIApplicationDidBecomeActive,
                                                object: nil)
-        
-        self.view?.showsPhysics = true
-        
         if(debug)
         {
             addParamSlider()                                //パラメータ調整用スライダー
