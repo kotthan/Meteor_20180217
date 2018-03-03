@@ -23,10 +23,17 @@ class GaugeView: SKSpriteNode {
         back.xScale = base.size.width / back.size.width
         back.yScale = base.size.height / back.size.height
         addChild(back)
+        //meteorゲージ
+        let meteorGauge = SKSpriteNode(imageNamed: "meteorGauge")
+        meteorGauge.xScale = 2.0
+        meteorGauge.yScale = 2.0
+        meteorGauge.position.x = 60
+        addChild(meteorGauge)
         //zPosion
         zPosition = 1000
         back.zPosition = zPosition
-        base.zPosition = zPosition + 0.1
+        meteorGauge.zPosition = zPosition + 0.1
+        base.zPosition = zPosition + 0.2
         //縮尺を合わせる
         xScale = 0.58
         yScale = 0.58
