@@ -22,6 +22,7 @@ class GuardPod: SKNode {
     private let glass: SKSpriteNode
     private let bottom: SKSpriteNode
     private let gauge = SKCropNode()
+    private let gaugeMask: SKShapeNode
     private let podScale: CGFloat = 1 / 5
     private var podHeight: CGFloat
     
@@ -29,7 +30,7 @@ class GuardPod: SKNode {
     let pod2Middle = SKCropNode()
     var middleMask: SKShapeNode!
     let pod2Bottom = SKCropNode()
-    let gaugeMask = SKCropNode()
+    let gauge2Mask = SKCropNode()
 
     var guardStatus = guardState.enable //ガード状態
     let maxCount:CGFloat = 90.0   //最大値
@@ -47,8 +48,16 @@ class GuardPod: SKNode {
         top = SKSpriteNode(texture: top_default)
         glass = SKSpriteNode(imageNamed: "podGlass")
         bottom = SKSpriteNode(imageNamed: "podBottom")
-        podHeight = glass.size.height / 2 - 12 //上下の枠は隠す
+        podHeight = glass.size.height / 2 - 12 //上下の枠は隠すために12pt引く
+        gaugeMask = SKShapeNode(rect: CGRect(origin: CGPoint.zero,
+                                             size:CGSize(width: glass.size.width,
+                                                         height: podHeight*2)))
         super.init()
+        let gaugeSprite = SKSpriteNode(imageNamed: "podGauge")
+        //ゲージ調整用マスク
+        gaugeMask.fillColor = UIColor.black
+        gauge.maskNode = gaugeMask
+        gauge.addChild(gaugeSprite)
         //縮小
         top.xScale = podScale
         top.yScale = podScale
@@ -56,10 +65,17 @@ class GuardPod: SKNode {
         glass.yScale = podScale
         bottom.xScale = podScale
         bottom.yScale = podScale
+        gaugeSprite.xScale = podScale
+        gaugeSprite.yScale = podScale
+        gaugeSprite.yScale *= glass.size.height / gaugeSprite.size.height //ガラスいっぱいのサイズに伸ばす
+        gaugeMask.xScale = podScale
+        gaugeMask.yScale = podScale
         podHeight *= podScale
         //アンカーポイント
         top.anchorPoint.y = 18 / 167 //中央の丸を除いた下端あたり
         bottom.anchorPoint.y = 1.0
+        gaugeMask.position.x -= glass.size.width / 2
+        gaugeMask.position.y -= podHeight
         //グラスを中心に位置調整
         top.position.y += podHeight
         bottom.position.y -= podHeight
@@ -67,25 +83,27 @@ class GuardPod: SKNode {
         glass.zPosition = zPosition
         bottom.zPosition = zPosition + 0.1
         top.zPosition = zPosition + 0.2
+        gaugeMask.zPosition = zPosition + 0.99
         //追加
-        self.addChild(self.top)
-        self.addChild(self.glass)
-        self.addChild(self.bottom)
+        addChild(top)
+        addChild(glass)
+        addChild(bottom)
+        addChild(gauge)
         //ゲージ部分をマスクするノードの定義
         self.gaugeMaskShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 20, height: 20))
         self.gaugeMaskShape.position.x -= 10
         self.gaugeMaskShape.position.y -= 10
         self.gaugeMaskShape.fillColor = UIColor.white
         //cropNodeのマスクに設定
-        self.gaugeMask.maskNode = self.gaugeMaskShape
+        self.gauge2Mask.maskNode = self.gaugeMaskShape
         self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
-        self.addChild(gaugeMask)
+        self.addChild(gauge2Mask)
         //
         //cropNodeにゲージのspriteNodeを追加
         let podGaugeSprite = SKSpriteNode(imageNamed: "Pod3")
         podGaugeSprite.xScale /= 5
         podGaugeSprite.yScale /= 5
-        self.gaugeMask.addChild(podGaugeSprite)
+        self.gauge2Mask.addChild(podGaugeSprite)
         //ベース
         let podSprite1 = SKSpriteNode(imageNamed: "Pod0")
         podSprite1.xScale /= 5
@@ -229,7 +247,7 @@ class GuardPod: SKNode {
         self.pod2Top.run( SKAction.move(to: CGPoint(x: 0, y:-11), duration: 1.0) )
         self.pod2Bottom.run( SKAction.move(to: CGPoint(x: 0, y:11), duration: 1.0) )
         brokenAnimation(duration: 1.0)
-        //self.gaugeMask.isHidden = true
+        //self.gauge2Mask.isHidden = true
         //ガード不可状態にする
         self.guardStatus = .disable
     }
