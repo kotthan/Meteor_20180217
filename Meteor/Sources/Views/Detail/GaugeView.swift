@@ -10,6 +10,7 @@ import SpriteKit
 @available(iOS 9.0, *)
 class GaugeView: SKSpriteNode {
     let meteorGaugeMask: SKShapeNode
+    let guardGaugeMask: SKShapeNode
     
     init(frame: CGRect) {
         //ゲージベース枠
@@ -37,10 +38,29 @@ class GaugeView: SKSpriteNode {
         meteorGauge.maskNode = meteorGaugeMask
         meteorGauge.position.x = 60 //思考錯誤で決めたゲージの位置
         meteorGauge.addChild(meteorGaugeSprite)
+        //ガードゲージSprite
+        let guardGaugeSprite = SKSpriteNode(imageNamed: "guardGauge")
+        guardGaugeSprite.xScale = 2.0
+        guardGaugeSprite.yScale = 2.0
+        //メテオゲージ調整用マスク
+        guardGaugeMask = SKShapeNode(rect: CGRect(x: 0, y: 0,
+                                                   width: guardGaugeSprite.size.width,
+                                                   height: guardGaugeSprite.size.height))
+        guardGaugeMask.position.x = -guardGaugeSprite.size.width / 2
+        guardGaugeMask.position.y = -guardGaugeSprite.size.height / 2
+        guardGaugeMask.fillColor = UIColor.green
+        //ガードゲージ
+        let guardGauge = SKCropNode()
+        guardGauge.maskNode = guardGaugeMask
+        guardGauge.addChild(guardGaugeSprite)
+        //試行錯誤による位置調整
+        guardGauge.position.x -= 22
+        guardGauge.position.y += 41.5
         //継承元クラスの初期化
         super.init(texture: nil, color: UIColor.clear, size:base.size)
         //ノード追加
         addChild(meteorGauge)
+        addChild(guardGauge)
         addChild(back)
         addChild(base)
         //zPosion設定
@@ -48,6 +68,8 @@ class GaugeView: SKSpriteNode {
         back.zPosition = zPosition + 0.1
         meteorGauge.zPosition = zPosition + 0.2
         base.zPosition = zPosition + 0.3
+        guardGaugeMask.zPosition = zPosition + 0.35
+        guardGauge.zPosition = zPosition + 0.4
         //スケール調整
         xScale = 0.58
         yScale = 0.58
