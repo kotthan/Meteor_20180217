@@ -253,30 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         creditButtonNode.name = "credit"
         creditButton.addChild(creditButtonNode)
         self.baseNode.addChild(self.creditButton)
-        
-        //===================
-        //MARK: cloud
-        //===================
-        //cloud_1
-        self.cloud_1 = SKSpriteNode(imageNamed: "cloud_0")
-        self.cloud_1.position = CGPoint(
-            x: 200,
-            y: 400
-        )
-        self.cloud_1.zPosition = -15
-        self.baseNode.addChild(self.cloud_1)
-        cloudLoopAction(cloud_1)
-        
-        //cloud_2
-        self.cloud_2 = SKSpriteNode(imageNamed: "cloud_1")
-        self.cloud_2.position = CGPoint(
-            x: 200,
-            y: 1000
-        )
-        self.cloud_2.zPosition = 30
-        self.baseNode.addChild(self.cloud_2)
-        cloudLoopAction(cloud_2)
-        
+
         //===================
         //MARK: ガードゲージ
         //===================
@@ -1305,22 +1282,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func vibrate() {
         //AudioServicesPlaySystemSound(1519)
         //AudioServicesDisposeSystemSoundID(1519)
-    }
-
-    //==========================================================
-    //MARK: - アクション
-    //==========================================================
-
-    func cloudLoopAction(_ node: SKSpriteNode){
-        let actions = SKAction.sequence(
-            [ SKAction.moveTo(x: -1000, duration: 3000.0),
-              SKAction.wait(forDuration: 1.0),
-              SKAction.moveTo(x: 1000, duration: 0),
-              SKAction.wait(forDuration: 1.0),
-             //SKAction.run{self.isPaused = true},
-            ])
-        let loopAction = SKAction.repeatForever(actions)
-        node.run(loopAction)
     }
 
     //MARK:デバッグ用
