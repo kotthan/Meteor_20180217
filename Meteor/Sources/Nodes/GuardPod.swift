@@ -24,7 +24,7 @@ class GuardPod: SKNode {
     private let gauge = SKCropNode()
     private let gaugeMask: SKShapeNode
     private let podScale: CGFloat = 1 / 5
-    private var podHeight: CGFloat
+    private let gaugeHeight: CGFloat
     
     var guardStatus = guardState.enable //ガード状態
     let maxCount:CGFloat = 90.0   //最大値
@@ -40,37 +40,25 @@ class GuardPod: SKNode {
         top = SKSpriteNode(texture: top_default)
         glass = SKSpriteNode(imageNamed: "podGlass")
         bottom = SKSpriteNode(imageNamed: "podBottom")
-        podHeight = glass.size.height / 2 - 12 //上下の枠は隠すために12pt引く
+        gaugeHeight = glass.size.height - 24 //上下の枠は隠すために12ptずつ引く
         gaugeMask = SKShapeNode(rect: CGRect(origin: CGPoint.zero,
                                              size:CGSize(width: glass.size.width,
-                                                         height: podHeight*2)))
+                                                         height: gaugeHeight)))
         super.init()
         let gaugeSprite = SKSpriteNode(imageNamed: "podGauge")
+        gaugeSprite.yScale *= glass.size.height / gaugeSprite.size.height //ガラスいっぱいのサイズに伸ばす
         //ゲージ調整用マスク
         gaugeMask.fillColor = UIColor.black
         gauge.maskNode = gaugeMask
         gauge.addChild(gaugeSprite)
-        //縮小
-        top.xScale = podScale
-        top.yScale = podScale
-        glass.xScale = podScale
-        glass.yScale = podScale
-        bottom.xScale = podScale
-        bottom.yScale = podScale
-        gaugeSprite.xScale = podScale
-        gaugeSprite.yScale = podScale
-        gaugeSprite.yScale *= glass.size.height / gaugeSprite.size.height //ガラスいっぱいのサイズに伸ばす
-        gaugeMask.xScale = podScale
-        gaugeMask.yScale = podScale
-        podHeight *= podScale
         //アンカーポイント
         top.anchorPoint.y = 18 / 167 //中央の丸を除いた下端あたり
         bottom.anchorPoint.y = 1.0
         gaugeMask.position.x -= glass.size.width / 2
-        gaugeMask.position.y -= podHeight
+        gaugeMask.position.y -= gaugeHeight / 2
         //グラスを中心に位置調整
-        top.position.y += podHeight
-        bottom.position.y -= podHeight
+        top.position.y += gaugeHeight / 2
+        bottom.position.y -= gaugeHeight / 2
         //z座標
         glass.zPosition = zPosition
         bottom.zPosition = zPosition + 0.1
@@ -78,9 +66,9 @@ class GuardPod: SKNode {
         gaugeMask.zPosition = zPosition + 0.99
         //追加
         addChild(top)
+        glass.addChild(gauge)
         addChild(glass)
         addChild(bottom)
-        addChild(gauge)
         //ふわふわ
         let act1 = SKAction.moveBy(x: 0, y: 20, duration: 2)
         act1.timingMode = .easeInEaseOut
@@ -129,9 +117,9 @@ class GuardPod: SKNode {
     func repairAnimation(duration: TimeInterval){
         let duration = 1.0
         top.run(SKAction.animate(with: [top_default], timePerFrame: 0.1))
-        top.run(SKAction.moveTo(y: podHeight, duration: duration))
-        bottom.run(SKAction.moveTo(y: -podHeight, duration: duration))
-        glass.run(SKAction.scaleY(to: podScale, duration: duration))
+        top.run(SKAction.moveTo(y: gaugeHeight / 2, duration: duration))
+        bottom.run(SKAction.moveTo(y: -gaugeHeight / 2, duration: duration))
+        glass.run(SKAction.scaleY(to: 1.0, duration: duration))
     }
     
     //ガード
