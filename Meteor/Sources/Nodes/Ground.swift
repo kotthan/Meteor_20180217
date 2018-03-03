@@ -9,18 +9,18 @@
 import SpriteKit
 
 @available(iOS 9.0, *)
-class Ground: SKShapeNode
+class Ground: SKNode
 {
     var Ground: SKShapeNode!
     init(frame: CGRect)
     {
         super.init()
-        Ground = SKShapeNode(rect: CGRect(x: frame.width/2, y: 0.0, width: 500, height: 1))
+        Ground = SKShapeNode(rect: CGRect(x: 0, y: 139.135, width: frame.size.width, height: 100))
         Ground.fillColor = UIColor.red
         Ground.name = "ground"
         Ground.position.x = 0
         Ground.position.y = 0
-        Ground.zPosition = 10000
+        Ground.zPosition = 1000
         Ground.physicsBody?.categoryBitMask = 0b0001
         Ground.physicsBody?.collisionBitMask = 0b0000 | 0b0000
         Ground.physicsBody?.contactTestBitMask = 0b0100

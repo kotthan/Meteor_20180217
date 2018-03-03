@@ -44,7 +44,7 @@ class TitleNode: SKNode {
                 ])
             let loopAction = SKAction.repeatForever(actions)
             node.run(loopAction)
-            }
+        }
         
        //addChild
         self.addChild(TitleNode)

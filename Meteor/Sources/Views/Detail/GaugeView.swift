@@ -20,7 +20,7 @@ class GaugeView: SKNode {
         base.xScale = 0.39
         base.yScale = 0.39
         base.position.x = 0
-        base.position.y =  0 - frame.size.height / 2 + base.size.height / 2
+        base.position.y =  0 - frame.size.height / 2 + base.size.height / 2 
         base.zPosition = 1000
         self.addChild(base)
     }

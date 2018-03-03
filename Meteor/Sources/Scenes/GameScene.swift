@@ -31,13 +31,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let backScrNode = SKNode()                                      //背景ノード
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
-    var ground: SKSpriteNode!                                       //地面
+    //var ground: SKSpriteNode!                                       //地面
     var lowestShape: SKShapeNode!                                   //落下判定シェイプノード
     var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
-    var ground1: Ground!
+    var ground: Ground!
     var guardPod: GuardPod!
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
@@ -307,8 +307,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera!.addChild(gaugeview)
         
         //MARK: 地面
-        ground1 = Ground(frame: self.frame)
-        self.baseNode.addChild(ground1)
+        ground = Ground(frame: self.frame)
+        self.baseNode.addChild(ground)
         
         //===================
         //MARK: credit表示ボタン
@@ -803,6 +803,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bitA = contact.bodyA.categoryBitMask
         let bitB = contact.bodyB.categoryBitMask
         //print("---接触したノードは\(String(describing: nameA))と\(String(describing: nameB))です---")
+        print("\(nodeA):\(nodeB)")
         
         if (bitA == 0b10000 || bitB == 0b10000) && (bitA == 0b1000 || bitB == 0b1000)
         {
