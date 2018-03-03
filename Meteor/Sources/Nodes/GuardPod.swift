@@ -50,12 +50,12 @@ class GuardPod: SKNode {
         podHeight = glass.size.height / 2 - 12 //上下の枠は隠す
         super.init()
         //縮小
-        top.xScale *= podScale
-        top.yScale *= podScale
-        glass.xScale *= podScale
-        glass.yScale *= podScale
-        bottom.xScale *= podScale
-        bottom.yScale *= podScale
+        top.xScale = podScale
+        top.yScale = podScale
+        glass.xScale = podScale
+        glass.yScale = podScale
+        bottom.xScale = podScale
+        bottom.yScale = podScale
         podHeight *= podScale
         //アンカーポイント
         top.anchorPoint.y = 18 / 167 //中央の丸を除いた下端あたり
@@ -169,6 +169,7 @@ class GuardPod: SKNode {
             self.pod2Top.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
             self.pod2Bottom.run( SKAction.move(to: CGPoint(x: 0, y:0), duration: 1.0) )
             self.gaugeMaskShape.run( SKAction.scale(to: 1.0, duration: 1.0) )
+            repairAnimation(duration: 1.0)
             stopRecover()
         }
         else{
@@ -179,6 +180,14 @@ class GuardPod: SKNode {
         if( self.guardStatus != .disable ){
             self.gaugeMaskShape.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         }
+    }
+    
+    func repairAnimation(duration: TimeInterval){
+        let duration = 1.0
+        top.run(SKAction.animate(with: [top_default], timePerFrame: 0.1))
+        top.run(SKAction.moveTo(y: podHeight, duration: duration))
+        bottom.run(SKAction.moveTo(y: -podHeight, duration: duration))
+        glass.run(SKAction.scaleY(to: podScale, duration: duration))
     }
     
     //ガード
