@@ -11,6 +11,7 @@ import SpriteKit
 class GaugeView: SKSpriteNode {
     let meteorGaugeMask: SKShapeNode
     let guardGaugeMask: SKShapeNode
+    let podIcon: SKSpriteNode
     
     init(frame: CGRect) {
         //ゲージベース枠
@@ -56,6 +57,10 @@ class GaugeView: SKSpriteNode {
         //試行錯誤による位置調整
         guardGauge.position.x -= 22
         guardGauge.position.y += 41.5
+        //Podアイコン
+        podIcon = SKSpriteNode(imageNamed: "podIcon_red")
+        podIcon.position.x -= 255
+        podIcon.zRotation += 10 / 180 * CGFloat.pi
         //継承元クラスの初期化
         super.init(texture: nil, color: UIColor.clear, size:base.size)
         //ノード追加
@@ -63,13 +68,14 @@ class GaugeView: SKSpriteNode {
         addChild(guardGauge)
         addChild(back)
         addChild(base)
+        addChild(podIcon)
         //zPosion設定
         zPosition = 1000
         back.zPosition = zPosition + 0.1
         meteorGauge.zPosition = zPosition + 0.2
         base.zPosition = zPosition + 0.3
-        guardGaugeMask.zPosition = zPosition + 0.35
         guardGauge.zPosition = zPosition + 0.4
+        podIcon.zPosition = zPosition + 0.5
         //スケール調整
         xScale = 0.58
         yScale = 0.58
