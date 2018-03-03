@@ -29,10 +29,10 @@ class GaugeView: SKSpriteNode {
         meteorGaugeSprite.yScale = 2.0
         //メテオゲージ調整用マスク
         meteorGaugeMask = SKShapeNode(rect: CGRect(x: 0, y: 0,
-                                                   width: meteorGaugeSprite.size.width * 2,
-                                                   height: meteorGaugeSprite.size.height * 2))
-        meteorGaugeMask.position.x = -meteorGaugeSprite.size.width
-        meteorGaugeMask.position.y = -meteorGaugeSprite.size.height
+                                                   width: meteorGaugeSprite.size.width,
+                                                   height: meteorGaugeSprite.size.height))
+        meteorGaugeMask.position.x = -meteorGaugeSprite.size.width / 2
+        meteorGaugeMask.position.y = -meteorGaugeSprite.size.height / 2
         meteorGaugeMask.fillColor = UIColor.red
         //メテオゲージ
         let meteorGauge = SKCropNode()
@@ -81,6 +81,15 @@ class GaugeView: SKSpriteNode {
         yScale = 0.58
         //フレームの一番下に配置する
         position.y = -frame.size.height / 2 + size.height / 2
+    }
+    
+    func setMeteorGaugeScale(to: CGFloat){
+        if to < 1 {
+            meteorGaugeMask.xScale = to * 0.69 / 0.9
+        }
+        else{
+            meteorGaugeMask.xScale = 1.0
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

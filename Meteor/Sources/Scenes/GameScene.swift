@@ -226,6 +226,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(titleNode)
         //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
+        gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0)
         self.camera!.addChild(gaugeview)
         
         //===================
@@ -991,6 +992,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if( ultraAttackState == .none )
                 {
                     UltraPower += 1
+                    gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0 )
                     if UltraPower >= 10
                     {
                         ultraButton.isHidden = true
@@ -1024,6 +1026,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ultraButton.isHidden = false
         ultraOkButton.isHidden = true
         UltraPower = 0
+        gaugeview.setMeteorGaugeScale(to: 0)
         //入力を受け付けないようにフラグを立てる
         ultraAttackState = .landing
         //print(ultraAttackState)
