@@ -1,8 +1,8 @@
 //
-//  GameOverView.swift
+//  File.swift
 //  Meteor
 //
-//  Created by Kazuaki Oe on 2018/02/19.
+//  Created by Kazuaki Oe on 2018/03/03.
 //  Copyright © 2018年 Kazuaki Oe. All rights reserved.
 //
 
@@ -11,13 +11,14 @@ import AVFoundation
 import AudioToolbox
 
 @available(iOS 9.0, *)
-class GameOverView: SKNode {
+class BackgroundView: SKNode {
     var HomeButton: SKSpriteNode!
     var ReStartButton: SKSpriteNode!
     var audioPlayer: AVAudioPlayer!
-
+    
     init(frame: CGRect, score:Int, highScore:Int) {
         super.init()
+        
         do {
             let filePath = Bundle.main.path(forResource: "piano31",ofType: "mp3")
             let musicPath = URL(fileURLWithPath: filePath!)
@@ -26,7 +27,7 @@ class GameOverView: SKNode {
             print("error")
         }
         audioPlayer.play()
-
+        
         self.position.x = -frame.size.width/2
         self.position.y = -frame.size.height/2
         self.zPosition = 10000
@@ -89,3 +90,4 @@ class GameOverView: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

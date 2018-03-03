@@ -23,24 +23,25 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 @available(iOS 9.0, *)
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    let debug = false   //デバッグフラグ
+    let debug = false  //デバッグフラグ
 	//MARK: - 基本構成
     //MARK: ノード
-    let baseNode = SKNode()                                         //ゲームベースノード
-    let player = Player()                                           //プレイヤーベース
-    let backScrNode = SKNode()                                      //背景ノード
+    let baseNode = SKNode()
+    let backScrNode = SKNode()
+    let player = Player()
+    var ground: Ground!
+    var lowestShape: LowestShape!
+    var guardPod: GuardPod!
+    var titleNode: TitleNode!
+    var gaugeview: GaugeView!
+    
+    
     var back_wall_main: SKSpriteNode!                               //メイン背景
     var back_wall: SKSpriteNode!                                    //メニュー画面背景
-    //var ground: SKSpriteNode!                                       //地面
-    var lowestShape: SKShapeNode!                                   //落下判定シェイプノード
     var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
-    var ground: Ground!
-    var guardPod: GuardPod!
-    var titleNode: TitleNode!
-    var gaugeview: GaugeView!
     var creditButton = SKLabelNode()
     var cloud_1: SKSpriteNode!
     var cloud_2: SKSpriteNode!
@@ -197,42 +198,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.backScrNode.addChild(back_wall_main)
                     //print("---SKSファイルより背景＝\(back_wall)を読み込みました---")
             })
-            /*
-			//===================
-			//MARK: 地面
-			//===================
-			scene.enumerateChildNodes(withName: "ground", using: { (node, stop) -> Void in
-				let ground = node as! SKSpriteNode
-				ground.name = "ground"
-                ground.physicsBody?.categoryBitMask = 0b0001                //接触判定用マスク設定
-                ground.physicsBody?.collisionBitMask = 0b0000 | 0b0000      //接触対象をplayer|meteorに設定
-                ground.physicsBody?.contactTestBitMask = 0b0100             //接触対象をplayer|meteorに設定
-				//シーンから削除して再配置
-				ground.removeFromParent()
-				self.baseNode.addChild(ground)
-                self.ground = ground
-                //print("---SKSファイルより地面＝\(ground)を読み込みました---")
-			})
-             */
-            //===================
-            //MARK: 落下判定シェイプノード
-            //===================
-            scene.enumerateChildNodes(withName: "lowestShape", using: { (node, stop) -> Void in
-                let lowestShape = node as! SKShapeNode
-                lowestShape.name = "lowestShape"
-                let physicsBody = SKPhysicsBody(rectangleOf: lowestShape.frame.size)
-                lowestShape.physicsBody = physicsBody
-                lowestShape.physicsBody?.affectedByGravity = false      //重力判定を無視
-                lowestShape.physicsBody?.isDynamic = false              //固定物に設定
-                lowestShape.physicsBody?.categoryBitMask = 0b0010       //接触判定用マスク設定
-                lowestShape.physicsBody?.collisionBitMask = 0b0000      //接触対象をなしに設定
-                lowestShape.physicsBody?.contactTestBitMask = 0b1000    //接触対象をmeteorに設定
-                //シーンから削除して再配置
-                lowestShape.removeFromParent()
-                self.baseNode.addChild(lowestShape)
-                self.lowestShape = lowestShape
-                //print("---SKSファイルより落下判定シェイプノード＝\(lowestShape)を読み込みました---")
-            })
             //===================
 			//MARK: プレイヤー
 			//===================
@@ -288,27 +253,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(camera)
         self.camera = camera
-        
         //隕石ベース
         self.addChild(self.meteorBase)
-        
         //攻撃判定用シェイプ
         attackShapeMake()
-        
         //ガード判定用シェイプ
         guardShapeMake()
-        
-        //MARK: タイトルノード
+        //タイトルノード
         titleNode = TitleNode()
         self.baseNode.addChild(titleNode)
-        
-        //MARK: ゲージ関係
+        //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
         self.camera!.addChild(gaugeview)
-        
-        //MARK: 地面
+        //地面
         ground = Ground(frame: self.frame)
         self.baseNode.addChild(ground)
+        //LowestShape（ゲームオーバー判定用）
+        lowestShape = LowestShape(frame: self.frame)
+        self.baseNode.addChild(lowestShape)
         
         //===================
         //MARK: credit表示ボタン
@@ -409,6 +371,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                                selector: #selector(becomeActive(_:)),
                                                name: .UIApplicationDidBecomeActive,
                                                object: nil)
+        
+        self.view?.showsPhysics = true
         
         if(debug)
         {
@@ -802,8 +766,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         _ = nodeB?.name
         let bitA = contact.bodyA.categoryBitMask
         let bitB = contact.bodyB.categoryBitMask
-        //print("---接触したノードは\(String(describing: nameA))と\(String(describing: nameB))です---")
-        print("\(nodeA):\(nodeB)")
         
         if (bitA == 0b10000 || bitB == 0b10000) && (bitA == 0b1000 || bitB == 0b1000)
         {
@@ -913,7 +875,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.mainBgmPlayer.play()
         if( retryFlg == false ){
             //リトライ時はアニメーションはしない
-            //let action1 = SKAction.fadeOut(withDuration: 1.0)
             let action2 = SKAction.run{
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 2)
                 action1.timingMode = .easeInEaseOut
@@ -932,7 +893,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.camera?.run(actionAll)
             }
             self.titleNode.run(action2)
-            //self.titleNode.run(SKAction.sequence([action1,action2]))
             let action_1 = SKAction.fadeOut(withDuration: 1.0)
             self.creditButton.run(SKAction.sequence([action_1,SKAction.removeFromParent()]))
         }
@@ -1323,18 +1283,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    @objc func newGameButtonAction(_ sender: UIButton ){
-        for view in self.view!.subviews {
-            view.removeFromSuperview()
-        }
-        newGame()
-    }
     func homeButtonAction(){
-        adBanner.isHidden = true
-        gameOverView.audioPlayer.stop()
-        newGame()
+        playSound(soundName: "push_45")
+        //adBanner.isHidden = true
+        //gameOverView.audioPlayer.stop()
+        //newGame()
+        /*let actions = SKAction.sequence(
+            [ /*SKAction.run {
+                self.playSound(soundName: "push_45")
+                },*/
+              SKAction.run {
+                adBanner.isHidden = true
+                },
+              SKAction.run {
+                self.gameOverView.audioPlayer.stop()
+                },
+              SKAction.run {
+                self.newGame()
+                }
+            ])
+ */
+        //run(actions)
     }
     func reStartButtonAction(){
+        playSound(soundName: "push_45")
         let scene = GameScene(size: self.scene!.size)
         scene.scaleMode = SKSceneScaleMode.aspectFill
         scene.retryFlg = true
@@ -1342,23 +1314,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOverView.audioPlayer.stop()
         self.view!.presentScene(scene)
     }
-    @objc func retryButtonAction(_ sender: UIButton ){
-        for view in self.view!.subviews {
-            view.removeFromSuperview()
-        }
-        let scene = GameScene(size: self.scene!.size)
-        scene.scaleMode = SKSceneScaleMode.aspectFill
-        scene.retryFlg = true
-        self.view?.presentScene(scene)
-    }
-    
-    @objc func newGame()
-    {
-        let scene = GameScene(size: self.scene!.size)
-        scene.scaleMode = SKSceneScaleMode.aspectFill
-        self.view?.presentScene(scene)
-    }
-    
     //MARK: 音楽
     func playSound(soundName: String)
     {

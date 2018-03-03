@@ -46,6 +46,11 @@
 		B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661083E2046A8B0008B3767 /* TitleNode.swift */; };
 		B6610841204829AA008B3767 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6610840204829AA008B3767 /* GaugeView.swift */; };
 		B661084320484ECA008B3767 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661084220484ECA008B3767 /* Ground.swift */; };
+		B6610845204A6101008B3767 /* push_45.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6610844204A6101008B3767 /* push_45.mp3 */; };
+		B6610847204A67F0008B3767 /* GameOver.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6610846204A67F0008B3767 /* GameOver.xcassets */; };
+		B6610849204A76D2008B3767 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6610848204A76D2008B3767 /* BackgroundView.swift */; };
+		B661084B204A771D008B3767 /* LowestShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661084A204A771D008B3767 /* LowestShape.swift */; };
+		B661084D204A777E008B3767 /* Background.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B661084C204A777E008B3767 /* Background.xcassets */; };
 		B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAA2045885E00573D8D /* explore16.mp3 */; };
 		B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAC20459D0400573D8D /* attack03.mp3 */; };
 		B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6958AAE20459D2F00573D8D /* broken1.mp3 */; };
@@ -124,6 +129,11 @@
 		B661083E2046A8B0008B3767 /* TitleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleNode.swift; sourceTree = "<group>"; };
 		B6610840204829AA008B3767 /* GaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
 		B661084220484ECA008B3767 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		B6610844204A6101008B3767 /* push_45.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = push_45.mp3; sourceTree = "<group>"; };
+		B6610846204A67F0008B3767 /* GameOver.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = GameOver.xcassets; sourceTree = "<group>"; };
+		B6610848204A76D2008B3767 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		B661084A204A771D008B3767 /* LowestShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowestShape.swift; sourceTree = "<group>"; };
+		B661084C204A777E008B3767 /* Background.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Background.xcassets; sourceTree = "<group>"; };
 		B6958AAA2045885E00573D8D /* explore16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explore16.mp3; sourceTree = "<group>"; };
 		B6958AAC20459D0400573D8D /* attack03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = attack03.mp3; sourceTree = "<group>"; };
 		B6958AAE20459D2F00573D8D /* broken1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = broken1.mp3; sourceTree = "<group>"; };
@@ -291,6 +301,7 @@
 				B6610840204829AA008B3767 /* GaugeView.swift */,
 				B63CFDCB20373D2C00F0F90E /* PauseView.swift */,
 				B6DE6285203B15E100A1B13F /* GameOverView.swift */,
+				B6610848204A76D2008B3767 /* BackgroundView.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -318,7 +329,9 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDF32037E28D00F0F90E /* Assets.xcassets */,
+				B661084C204A777E008B3767 /* Background.xcassets */,
 				A3DCB55A204A2AE2008C8262 /* pod.xcassets */,
+				B6610846204A67F0008B3767 /* GameOver.xcassets */,
 				B63CFDA020373B1400F0F90E /* Base.lproj */,
 			);
 			path = Images;
@@ -344,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				B6958ABA2045A49C00573D8D /* piano31.mp3 */,
+				B6610844204A6101008B3767 /* push_45.mp3 */,
 				B6958AB620459DE000573D8D /* move1.mp3 */,
 				B6958AB82045A0FA00573D8D /* button01.mp3 */,
 				B6958AB420459DBE00573D8D /* tyakuti1.mp3 */,
@@ -364,6 +378,7 @@
 			children = (
 				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				B661084220484ECA008B3767 /* Ground.swift */,
+				B661084A204A771D008B3767 /* LowestShape.swift */,
 				B661083E2046A8B0008B3767 /* TitleNode.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
@@ -518,10 +533,13 @@
 				B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */,
 				B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */,
 				B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */,
+				B661084D204A777E008B3767 /* Background.xcassets in Resources */,
 				A3DCB55B204A2AE2008C8262 /* pod.xcassets in Resources */,
 				B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
+				B6610845204A6101008B3767 /* push_45.mp3 in Resources */,
 				B6958AB520459DBE00573D8D /* tyakuti1.mp3 in Resources */,
+				B6610847204A67F0008B3767 /* GameOver.xcassets in Resources */,
 				B6958ABB2045A49C00573D8D /* piano31.mp3 in Resources */,
 				B6958AB720459DE000573D8D /* move1.mp3 in Resources */,
 				B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */,
@@ -556,6 +574,7 @@
 				A3DBAE852039CA1C0025B9DD /* ComboLabel.swift in Sources */,
 				B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */,
 				B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */,
+				B661084B204A771D008B3767 /* LowestShape.swift in Sources */,
 				B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */,
 				A3DBAE83203946960025B9DD /* Player.swift in Sources */,
 				B661084320484ECA008B3767 /* Ground.swift in Sources */,
@@ -568,6 +587,7 @@
 				B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */,
 				B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */,
 				B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */,
+				B6610849204A76D2008B3767 /* BackgroundView.swift in Sources */,
 				A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
