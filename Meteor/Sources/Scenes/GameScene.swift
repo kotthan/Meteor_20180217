@@ -39,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
     var creditButton = SKLabelNode()
+    var creditBackButton = SKLabelNode()
     var score = 0                                                   //スコア
     var combo = 0                                                   //スコア
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
@@ -248,7 +249,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         creditButtonNode.name = "credit"
         creditButton.addChild(creditButtonNode)
         self.baseNode.addChild(self.creditButton)
-
+        //===================
+        //MARK: credit戻るボタン
+        //===================
+        self.creditBackButton.fontName = "GillSansStd-ExtraBold"
+        self.creditBackButton.fontSize = 30
+        self.creditBackButton.text = "Back"
+        self.creditBackButton.position.x = self.frame.size.width / 2
+        self.creditBackButton.position.y += 70 //適当
+        self.creditBackButton.zPosition = 50
+        //タッチ判定用SpriteNode
+        let creditBackButtonNode = SKSpriteNode(color: UIColor.clear, size: creditBackButton.frame.size)
+        creditBackButtonNode.position.y = creditButton.frame.size.height / 2
+        creditBackButtonNode.xScale = 1.2
+        creditBackButtonNode.yScale = 1.5
+        creditBackButtonNode.name = "BackTitle"
+        creditBackButton.addChild(creditBackButtonNode)
+        self.baseNode.addChild(self.creditBackButton)
+        
         //===================
         //MARK: ガードゲージ
         //===================
@@ -434,8 +452,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.childNode(withName: "credits")?.removeFromParent()
                     self.creditButton.isHidden = false
                     self.creditButton.alpha = 1.0
-                    if( self.camera!.position.y < titleNode.position.y ){
-                        self.camera!.position = CGPoint(x: self.frame.size.width/2,y: titleNode.position.y)
+                    if( self.camera!.position.y < titleNode.TitleNode?.position.y ){
+                        self.camera!.position = CGPoint(x: self.frame.size.width/2,y: (titleNode.TitleNode?.position.y)!)
                         self.gameFlg = false
                         self.creditFlg = false
                     }
@@ -592,6 +610,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
+                case let node where node?.name == "BackTitle":
+                    gameFlg = true
+                    ultraAttack()
                 case let node where node == gameOverView?.HomeButton :
                     homeButtonAction()
                 case let node where node ==  gameOverView?.ReStartButton :
@@ -831,6 +852,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         pauseButton.isHidden = false //ポーズボタンを表示する
         gaugeview.isHidden = false
+        creditBackButton.isHidden = true
     }
     
     func gameStart(){
