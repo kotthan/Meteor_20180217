@@ -229,6 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0)
         gaugeview.position.y -= gaugeview.size.height
         self.camera!.addChild(gaugeview)
+        gaugeview.isHidden = true
         
         //===================
         //MARK: credit表示ボタン
@@ -318,6 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         { //リトライ時はそのままスタートする
             startButtonAction()
         }
+        view.showsPhysics = false
 	}
     
     //アプリがバックグラウンドから復帰した際に呼ばれる関数
@@ -800,7 +802,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playSound(soundName: "button01")
         self.titleBgmPlayer.stop()
         self.mainBgmPlayer.play()
-        if( retryFlg == false ){
+        if( retryFlg == false )
+        {
             //リトライ時はアニメーションはしない
             let action2 = SKAction.run{
                 let action1 = SKAction.moveTo(y: self.frame.size.height / 2, duration: 2)
@@ -827,6 +830,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gameStart()
         }
         pauseButton.isHidden = false //ポーズボタンを表示する
+        gaugeview.isHidden = false
     }
     
     func gameStart(){
