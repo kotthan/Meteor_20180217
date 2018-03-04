@@ -11,6 +11,7 @@ import SpriteKit
 class GaugeView: SKSpriteNode {
     let meteorGaugeMask: SKShapeNode
     let guardGaugeMask: SKShapeNode
+    let podGaugeMask: SKShapeNode
     let podIcon: SKSpriteNode
     let ultraAttackIcon: SKSpriteNode
     let ultraAttackPush: SKSpriteNode
@@ -66,6 +67,26 @@ class GaugeView: SKSpriteNode {
         //必殺技アイコン
         ultraAttackIcon = SKSpriteNode(imageNamed: "ultraAttackIcon")
         ultraAttackIcon.name = "ultraOKbutton"
+        //podアイコンゲージSprite
+        let podGaugeSprite = SKSpriteNode(imageNamed: "podGauge")
+        podGaugeSprite.yScale = 2.75
+        //podアイコンゲージ用マスク
+        podGaugeMask = SKShapeNode(rect: CGRect(x: 0, y: 0,
+                                                width: podGaugeSprite.size.width,
+                                                height: podGaugeSprite.size.height ))
+        podGaugeMask.position.x = -podGaugeSprite.size.width / 2
+        podGaugeMask.position.y = -podGaugeSprite.size.height / 2
+        podGaugeMask.fillColor = UIColor.green
+        //podアイコンゲージ
+        let podGauge = SKCropNode()
+        podGauge.maskNode = podGaugeMask
+        podGauge.addChild(podGaugeSprite)
+        //podアイコン
+        let podGlass = SKSpriteNode(imageNamed: "podGlass")
+        let podTop = SKSpriteNode(imageNamed: "podTop_green")
+        podTop.position.y += (podGlass.size.height / 2 + 17)
+        let podBottom = SKSpriteNode(imageNamed: "podBottom")
+        podBottom.position.y -= (podGlass.size.height / 2 + 18) //上下の枠隠すために
         //試行錯誤による位置調整
         ultraAttackIcon.position.x += 219
         ultraAttackIcon.position.y -= 0.5
@@ -84,6 +105,14 @@ class GaugeView: SKSpriteNode {
         addChild(back)
         addChild(base)
         addChild(podIcon)
+        let podBase = SKNode()
+        podBase.addChild(podTop)
+        podBase.addChild(podGlass)
+        podBase.addChild(podBottom)
+        podBase.addChild(podGauge)
+        podBase.yScale = 0.95
+        podBase.xScale = 0.95
+        podIcon.addChild(podBase)
         addChild(ultraAttackIcon)
         addChild(ultraAttackPush)
         //zPosion設定
@@ -93,6 +122,10 @@ class GaugeView: SKSpriteNode {
         base.zPosition = zPosition + 0.3
         guardGauge.zPosition = zPosition + 0.4
         podIcon.zPosition = zPosition + 0.5
+        podGauge.zPosition = zPosition + 0.51
+        podGlass.zPosition = zPosition + 0.52
+        podTop.zPosition = zPosition + 0.53
+        podBottom.zPosition = zPosition + 0.54
         ultraAttackIcon.zPosition = zPosition + 0.6
         ultraAttackPush.zPosition = zPosition + 0.7
         //スケール調整
