@@ -70,6 +70,7 @@ class GuardPod: SKNode {
         top.zPosition = zPosition + 0.2
         gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         gaugeView.guardGaugeMask.xScale = CGFloat(self.count) / CGFloat(self.maxCount)
+        gaugeView.podGaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         //追加
         addChild(top)
         glass.addChild(gauge)
@@ -118,6 +119,7 @@ class GuardPod: SKNode {
         if( self.guardStatus != .disable ){
             self.gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
             gaugeView.guardGaugeMask.xScale = CGFloat(self.count) / CGFloat(self.maxCount)
+            gaugeView.podGaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         }
     }
     
@@ -154,6 +156,7 @@ class GuardPod: SKNode {
         }
         self.gaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
         gaugeView.guardGaugeMask.xScale = CGFloat(self.count) / CGFloat(self.maxCount)
+        gaugeView.podGaugeMask.yScale = CGFloat(self.count) / CGFloat(self.maxCount)
     }
     
     //ガード破損

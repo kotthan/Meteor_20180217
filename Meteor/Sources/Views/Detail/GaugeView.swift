@@ -83,6 +83,7 @@ class GaugeView: SKSpriteNode {
         podGauge.addChild(podGaugeSprite)
         //podアイコン
         let podGlass = SKSpriteNode(imageNamed: "podGlass")
+        podGlass.xScale = 0.95
         let podTop = SKSpriteNode(imageNamed: "podTop_green")
         podTop.position.y += (podGlass.size.height / 2 + 17)
         let podBottom = SKSpriteNode(imageNamed: "podBottom")
@@ -106,10 +107,10 @@ class GaugeView: SKSpriteNode {
         addChild(base)
         addChild(podIcon)
         let podBase = SKNode()
+        podBase.addChild(podGauge)
         podBase.addChild(podTop)
         podBase.addChild(podGlass)
         podBase.addChild(podBottom)
-        podBase.addChild(podGauge)
         podBase.yScale = 0.95
         podBase.xScale = 0.95
         podIcon.addChild(podBase)
