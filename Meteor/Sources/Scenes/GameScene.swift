@@ -318,6 +318,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         { //リトライ時はそのままスタートする
             startButtonAction()
         }
+        view.showsPhysics = false
 	}
     
     //アプリがバックグラウンドから復帰した際に呼ばれる関数

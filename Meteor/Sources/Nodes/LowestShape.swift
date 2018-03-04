@@ -16,7 +16,7 @@ class LowestShape: SKNode
     init(frame: CGRect)
     {
         super.init()
-        let positionY: CGFloat = 139.125
+        let positionY: CGFloat = 145
         LowestShape = SKShapeNode(rect: CGRect(x: 0, y: positionY, width: frame.size.width, height: 1))
         LowestShape.fillColor = UIColor.clear
         LowestShape.strokeColor = UIColor.clear

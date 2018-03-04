@@ -15,7 +15,7 @@ class Ground: SKNode
     init(frame: CGRect)
     {
         super.init()
-        let GroundY: CGFloat = 139.125
+        let GroundY: CGFloat = 145
         Ground = SKShapeNode(rect: CGRect(x: 0, y: GroundY, width: frame.size.width, height: 1))
         Ground.fillColor = UIColor.clear
         Ground.strokeColor = UIColor.clear
