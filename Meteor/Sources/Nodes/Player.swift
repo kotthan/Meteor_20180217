@@ -19,6 +19,7 @@ class Player: SKNode {
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
     let jumpAnimationTextureNames = ["jump00","jump01"]
+    let fallAnimationTextureNames = ["fall01","fall02"]
     var jumpVelocity:CGFloat = 9.8 * 150 * 1.2  //プレイヤーのジャンプ時の初速
     var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
@@ -86,6 +87,24 @@ class Player: SKNode {
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
         for name in self.jumpAnimationTextureNames {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
+    
+    func fall() {
+        //すでにFallingならなにもしない
+        guard actionStatus != .Falling else{ return }
+
+        actionStatus = .Falling
+        fallAinmation()
+    }
+    
+    func fallAinmation(){
+        self.sprite.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in self.fallAnimationTextureNames {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)

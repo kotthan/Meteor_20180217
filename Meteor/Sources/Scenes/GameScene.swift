@@ -412,9 +412,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         /* なんやかんや計算した結果、隕石と衝突してなくて速度が-ならFallingとする */
-        if( self.player.meteorCollisionFlg != false ) &&
+        if( self.player.meteorCollisionFlg == false ) &&
           ( self.player.velocity < 0 ){
-            self.player.actionStatus = .Falling
+            self.player.fall()
         }
         
         if (gameFlg == false)
