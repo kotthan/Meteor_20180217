@@ -722,6 +722,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .landing:
                 ultraAttackState = .attacking
                 //print(ultraAttackState)
+                player.position.y = player.defaultYPosition
                 ultraAttackJump()
                 break
             case .attacking:
