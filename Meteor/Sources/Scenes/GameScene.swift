@@ -586,6 +586,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if self.creditButton.childNode(withName: "credit") != nil {
                         gameFlg = true
                     }
+                    guard gameoverFlg == false else{ break }
                     ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
@@ -742,7 +743,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
         {
             //print("---Playerとmeteorが接触しました---")
-            self.player.collisionMeteor()
+            if ultraAttackState == .none {
+                self.player.collisionMeteor()
+            }
         }
     }
 
@@ -943,12 +946,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func attackMeteor()
     {
-        if gameoverFlg == true
-        {
-            return
-        }
-        if attackFlg == true
-        {
+        guard gameoverFlg != true else{ return }
+        guard attackFlg == true else{ return }
+        
             //print("---隕石を攻撃---")
             if meteores.isEmpty == false
             {
@@ -1019,7 +1019,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //print("---meteoresが空だったのでビルドフラグON---")
                 }
             }
-        }
+        
     }
     
     //必殺技
