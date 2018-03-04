@@ -44,8 +44,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var combo = 0                                                   //スコア
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
     var highScore = 0                                               //ハイスコア
-    var ultraButton: SKSpriteNode!
-    var ultraOkButton: SKSpriteNode!
     var pauseButton: PauseButton!                                   //ポーズボタン
     //MARK: 画面
     var pauseView: PauseView!                                       //ポーズ画面
@@ -177,29 +175,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if( debug ){ //デバッグ用
                 //addBodyFrame(node: player)  //枠表示
             }
-            //===================
-            //MARK: 必殺技ボタン
-            //===================
-            ultraButton = SKSpriteNode(imageNamed: "ultraButtun")
-            self.ultraButton.position = CGPoint(                          //表示位置をplayerのサイズ分左に
-                x: 0,
-                y: +self.player.size.height / 2
-            )
-            self.ultraButton.xScale = 1 / 18
-            self.ultraButton.yScale = 1 / 18
-            self.ultraButton.zPosition = 2
-            self.player.addChild(self.ultraButton)               //playerにaddchiledすることでplayerに追従
-            ultraOkButton = SKSpriteNode(imageNamed: "ultraOkButtun")
-            self.ultraOkButton.position = CGPoint(                       //表示位置をplayerのサイズ分左上に
-                x: 0,
-                y: +self.player.size.height / 2
-            )
-            self.ultraOkButton.xScale = 1 / 18
-            self.ultraOkButton.yScale = 1 / 18
-            self.ultraOkButton.zPosition = 2
-            ultraOkButton.removeFromParent()
-            self.player.addChild(self.ultraOkButton)             //playerにaddchiledすることでplayerに追従させる
-            self.ultraOkButton.isHidden = true
 		}
         
         //MARK: カメラ
@@ -871,7 +846,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         credits.position.y -= self.frame.height
         self.addChild(credits)
         self.creditFlg = true
-        self.ultraOkButton.isHidden = false //トップに戻るボタンとして使う
         let action1 = SKAction.fadeOut(withDuration: 1.0)
         let action2 = SKAction.run{
             let moveCredit = SKAction.moveTo(y: credits.height - self.frame.size.height, duration: 10)
@@ -1022,11 +996,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 {
                     UltraPower += 1
                     gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0 )
-                    if UltraPower >= 10
-                    {
-                        ultraButton.isHidden = true
-                        ultraOkButton.isHidden = false
-                    }
                 }
                 playSound(soundName: "broken1")
                 vibrate()
@@ -1051,9 +1020,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //必殺技
     func ultraAttack(){
         //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
-        //ボタンを元に戻す
-        ultraButton.isHidden = false
-        ultraOkButton.isHidden = true
         UltraPower = 0
         gaugeview.setMeteorGaugeScale(to: 0)
         //入力を受け付けないようにフラグを立てる
