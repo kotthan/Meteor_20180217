@@ -40,6 +40,7 @@ class GaugeView: SKSpriteNode {
         //メテオゲージ
         let meteorGauge = SKCropNode()
         meteorGauge.maskNode = meteorGaugeMask
+        meteorGaugeMask.xScale = 0
         meteorGauge.position.x = 60 //思考錯誤で決めたゲージの位置
         meteorGauge.addChild(meteorGaugeSprite)
         //ガードゲージSprite

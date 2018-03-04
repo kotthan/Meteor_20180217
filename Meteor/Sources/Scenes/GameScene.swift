@@ -227,6 +227,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
         gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0)
+        gaugeview.position.y -= gaugeview.size.height
         self.camera!.addChild(gaugeview)
         
         //===================
@@ -716,10 +717,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---Playerと地面が接触しました---")
             self.player.landing()
             if( gameWaitFlag == true ){
-                gameWaitFlag = false
-                gameFlg = true
-                //pod回復スタート
-                self.guardPod.startRecover()
+                gameStart()
             }
             switch ( ultraAttackState )
             {
@@ -813,9 +811,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         self.gameWaitFlag = true
                     }
                     else{
-                        self.gameFlg = true
-                        //pod回復スタート
-                        self.guardPod.startRecover()
+                        self.gameStart()
                     }
                 }
                 let actionAll = SKAction.sequence([action1,action2])
@@ -828,12 +824,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else{
             self.titleNode.isHidden = true
             self.creditButton.isHidden = true
-            gameFlg = true
-            //pod回復スタート
-            self.guardPod.startRecover()
+            gameStart()
         }
         pauseButton.isHidden = false //ポーズボタンを表示する
     }
+    
+    func gameStart(){
+        gameWaitFlag = false
+        gameFlg = true
+        //pod回復スタート
+        guardPod.startRecover()
+        gaugeview.run( SKAction.moveTo(y: -frame.size.height / 2 + gaugeview.size.height / 2, duration: 0.5))
+    }
+    
     func creditAction(){
         let credits = Credits(frame: self.frame)
         credits.name = "credits"
