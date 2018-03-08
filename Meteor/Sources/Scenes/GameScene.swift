@@ -75,23 +75,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
     var creditFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
-    enum UAState{ //必殺技の状態
-        case none       //未発動
-        case landing    //最初の着地
-        case attacking  //攻撃中
-    }
-    var ultraAttackState = UAState.none                             //必殺技発動中フラグ
     
     //MARK: - プロパティ
 	//MARK: プレイヤーキャラプロパティ
-	var playerAcceleration: CGFloat = 50.0                          //移動加速値
-	var playerMaxVelocity: CGFloat = 300.0                          //MAX移動値
-	var jumpForce: CGFloat = 60.0                                   //ジャンプ力
-    var guardForce: CGFloat = -10.0                                 //ガード反発力
-	var charXOffset: CGFloat = 0                                    //X位置のオフセット
-	var charYOffset: CGFloat = 0                                    //Y位置のオフセット
-    var guardPower : CGFloat = 4500.0                               //ガード可否判定用
-    var UltraPower : Int = 0                                        //必殺技可否判定用
     //MARK: 隕石・プレイヤー動作プロパティ
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
@@ -99,8 +85,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
     var meteorPos :CGFloat = 1320.0                                 //隕石の初期位置(1500.0)
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
-    var playerUltraAttackSpped : CGFloat = 9.8 * 150 * 2            //プレイヤーの必殺技ジャンプ時の初速
-    var playerGravityCoefficient: CGFloat = 1                       //プレイヤーが受ける重力の影響を調整する係数
     var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var speedFromMeteorAtGuard : CGFloat = 350                      //隕石を防御した時にプレイヤーが受ける隕石の速度
     var cameraMax : CGFloat = 1450                                  //カメラの上限
@@ -163,8 +147,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //===================
 			//MARK: プレイヤー
 			//===================
-            self.charXOffset = self.frame.size.width * 0.5
-			self.charYOffset = self.frame.size.height * 0.5
 			scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
 				let player = node as! SKSpriteNode
                 self.player.setSprite(sprite: player)
@@ -202,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(titleNode)
         //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
-        gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0)
+        gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0)
         gaugeview.position.y -= gaugeview.size.height
         self.camera!.addChild(gaugeview)
         gaugeview.isHidden = true
@@ -338,80 +320,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 m.position.y += self.meteorSpeed / 60
             }
         }
-        if player.actionStatus != .Standing
-        {
-            // 次の位置を計算する
-            self.player.velocity += self.gravity * self.playerGravityCoefficient / 60   // [pixcel/s^2] / 60[fps]
-            self.player.position.y += CGFloat( player.velocity / 60 )           // [pixcel/s] / 60[fps]
-            if ( !meteores.isEmpty ){
-                let meteor = self.meteores.first
-                let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                _ = player.position.y + (player.size.height/2)
-                if( self.player.meteorCollisionFlg ){ //衝突する
-                    self.player.position.y = meteorMinY - player.halfSize
-                    self.player.velocity -= self.meteorSpeed / 60
-                    if( self.player.velocity < self.meteorSpeed ){
-                        //playerが上昇中にfalseにすると何度も衝突がおきてplayeerがぶれるので
-                        //落下速度が隕石より早くなってからfalseにする
-                        self.player.meteorCollisionFlg = false
-                    }
-                    if( debug )
-                    {
-                        //衝突位置表示
-                        var points = [CGPoint(x:frame.minX,y:player.position.y + player.halfSize),
-                                      CGPoint(x:frame.maxX,y:player.position.y + player.halfSize)]
-                        if( collisionLine != nil )
-                        {
-                            collisionLine.removeFromParent()
-                        }
-                        collisionLine = SKShapeNode(points: &points, count: points.count)
-                        collisionLine.strokeColor = UIColor.clear
-                        baseNode.addChild(collisionLine)
-                    }
-                }
-                else
-                {
-                    if ( debug )
-                    {
-                        if( collisionLine != nil )
-                        {
-                            collisionLine.removeFromParent()
-                            collisionLine = nil
-                        }
-                    }
-                }
-            }
-            if( self.player.position.y < self.player.defaultYPosition )
-            {
-                self.player.position.y = self.player.defaultYPosition
-            }
-            self.player.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策
-        }
-        else{
-            if( !meteores.isEmpty ){
-                let meteor = self.meteores.first
-                let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
-                if( self.player.position.y < meteorMinY - player.halfSize ){
-                    self.player.meteorCollisionFlg = false
-                    if( collisionLine != nil ){
-                        collisionLine.removeFromParent()
-                        collisionLine = nil
-                    }
-                }
-            }
-            else{
-                self.player.meteorCollisionFlg = false
-                if( collisionLine != nil ){
-                    collisionLine.removeFromParent()
-                    collisionLine = nil
-                }
-            }
-        }
-        /* なんやかんや計算した結果、隕石と衝突してなくて速度が-ならFallingとする */
-        if( self.player.meteorCollisionFlg == false ) &&
-          ( self.player.velocity < 0 ){
-            self.player.fall()
-        }
+        self.player.update(meteor: self.meteores.first, meteorSpeed: self.meteorSpeed)
         
         if (gameFlg == false)
         { }
@@ -420,7 +329,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
                 self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 150 );
-                if ( self.creditFlg == true ) && ( self.ultraAttackState == .attacking ) &&
+                if ( self.creditFlg == true ) && ( self.player.ultraAttackStatus == .attacking ) &&
                     ( self.player.velocity < 0 ){
                     self.titleNode.isHidden = false
                     self.titleNode.alpha = 1.0
@@ -439,19 +348,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.frame.size.height/2)
         }
-        if( debug )
-        {
-            playerPosLabel.text = "playerSpeed : \(self.player.velocity) \n" + "y +: \(CGFloat( player.velocity / 60 ))"
-        }
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
     override func didSimulatePhysics()
-    {   }
+    {
+        self.player.didSimulatePhysics()
+    }
     //MARK: - 関数定義　タッチ処理
     //MARK: タッチダウンされたときに呼ばれる関数
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        guard ( ultraAttackState == .none ) else { //必殺技中でなければ次の処理に進む
+        guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
         /*guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
@@ -488,7 +395,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: タッチ移動されたときに呼ばれる関数
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        guard ( ultraAttackState == .none ) else { //必殺技中でなければ次の処理に進む
+        guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
         guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
@@ -532,7 +439,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: タッチアップされたときに呼ばれる関数
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        guard ( ultraAttackState == .none ) else { //必殺技中でなければ次の処理に進む
+        guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
         /*guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
@@ -706,7 +613,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0010 || bitB == 0b0010) && (bitA == 0b1000 || bitB == 0b1000)
         {
             //print("---MeteorとGameOverが接触しました---")
-            if( ultraAttackState == .none ){ //必殺技中はゲームオーバーにしない
+            if( player.ultraAttackStatus == .none ){ //必殺技中はゲームオーバーにしない
                 gameOver()
             }
         }
@@ -717,11 +624,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if( gameWaitFlag == true ){
                 gameStart()
             }
-            switch ( ultraAttackState )
+            switch ( player.ultraAttackStatus )
             {
             case .landing:
-                ultraAttackState = .attacking
-                //print(ultraAttackState)
+                player.ultraAttackStatus = .attacking
                 player.position.y = player.defaultYPosition
                 ultraAttackJump()
                 break
@@ -739,7 +645,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
         {
             //print("---Playerとmeteorが接触しました---")
-            if ultraAttackState == .none {
+            if player.ultraAttackStatus == .none {
                 self.player.collisionMeteor()
             }
         }
@@ -953,7 +859,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---隕石を攻撃---")
             if meteores.isEmpty == false
             {
-                if ultraAttackState == .none //必殺技のときは続けて攻撃するため
+                if player.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
                 {
                     if let attackNode = player.childNode(withName: attackShapeName)
                     {
@@ -981,7 +887,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 particle!.run(actionAll)
                 //print("---消すノードは\(meteores[0])です---")
                 meteores.remove(at: 0)
-                //print("---UltraPowerは\(UltraPower)です---")
                 //self.meteorGravityCoefficient -= 0.06                   //数が減るごとに隕石の速度を遅くする
                 //スコア
                 self.score += 1;
@@ -993,10 +898,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 comboLabel.position.y = self.player.size.height/2
                 self.player.addChild(comboLabel)
                 //必殺技
-                if( ultraAttackState == .none )
+                if( player.ultraAttackStatus == .none )
                 {
-                    UltraPower += 1
-                    gaugeview.setMeteorGaugeScale(to: CGFloat(UltraPower) / 10.0 )
+                    self.player.ultraPower += 1
+                    gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0 )
                 }
                 playSound(soundName: "broken1")
                 vibrate()
@@ -1009,7 +914,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if meteores.isEmpty == true
             {
-                if ultraAttackState == .none //必殺技中は着地後に生成する
+                if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
                 {
                     self.buildFlg = true
                     //print("---meteoresが空だったのでビルドフラグON---")
@@ -1021,11 +926,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //必殺技
     func ultraAttack(){
         //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
-        UltraPower = 0
+        self.player.ultraPower = 0
         gaugeview.setMeteorGaugeScale(to: 0)
         //入力を受け付けないようにフラグを立てる
-        ultraAttackState = .landing
-        //print(ultraAttackState)
+        player.ultraAttackStatus = .landing
         if( player.actionStatus != .Standing ) //空中にいる場合
         {
             //地面に戻る
@@ -1033,8 +937,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else
         {
-            ultraAttackState = .attacking
-            //print(ultraAttackState)
+            player.ultraAttackStatus = .attacking
             //大ジャンプ
             ultraAttackJump()
         }
@@ -1052,7 +955,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //大ジャンプ
         player.moving = false
         player.actionStatus = .Jumping
-        player.velocity = self.playerUltraAttackSpped
+        player.velocity = self.player.ultraAttackSpped
         //サウンド
         playSound(soundName: "jump10")
     }
@@ -1065,8 +968,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("remove ultra attackShape")
         }
         //フラグを落とす
-        ultraAttackState = .none
-        //print(ultraAttackState)
+        player.ultraAttackStatus = .none
         if( meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
             //次のmeteores生成
             self.buildFlg = true
@@ -1298,21 +1200,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             0,       //meteorPos
                             0,       //meteorGravityCoefficient
                             0,       //pleyer.jumpVeloctiy
-                            0,       //playerGravityCoefficient
                             0,       //meteorSpeedAtGuard
                             0]       //speedFromMeteorOnGuard
     let paramMax:[Float] = [1000,    //gravity
                             5000,    //meteorPos
                             100,     //meteorGravityCoefficient
                             2000,    //pleyer.jumpVeloctiy
-                            100,     //playerGravityCoefficient
                             1000,    //meteorSpeedAtGuard
                             1000]    //speedFromMeteorOnGuard
     let paramTrans = [ {(a: Float) -> CGFloat in return -CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) / 100 },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) / 100 },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) }
     ]
@@ -1320,7 +1219,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                      {(a: CGFloat) -> Float in return Float(a) },
                      {(a: CGFloat) -> Float in return Float(a * 100) },
                      {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a * 100) },
                      {(a: CGFloat) -> Float in return Float(a) },
                      {(a: CGFloat) -> Float in return Float(a) }
     ]
@@ -1344,7 +1242,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         meteorPos = 2400                             //隕石の初期位置
         meteorGravityCoefficient = 0.06              //隕石が受ける重力の影響を調整する係数
         player.jumpVelocity = 1500                       //プレイヤーのジャンプ時の初速
-        playerGravityCoefficient = 1                 //隕石が受ける重力の影響を調整する係数
         meteorSpeedAtGuard = 100                     //隕石が防御された時の速度
         speedFromMeteorAtGuard = -500                //隕石を防御した時にプレイヤーの速度
         var ix = 0

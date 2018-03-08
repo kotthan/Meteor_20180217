@@ -11,6 +11,8 @@ import SpriteKit
 class Player: SKNode {
     
     var velocity: CGFloat = 0.0
+    var ultraPower: Int = 0         //必殺技判定用
+    let gravity: CGFloat = -900
     var sprite: SKSpriteNode!
     var size: CGSize!
     let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
@@ -41,6 +43,13 @@ class Player: SKNode {
         case Falling
     }
     var actionStatus = ActionState.Standing
+    let ultraAttackSpped : CGFloat = 9.8 * 150 * 2            //プレイヤーの必殺技ジャンプ時の初速
+    enum UltraAttackState{ //必殺技の状態
+        case none       //未発動
+        case landing    //最初の着地
+        case attacking  //攻撃中
+    }
+    var ultraAttackStatus = UltraAttackState.none   //必殺技発動中フラグ
     
     override init() {
         super.init()
@@ -70,6 +79,39 @@ class Player: SKNode {
         self.size = sprite.size
         self.addChild(sprite)
         
+    }
+
+    func update(meteor: SKSpriteNode?, meteorSpeed: CGFloat){
+        //地面に立っている場合は計算しない
+        guard actionStatus != .Standing else { return }
+        // 次の位置を計算する
+        self.velocity += self.gravity / 60   // [pixcel/s^2] / 60[fps]
+        self.position.y += CGFloat( self.velocity / 60 )           // [pixcel/s] / 60[fps]
+
+        //隕石衝突時の位置修正
+        guard self.meteorCollisionFlg  == true else { return }
+        guard let meteor = meteor else { return }
+        
+        let meteorMinY = meteor.position.y - (meteor.size.height/2)
+        self.position.y = meteorMinY - self.halfSize
+        self.velocity -= meteorSpeed / 60
+        if( self.velocity < meteorSpeed ){
+            //playerが上昇中にfalseにすると何度も衝突がおきてplayeerがぶれるので
+            //落下速度が隕石より早くなってからfalseにする
+            self.meteorCollisionFlg = false
+        }
+    }
+
+    func didSimulatePhysics(){
+        // 隕石と衝突してなくて速度が-ならFallingとする 
+        if( meteorCollisionFlg == false ) && ( velocity < 0 ){
+            fall()
+        }
+        //初期位置（地面）より下なら地面にする
+        if self.position.y < self.defaultYPosition {
+            self.position.y = self.defaultYPosition
+        }
+        self.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策
     }
     
     //ジャンプ
