@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A38E0CD020518C1300467A61 /* Meteor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38E0CCF20518C1300467A61 /* Meteor.swift */; };
 		A3A0DA09204142EE0044D397 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA08204142ED0044D397 /* AdSupport.framework */; };
 		A3A0DA14204143500044D397 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */; };
 		A3A0DA15204143500044D397 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0B2041434F0044D397 /* EventKit.framework */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A38E0CCF20518C1300467A61 /* Meteor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Meteor.swift; path = Meteor/Sources/Nodes/Meteor.swift; sourceTree = "<group>"; };
 		A3A0DA08204142ED0044D397 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A3A0DA0B2041434F0044D397 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -212,6 +214,7 @@
 		B63CFD582037390800F0F90E = {
 			isa = PBXGroup;
 			children = (
+				A38E0CCF20518C1300467A61 /* Meteor.swift */,
 				B63CFD632037390800F0F90E /* Meteor */,
 				B63CFD7E2037390800F0F90E /* MeteorTests */,
 				B63CFD892037390800F0F90E /* MeteorUITests */,
@@ -585,6 +588,7 @@
 				B661084B204A771D008B3767 /* LowestShape.swift in Sources */,
 				B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */,
 				A3DBAE83203946960025B9DD /* Player.swift in Sources */,
+				A38E0CD020518C1300467A61 /* Meteor.swift in Sources */,
 				B661084320484ECA008B3767 /* Ground.swift in Sources */,
 				A3DBAE87203B1CB50025B9DD /* Credits.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
