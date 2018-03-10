@@ -264,9 +264,6 @@ class Player: SKNode {
     //MARK: - 停止
     func moveStop() {
         self.moving = false
-        if self.actionStatus == .Standing {
-            self.sprite.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-        }
         self.stand()
     }
     
