@@ -240,7 +240,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             x: 280.0,
             y: 85.0
         )
-        self.highScoreLabel.zPosition = -1                  //プレイヤーの後ろ
+        self.highScoreLabel.setzPos(.HighScore)             //プレイヤーの後ろ
         self.baseNode.addChild(self.highScoreLabel)         //背景に固定のつもりでbaseNodeに追加
         self.highScoreLabel.isHidden = true
         //===================

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A38E0CD020518C1300467A61 /* Meteor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38E0CCF20518C1300467A61 /* Meteor.swift */; };
+		A38E0CD22053904800467A61 /* SKNode+zPos.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38E0CD12053904800467A61 /* SKNode+zPos.swift */; };
 		A3A0DA09204142EE0044D397 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA08204142ED0044D397 /* AdSupport.framework */; };
 		A3A0DA14204143500044D397 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */; };
 		A3A0DA15204143500044D397 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA0B2041434F0044D397 /* EventKit.framework */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		A38E0CCF20518C1300467A61 /* Meteor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meteor.swift; sourceTree = "<group>"; };
+		A38E0CD12053904800467A61 /* SKNode+zPos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+zPos.swift"; sourceTree = "<group>"; };
 		A3A0DA08204142ED0044D397 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A3A0DA0A2041434F0044D397 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A3A0DA0B2041434F0044D397 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -384,6 +386,7 @@
 		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				A38E0CD12053904800467A61 /* SKNode+zPos.swift */,
 				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				B661084220484ECA008B3767 /* Ground.swift */,
 				B661084A204A771D008B3767 /* LowestShape.swift */,
@@ -601,6 +604,7 @@
 				B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */,
 				B6610849204A76D2008B3767 /* BackgroundView.swift in Sources */,
 				A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */,
+				A38E0CD22053904800467A61 /* SKNode+zPos.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
