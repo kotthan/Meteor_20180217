@@ -819,8 +819,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let actionAll = SKAction.sequence([action1, action2])
                 //パーティクルをシーンに追加する。
                 self.addChild(particle!)
-                //アクションを実行する。
                 particle!.run(actionAll)
+                //隕石を爆発させる
+                let impact = SKEmitterNode(fileNamed: "Impact.sks")
+                //接触座標にパーティクルを放出するようにする。
+                impact!.position = CGPoint(x: player.position.x,
+                                             y: player.position.y + (attackShape.position.y))
+                //0.7秒後にシーンから消すアクションを作成する。
+                let action11 = SKAction.wait(forDuration: 0.5)
+                let action21 = SKAction.removeFromParent()
+                let actionAll1 = SKAction.sequence([action11, action21])
+                //パーティクルをシーンに追加する。
+                self.addChild(impact!)
+                //アクションを実行する。
+                impact!.run(actionAll1)
                 //print("---消すノードは\(meteorBase.meteores[0])です---")
                 meteorBase.meteores.remove(at: 0)
                 //self.meteorGravityCoefficient -= 0.06                   //数が減るごとに隕石の速度を遅くする
@@ -971,6 +983,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (self.guardPod.guardStatus == .guarding)
         {
             playSound(soundName: "bougyo01")
+            //隕石を爆発させる
+            let impact = SKEmitterNode(fileNamed: "Impact.sks")
+            //接触座標にパーティクルを放出するようにする。
+            impact!.position = CGPoint(x: player.position.x,
+                                       y: player.position.y + (guardShape.position.y))
+            //0.7秒後にシーンから消すアクションを作成する。
+            let action11 = SKAction.wait(forDuration: 0.5)
+            let action21 = SKAction.removeFromParent()
+            let actionAll1 = SKAction.sequence([action11, action21])
+            //パーティクルをシーンに追加する。
+            self.addChild(impact!)
+            //アクションを実行する。
+            impact!.run(actionAll1)
             guardPod.subCount()
             //ガードシェイプ削除
             guardNode.removeFromParent()

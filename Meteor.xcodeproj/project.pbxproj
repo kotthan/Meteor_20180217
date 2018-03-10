@@ -67,6 +67,8 @@
 		B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBB204141A700A9AB0D /* Launch Screen.storyboard */; };
 		B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */; };
 		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
+		B6D0C6162053A09B0007F8D1 /* Impact.sks in Resources */ = {isa = PBXBuildFile; fileRef = B6D0C6142053A09B0007F8D1 /* Impact.sks */; };
+		B6D0C6172053A09B0007F8D1 /* Particle.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6D0C6152053A09B0007F8D1 /* Particle.xcassets */; };
 		B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* GameOverView.swift */; };
 /* End PBXBuildFile section */
 
@@ -154,6 +156,8 @@
 		B6A4CEBC204141A700A9AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yabusaka.mp3; sourceTree = "<group>"; };
 		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
+		B6D0C6142053A09B0007F8D1 /* Impact.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Impact.sks; sourceTree = "<group>"; };
+		B6D0C6152053A09B0007F8D1 /* Particle.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Particle.xcassets; sourceTree = "<group>"; };
 		B6DE6285203B15E100A1B13F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -338,6 +342,7 @@
 			children = (
 				B63CFDF32037E28D00F0F90E /* Assets.xcassets */,
 				B6511692204ACEB7008C6571 /* Player.xcassets */,
+				B6D0C6152053A09B0007F8D1 /* Particle.xcassets */,
 				B661084C204A777E008B3767 /* BackgroundView.xcassets */,
 				A3DCB55A204A2AE2008C8262 /* pod.xcassets */,
 				B6610846204A67F0008B3767 /* GameOverView.xcassets */,
@@ -406,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */,
+				B6D0C6142053A09B0007F8D1 /* Impact.sks */,
 			);
 			path = Particles;
 			sourceTree = "<group>";
@@ -537,6 +543,7 @@
 				B6958AB320459D8000573D8D /* bougyo01.mp3 in Resources */,
 				B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */,
 				B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */,
+				B6D0C6162053A09B0007F8D1 /* Impact.sks in Resources */,
 				B6958AB92045A0FA00573D8D /* button01.mp3 in Resources */,
 				B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */,
 				B6511693204ACEB7008C6571 /* Player.xcassets in Resources */,
@@ -550,6 +557,7 @@
 				A3DCB55B204A2AE2008C8262 /* pod.xcassets in Resources */,
 				B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
+				B6D0C6172053A09B0007F8D1 /* Particle.xcassets in Resources */,
 				B6610845204A6101008B3767 /* push_45.mp3 in Resources */,
 				B6958AB520459DBE00573D8D /* tyakuti1.mp3 in Resources */,
 				B6610847204A67F0008B3767 /* GameOverView.xcassets in Resources */,
