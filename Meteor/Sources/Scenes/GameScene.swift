@@ -666,8 +666,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.camera?.run(actionAll)
             }
             self.titleNode.run(action2)
-            let action_1 = SKAction.fadeOut(withDuration: 1.0)
-            self.creditButton.run(SKAction.sequence([action_1,SKAction.removeFromParent()]))
+            self.creditButton.isHidden = true
         }
         else{
             self.titleNode.isHidden = true
