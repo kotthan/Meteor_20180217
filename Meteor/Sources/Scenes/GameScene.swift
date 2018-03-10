@@ -439,15 +439,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
-        /*guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
-            
-           // return
-        }*/
-        //ポーズでなければ次の処理に進む
-        /*guard ( self.view!.scene?.isPaused == false ) else {
-            return
-        }*/
-        
         for touch: AnyObject in touches
         {
             let endPosOnView = CGPoint(x: touch.location(in: view).x,
@@ -459,28 +450,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("---タップを離したノード=\(String(describing: node?.name))---")
                 var buttonPushFlg = true
                 switch node{ //押したボタン別処理
-                case let node where node == titleNode?.TitleMeteorNode :
-                    let actions = SKAction.sequence(
-                        [ SKAction.run {
-                            TitleNode.TapAction(self.titleNode.TitleNode, node2: self.titleNode.TitleMeteorNode)
-                            },
-                          SKAction.wait(forDuration: 1.5),
-                          SKAction.run {
-                            self.startButtonAction()
-                            }
-                        ])
-                    run(actions)
-                case let node where node == titleNode?.TitleNode :
-                    let actions = SKAction.sequence(
-                        [ SKAction.run {
-                            TitleNode.TapAction(self.titleNode.TitleNode, node2: self.titleNode.TitleMeteorNode)
-                            },
-                          SKAction.wait(forDuration: 1.5),
-                          SKAction.run {
-                            self.startButtonAction()
-                            }
-                        ])
-                    run(actions)
                 case let node where node == gaugeview.ultraAttackIcon :
                     if self.creditButton.childNode(withName: "credit") != nil {
                         gameFlg = true
@@ -509,7 +478,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             drawTouchPath(begin: beganPosOnView, end: endPosOnView)
             switch getTouchAction(begin: beganPosOnView, end: endPosOnView) {
             case .tap:
-                attackAction()
+                if gameFlg == false && gameoverFlg == false && creditFlg == false {
+                    let actions = SKAction.sequence(
+                        [ SKAction.run {
+                            TitleNode.TapAction(self.titleNode.TitleNode, node2: self.titleNode.TitleMeteorNode)
+                            },
+                          SKAction.wait(forDuration: 1.5),
+                          SKAction.run {
+                            self.startButtonAction()
+                            }
+                        ])
+                    run(actions)
+                } else { attackAction() }
             case .swipeDown:
                 if gameFlg == true{
                     guardAction(endFlg: true)
