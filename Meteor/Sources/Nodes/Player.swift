@@ -60,23 +60,25 @@ class Player: SKNode {
         //baseNodeをspriteの位置にする
         self.position = sprite.position
         sprite.position = CGPoint(x:0,y:0)
-        self.defaultYPosition = self.position.y
         sprite.name = "player"
         //sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64), center: CGPoint(x: 0, y: 0))
         let texture = SKTexture(imageNamed: "player00")
-        sprite.physicsBody = SKPhysicsBody(texture: texture, size: sprite.size)
-        sprite.physicsBody!.friction = 1.0                      //摩擦
-        sprite.physicsBody!.allowsRotation = false              //回転禁止
-        sprite.physicsBody!.restitution = 0.0                   //跳ね返り値
-        sprite.physicsBody!.mass = 0.03                         //質量
-        sprite.physicsBody?.categoryBitMask = 0b0100            //接触判定用マスク設定
-        sprite.physicsBody?.collisionBitMask = 0b0001           //接触対象を地面に設定
-        sprite.physicsBody?.contactTestBitMask = 0b1000 | 0b0001//接触対象を地面｜meteorに設定
+        let physicsBody = SKPhysicsBody(texture: texture, size: sprite.size)
+        physicsBody.friction = 1.0                      //摩擦
+        physicsBody.allowsRotation = false              //回転禁止
+        physicsBody.restitution = 0.0                   //跳ね返り値
+        physicsBody.mass = 0.03                         //質量
+        physicsBody.categoryBitMask = 0b0100            //接触判定用マスク設定
+        physicsBody.collisionBitMask = 0b0001           //接触対象を地面に設定
+        physicsBody.contactTestBitMask = 0b1000 | 0b0001//接触対象を地面｜meteorに設定
+        self.physicsBody = physicsBody
         //シーンから削除して再配置
         sprite.removeFromParent()
         sprite.isPaused = false
         //スプライトのサイズをbaseのサイズにする
         self.size = sprite.size
+        let groundY: CGFloat = 145.5
+        self.defaultYPosition = groundY + 27
         self.addChild(sprite)
         
     }
@@ -87,6 +89,10 @@ class Player: SKNode {
         // 次の位置を計算する
         self.velocity += self.gravity / 60   // [pixcel/s^2] / 60[fps]
         self.position.y += CGFloat( self.velocity / 60 )           // [pixcel/s] / 60[fps]
+        //初期位置（地面）より下なら地面にする
+        if self.position.y < self.defaultYPosition {
+            self.position.y = self.defaultYPosition
+        }
 
         //隕石衝突時の位置修正
         guard self.meteorCollisionFlg  == true else { return }
@@ -108,7 +114,7 @@ class Player: SKNode {
             fall()
         }
         //初期位置（地面）より下なら地面にする
-        if self.position.y < self.defaultYPosition {
+        if self.actionStatus == .Standing {
             self.position.y = self.defaultYPosition
         }
         self.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策

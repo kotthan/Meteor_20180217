@@ -69,8 +69,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var sceneState:SceneState = .Title
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var attackFlg : Bool = false                                    //攻撃フラグ
-    var firstBuildFlg: Bool = true
-    var buildFlg:Bool = true
     var gameFlg:Bool = false
     var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
     var creditFlg = false
@@ -79,12 +77,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - プロパティ
 	//MARK: プレイヤーキャラプロパティ
     //MARK: 隕石・プレイヤー動作プロパティ
-    var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
-    var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
+
     //調整用パラメータ
     var gravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
     var meteorPos :CGFloat = 1320.0                                 //隕石の初期位置(1500.0)
-    var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
+
     var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var speedFromMeteorAtGuard : CGFloat = 350                      //隕石を防御した時にプレイヤーが受ける隕石の速度
     var cameraMax : CGFloat = 1450                                  //カメラの上限
@@ -312,15 +309,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: シーンのアップデート時に呼ばれる関数
     override func update(_ currentTime: TimeInterval)
     {
-        if ( !meteores.isEmpty )
+        if ( !meteorBase.meteores.isEmpty )
         {
-            self.meteorSpeed += self.gravity * meteorGravityCoefficient / 60
-            for m in meteores
+            self.meteorBase.meteorSpeed += self.gravity * meteorBase.meteorGravityCoefficient / 60
+            for m in meteorBase.meteores
             {
-                m.position.y += self.meteorSpeed / 60
+                m.position.y += self.meteorBase.meteorSpeed / 60
             }
         }
-        self.player.update(meteor: self.meteores.first, meteorSpeed: self.meteorSpeed)
+        self.player.update(meteor: self.meteorBase.meteores.first, meteorSpeed: self.meteorBase.meteorSpeed)
         
         if (gameFlg == false)
         { }
@@ -661,43 +658,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - 関数定義　自分で設定関係
     
     //MARK: 配列
-    var meteorNames: [String] = ["normal_meteor"]
-    var meteorInt: Int = 0
-    var meteorDouble: Double = 70.0
-    var meteores: [SKSpriteNode] = []
-    let meteorBase = SKNode()
-    
-    //MARK: 隕石落下
-    func buildMeteor(size: Double, meteorString: String, meteorZ: Double){
-        self.firstBuildFlg = false
-        self.buildFlg = false
-        let texture = SKTexture(imageNamed: meteorString)
-        let meteor = SKSpriteNode(texture: texture)
-        meteor.zPosition = CGFloat(meteorZ)
-        meteor.size = CGSize(width: texture.size().width, height: texture.size().height)
-        meteor.xScale = CGFloat(size)
-        meteor.yScale = CGFloat(size)
-        if meteores.isEmpty
-        {
-            //meteor.position = CGPoint(x: 187, y: self.meteorPos + (meteor.size.height)/2)
-            meteor.position = CGPoint(x:187, y: self.player.position.y + 760 + (meteor.size.height) / 2)
-        } else
-        {
-            meteor.position = CGPoint(x: 187, y: (meteores.first?.position.y)!)
-        }
-        meteor.physicsBody = SKPhysicsBody(texture: texture, size: meteor.size)
-        meteor.physicsBody?.affectedByGravity = false
-        meteor.physicsBody?.categoryBitMask = 0b1000                         //接触判定用マスク設定
-        meteor.physicsBody?.collisionBitMask = 0b0000                        //接触対象をなしに設定
-        meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
-        meteor.name = "meteor"//meteorString
-        self.meteorBase.addChild(meteor)
-        //print("---meteor\(meteorString)を生成しました---")
-        self.meteores.append(meteor)
-        if( debug ){    //デバッグ用
-            //addBodyFrame(node: meteor)  //枠を表示
-        }
-    }
+    let meteorBase = Meteor()
+
     func startButtonAction()
     {
         //MARK: ゲーム進行関係
@@ -772,36 +734,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func fallMeteor()
     {
-        if gameFlg == false
-        {
-            return
-        }
-        else if firstBuildFlg == true
-        {
-            buildMeteor(size: 0.3, meteorString: "normal_meteor", meteorZ: 20.0)
-        }
-        else if buildFlg == false
-        {
-            return
-        }
-        else if buildFlg == true
-        {
-            meteorInt += 1
-            meteorDouble = 20.0
-            self.meteorSpeed = 0.0
-            self.meteorGravityCoefficient = CGFloat(0.05 + 0.01 * Double(meteorInt))
-            //print("--meteorGravityCoeffient\(meteorGravityCoefficient)--")
-            for i in (0...meteorInt).reversed()
-            {
-                meteorDouble -= 1.0
-                buildMeteor(size: Double(0.3 + (CGFloat(i) * meteorUpScale)),meteorString: meteorNames[0], meteorZ: meteorDouble)
-                    //print("---meteorInt = \(i)です-----")
-            }
-        }
-        else
-        {
-            return
-        }
+        guard gameFlg == true else { return }
+
+        meteorBase.buildMeteor(position: CGPoint(x:187, y: self.player.position.y + 760))
+
     }
     
     //MARK: 攻撃
@@ -857,7 +793,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard attackFlg == true else{ return }
         
             //print("---隕石を攻撃---")
-            if meteores.isEmpty == false
+            if meteorBase.meteores.isEmpty == false
             {
                 if player.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
                 {
@@ -869,9 +805,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     attackFlg = false
                     //print("---アタックフラグをOFF---")
                 }
-                meteores[0].physicsBody?.categoryBitMask = 0
-                meteores[0].physicsBody?.contactTestBitMask = 0
-                meteores[0].removeFromParent()
+                meteorBase.meteores[0].physicsBody?.categoryBitMask = 0
+                meteorBase.meteores[0].physicsBody?.contactTestBitMask = 0
+                meteorBase.meteores[0].removeFromParent()
                 //隕石を爆発させる
                 let particle = SKEmitterNode(fileNamed: "MeteorBroken.sks")
                 //接触座標にパーティクルを放出するようにする。
@@ -885,8 +821,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.addChild(particle!)
                 //アクションを実行する。
                 particle!.run(actionAll)
-                //print("---消すノードは\(meteores[0])です---")
-                meteores.remove(at: 0)
+                //print("---消すノードは\(meteorBase.meteores[0])です---")
+                meteorBase.meteores.remove(at: 0)
                 //self.meteorGravityCoefficient -= 0.06                   //数が減るごとに隕石の速度を遅くする
                 //スコア
                 self.score += 1;
@@ -912,12 +848,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     player.velocity = 0;
                 }
             }
-            if meteores.isEmpty == true
+            if meteorBase.meteores.isEmpty == true
             {
                 if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
                 {
-                    self.buildFlg = true
-                    //print("---meteoresが空だったのでビルドフラグON---")
+                    self.meteorBase.buildFlg = true
+                    //print("---meteorBase.meteoresが空だったのでビルドフラグON---")
                 }
             }
         
@@ -969,9 +905,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         //フラグを落とす
         player.ultraAttackStatus = .none
-        if( meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
-            //次のmeteores生成
-            self.buildFlg = true
+        if( meteorBase.meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
+            //次のmeteorBase.meteores生成
+            self.meteorBase.buildFlg = true
         }
     }
     //MARK: 防御
@@ -1039,17 +975,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //ガードシェイプ削除
             guardNode.removeFromParent()
             self.player.guardEnd()
-            for i in meteores
+            for i in meteorBase.meteores
             {
                 i.removeAllActions()
                 if player.actionStatus != .Standing {
                     self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
-                    let meteor = self.meteores.first
+                    let meteor = self.meteorBase.meteores.first
                     let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
                     let playerHalfSize = self.player.size.height / 2
                     self.player.position.y = meteorMinY - playerHalfSize - 1
                 }
-                self.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
+                self.meteorBase.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
                 self.combo = 0
             }
         }
@@ -1080,8 +1016,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.mainBgmPlayer.stop()
             //墜落演出
             let circle = SKShapeNode(circleOfRadius:1)
-            circle.position.x = self.meteores[0].position.x
-            circle.position.y = self.meteores[0].position.y - self.meteores[0].size.height / 2
+            circle.position.x = self.meteorBase.meteores[0].position.x
+            circle.position.y = self.meteorBase.meteores[0].position.y - self.meteorBase.meteores[0].size.height / 2
             circle.zPosition = 1500.0
             circle.fillColor = UIColor.white
             self.addChild(circle)
@@ -1198,26 +1134,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var params = [UnsafeMutablePointer<CGFloat>]()
     let paramMin:[Float] = [0,       //gravity
                             0,       //meteorPos
-                            0,       //meteorGravityCoefficient
                             0,       //pleyer.jumpVeloctiy
                             0,       //meteorSpeedAtGuard
                             0]       //speedFromMeteorOnGuard
     let paramMax:[Float] = [1000,    //gravity
                             5000,    //meteorPos
-                            100,     //meteorGravityCoefficient
                             2000,    //pleyer.jumpVeloctiy
                             1000,    //meteorSpeedAtGuard
                             1000]    //speedFromMeteorOnGuard
     let paramTrans = [ {(a: Float) -> CGFloat in return -CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) / 100 },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) }
     ]
     let paramInv = [ {(a: CGFloat) -> Float in return -Float(a) },
                      {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a * 100) },
                      {(a: CGFloat) -> Float in return Float(a) },
                      {(a: CGFloat) -> Float in return Float(a) },
                      {(a: CGFloat) -> Float in return Float(a) }
@@ -1240,7 +1172,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //調整用パラメータ
         gravity = -900                               //重力 9.8 [m/s^2] * 150 [pixels/m]
         meteorPos = 2400                             //隕石の初期位置
-        meteorGravityCoefficient = 0.06              //隕石が受ける重力の影響を調整する係数
         player.jumpVelocity = 1500                       //プレイヤーのジャンプ時の初速
         meteorSpeedAtGuard = 100                     //隕石が防御された時の速度
         speedFromMeteorAtGuard = -500                //隕石を防御した時にプレイヤーの速度

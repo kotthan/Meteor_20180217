@@ -388,6 +388,7 @@
 				A3DBAE842039CA1C0025B9DD /* ComboLabel.swift */,
 				B661084220484ECA008B3767 /* Ground.swift */,
 				B661084A204A771D008B3767 /* LowestShape.swift */,
+				A38E0CCF20518C1300467A61 /* Meteor.swift */,
 				B661083E2046A8B0008B3767 /* TitleNode.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
