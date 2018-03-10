@@ -17,7 +17,7 @@ class PauseView: SKNode {
         //画面の左下が原点になるように移動しておく
         self.position.x -= frame.size.width / 2
         self.position.y -= frame.size.height / 2
-        self.zPosition = 10000
+        self.setzPos(.PauseView)
         //背景ノード追加
         let background = SKShapeNode(rect: frame)
         background.name = "backgound"

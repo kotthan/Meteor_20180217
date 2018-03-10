@@ -33,7 +33,7 @@ class Meteor: SKNode{
         self.meteorSpeed = 0.0
         self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.meteorInt)
         
-        var meteorZ: CGFloat = 20.0
+        var meteorZ = SKNode.zPos.Meteor.rawValue
         for i in (0...meteorInt).reversed()
         {
             let size: CGFloat = 0.3 + CGFloat(i) * self.meteorUpScale
@@ -60,7 +60,7 @@ class Meteor: SKNode{
             self.addChild(meteor)
             self.meteores.append(meteor)
             
-            meteorZ -= 1.0
+            meteorZ -= 0.001
         }
         meteorInt += 1
     }

@@ -31,7 +31,7 @@ class GameOverView: SKNode
 
         self.position.x = -frame.size.width/2
         self.position.y = -frame.size.height/2
-        self.zPosition = 10000
+        self.setzPos(.GameOverView)
         //背景ノード追加
         let background = SKSpriteNode(imageNamed: "gameover_back")
         background.name = "backgound"

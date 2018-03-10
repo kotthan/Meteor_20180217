@@ -20,7 +20,7 @@ class Ground: SKNode
         Ground.fillColor = UIColor.clear
         Ground.strokeColor = UIColor.clear
         Ground.name = "ground"
-        Ground.zPosition = -10000
+        Ground.setzPos(.Ground)
         Ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: Ground.frame.size.width, height: Ground.frame.size.height),center: CGPoint(x: 0 + frame.size.width/2, y: GroundY))
         Ground.physicsBody?.isDynamic = false
         Ground.physicsBody?.categoryBitMask = 0b0001

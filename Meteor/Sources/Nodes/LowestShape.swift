@@ -21,7 +21,7 @@ class LowestShape: SKNode
         LowestShape.fillColor = UIColor.clear
         LowestShape.strokeColor = UIColor.clear
         LowestShape.name = "LowestShape"
-        LowestShape.zPosition = -10000
+        LowestShape.setzPos(.LowestShape)
         LowestShape.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: LowestShape.frame.size.width, height: LowestShape.frame.size.height),center: CGPoint(x: 0 + frame.size.width/2, y: positionY))
         LowestShape.physicsBody?.affectedByGravity = false      //重力判定を無視
         LowestShape.physicsBody?.isDynamic = false              //固定物に設定

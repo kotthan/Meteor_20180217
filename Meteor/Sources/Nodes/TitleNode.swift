@@ -21,7 +21,7 @@ class TitleNode: SKNode {
         TitleNode.yScale = 1 / 10
         TitleNode.position = CGPoint(
             x: 189.836, y: 1003.673 )
-        TitleNode.zPosition = 50
+        TitleNode.setzPos(.Title)
         //TitleMeteorNode
         TitleMeteorNode = SKSpriteNode(imageNamed: "niki_312")
         TitleMeteorNode.name = "TitleMeteorNode"
@@ -29,7 +29,7 @@ class TitleNode: SKNode {
         TitleMeteorNode.yScale = 1 / 10
         TitleMeteorNode.position = CGPoint(
             x: TitleNode.position.x + 62, y:997)
-        TitleMeteorNode.zPosition = 51
+        TitleMeteorNode.setzPos(.TitleMeteor)
         //Function
         func scaleLoopAction(_ node: SKSpriteNode){
             let actions = SKAction.sequence(

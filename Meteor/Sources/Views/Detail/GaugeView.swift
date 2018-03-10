@@ -118,7 +118,7 @@ class GaugeView: SKSpriteNode {
         addChild(ultraAttackIcon)
         addChild(ultraAttackPush)
         //zPosion設定
-        zPosition = 1000
+        setzPos(.Gauge)
         back.zPosition = zPosition + 0.1
         meteorGauge.zPosition = zPosition + 0.2
         base.zPosition = zPosition + 0.3
