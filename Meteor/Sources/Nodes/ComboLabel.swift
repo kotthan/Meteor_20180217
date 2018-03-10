@@ -22,7 +22,7 @@ class ComboLabel: SKNode {
         self.addChild(value)
         self.addChild(combo)
         //アクション
-        self.zPosition = 10
+        self.setzPos(.ComboLabel)
         let move = SKAction.moveBy(x: 0, y: +60, duration: 1)
         let fadeOut = SKAction.fadeOut(withDuration: 1)
         let group = SKAction.group([move,fadeOut])

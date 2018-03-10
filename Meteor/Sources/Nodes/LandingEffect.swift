@@ -15,7 +15,7 @@ class LandingEffect: SKNode {
     override init() {
         super.init()
         //zpositionを前に
-        self.zPosition += 2
+        self.setzPos(.LandingEffect)
         //左右に出すスプライト生成
         let left = SKSpriteNode(imageNamed: imageName)
         let right = SKSpriteNode(imageNamed: imageName)

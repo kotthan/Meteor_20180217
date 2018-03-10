@@ -25,7 +25,7 @@ class BackgroundView: SKNode {
         Buillding.anchorPoint = CGPoint(x: 0, y: 0)
         Buillding.position.x = 0 + frame.size.width/2 - 25
         Buillding.position.y = 185
-        Buillding.zPosition = -10
+        Buillding.setzPos(.Building)
         self.addChild(Buillding)
         //空スプライト追加
         Sky = SKSpriteNode(imageNamed: "sky409")
@@ -33,20 +33,20 @@ class BackgroundView: SKNode {
         Sky.anchorPoint = CGPoint(x:0, y:0)
         Sky.position.x = 0 + frame.size.width/2
         Sky.position.y = 620
-        Sky.zPosition = -20
+        Sky.setzPos(.Sky)
         self.addChild(Sky)
         //雲１（ビル付近）追加
         cloud_1 = SKSpriteNode(imageNamed: "cloud_1")
         cloud_1.name = "cloud_1"
         cloud_1.anchorPoint = CGPoint(x:0.5, y: 0.5)
         cloud_1.position = CGPoint(x: 380, y: 800)
-        cloud_1.zPosition = -15
+        cloud_1.setzPos(.Cloud_1)
         self.addChild(cloud_1)
         //雲２（上空）追加
         cloud_2 = SKSpriteNode(imageNamed: "cloud_2")
         cloud_2.name = "cloud_2"
         cloud_2.position = CGPoint(x: 400,y: 1500)
-        cloud_2.zPosition = 30
+        cloud_2.setzPos(.Cloud_2)
         self.addChild(cloud_2)
         //アニメーション実行
         cloudLoopAction(cloud_1)

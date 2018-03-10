@@ -194,7 +194,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.creditButton.text = "Credits"
         self.creditButton.position.x = self.frame.size.width / 2
         self.creditButton.position.y += 720 //適当
-        self.creditButton.zPosition = 50
+        self.creditButton.setzPos(.CreditButton)
         //タッチ判定用SpriteNode
         let creditButtonNode = SKSpriteNode(color: UIColor.clear, size: creditButton.frame.size)
         creditButtonNode.position.y += creditButton.frame.size.height / 2
@@ -211,7 +211,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.creditBackButton.text = "Back"
         self.creditBackButton.position.x = self.frame.size.width / 2
         self.creditBackButton.position.y += 70 //適当
-        self.creditBackButton.zPosition = 50
+        self.creditBackButton.setzPos(.CreditBuckButton)
         //タッチ判定用SpriteNode
         let creditBackButtonNode = SKSpriteNode(color: UIColor.clear, size: creditBackButton.frame.size)
         creditBackButtonNode.position.y = creditButton.frame.size.height / 2
@@ -226,7 +226,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         guardPod = GuardPod(gaugeView: gaugeview)
         guardPod.position = CGPoint(x: self.player.sprite.position.x - 30, y: self.player.sprite.position.y )
-        guardPod.zPosition = -1
+        guardPod.setzPos(.GuadPod)
         self.player.addChild(guardPod)
         
         //ハイスコアラベル
@@ -749,7 +749,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         attackShape.position = CGPoint(x: 0, y: self.player.size.height)
         attackShape.fillColor = UIColor.clear
         attackShape.strokeColor = UIColor.clear
-        attackShape.zPosition = 1
+        attackShape.setzPos(.AttackShape)
         attackShape.physicsBody = physicsBody
         attackShape.physicsBody?.affectedByGravity = false      //重力判定を無視
         attackShape.physicsBody?.isDynamic = false              //固定物に設定
@@ -919,7 +919,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guardShape.position = CGPoint(x: 0, y: 0)
         guardShape.fillColor = UIColor.clear
         guardShape.strokeColor = UIColor.clear
-        guardShape.zPosition = 1
+        guardShape.setzPos(.GuardShape)
         guardShape.physicsBody = physicsBody
         guardShape.physicsBody?.affectedByGravity = false      //重力判定を無視
         guardShape.physicsBody?.isDynamic = false              //固定物に設定
@@ -1018,7 +1018,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let circle = SKShapeNode(circleOfRadius:1)
             circle.position.x = self.meteorBase.meteores[0].position.x
             circle.position.y = self.meteorBase.meteores[0].position.y - self.meteorBase.meteores[0].size.height / 2
-            circle.zPosition = 1500.0
+            circle.setzPos(.GameOverCircle)
             circle.fillColor = UIColor.white
             self.addChild(circle)
             let actions = SKAction.sequence(
