@@ -70,7 +70,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var attackFlg : Bool = false                                    //攻撃フラグ
     var gameFlg:Bool = false
-    var gameWaitFlag = false                                        //スタート時にplayerが空中の場合に待つためのフラグ
+    var gameWaitFlag = false
+    //スタート時にplayerが空中の場合に待つためのフラグ
     var creditFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
     
@@ -190,10 +191,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //MARK: credit表示ボタン
         //===================
         self.creditButton.fontName = "GillSansStd-ExtraBold"
-        self.creditButton.fontSize = 30
+        self.creditButton.fontSize = 20
         self.creditButton.text = "Credits"
-        self.creditButton.position.x = self.frame.size.width / 2
-        self.creditButton.position.y += 720 //適当
+        //self.creditButton.position.x = frame.width/2
+        //self.creditButton.position.y =
+        self.creditButton.position = CGPoint(
+            x: frame.width/2, y: 1300)
+        print("creditのposition=\(self.creditButton.position)")
         self.creditButton.setzPos(.CreditButton)
         //タッチ判定用SpriteNode
         let creditButtonNode = SKSpriteNode(color: UIColor.clear, size: creditButton.frame.size)
