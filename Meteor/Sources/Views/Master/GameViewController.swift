@@ -7,12 +7,11 @@ import SpriteKit
 import GoogleMobileAds
 
 @available(iOS 9.0, *)
-
 var adBanner: GADBannerView!
 class GameViewController: UIViewController, GADBannerViewDelegate {
 
-	var gameView: GameView!
-	var gameScene: GameScene!
+	var gameView: GameView!     //SKView
+    var gameScene: GameScene!   //SKScene, SKPhysicsContactDelegate
 	
 	class func gameViewController() -> GameViewController {
 		let gameView = GameViewController(nibName: "GameViewController", bundle: nil)
@@ -22,9 +21,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 	}
 	
     override func viewDidLoad() {
-        
 		super.viewDidLoad()
-        
+
 		//===================
 		//Game View作成
 		//===================
@@ -42,13 +40,35 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 		//===================
 		// Game Scene作成
 		//===================
-		
+        /*
+            if (UIDevice.current.model.range(of: "iPad") != nil){
+                gameScene.scaleMode = .fill
+            } else {
+                self.gameScene = GameScene(size: CGSize(width: frame1.size.width,height: frame1.size.height))
+                self.gameScene.scaleMode = .aspectFill
+                //シーンをビューと同じサイズに調整する
+                self.gameScene.size = CGSize(width: frame1.size.width, height: frame1.size.height)
+                // ゲームシーンを表示
+                self.gameView.presentScene(self.gameScene)
+                print("画面サイズ＝\(frame)")
+                print("画面サイズ１＝\(frame1)")
+            }
+                self.gameScene = GameScene(size: CGSize(width: frame1.size.width,height: frame1.size.height))
+                self.gameScene.scaleMode = .aspectFill
+                //シーンをビューと同じサイズに調整する
+                self.gameScene.size = CGSize(width: frame1.size.width, height: frame1.size.height)
+                // ゲームシーンを表示
+                self.gameView.presentScene(self.gameScene)
+                print("画面サイズ＝\(frame)")
+                print("画面サイズ１＝\(frame1)")
+*/
         self.gameScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
 		self.gameScene.scaleMode = .aspectFill
 		//シーンをビューと同じサイズに調整する
 		self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
 		// ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
+        print("画面サイズ＝\(frame)")
         //広告の表示
         self.showAd()
     }
