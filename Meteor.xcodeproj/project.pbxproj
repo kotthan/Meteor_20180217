@@ -67,6 +67,8 @@
 		B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBB204141A700A9AB0D /* Launch Screen.storyboard */; };
 		B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */; };
 		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
+		B6C67B93205AA6AF002E89E9 /* jump.sks in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B91205AA6AF002E89E9 /* jump.sks */; };
+		B6C67B94205AA6AF002E89E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B92205AA6AF002E89E9 /* Assets.xcassets */; };
 		B6D0C6162053A09B0007F8D1 /* Impact.sks in Resources */ = {isa = PBXBuildFile; fileRef = B6D0C6142053A09B0007F8D1 /* Impact.sks */; };
 		B6D0C6172053A09B0007F8D1 /* Particle.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6D0C6152053A09B0007F8D1 /* Particle.xcassets */; };
 		B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* GameOverView.swift */; };
@@ -156,6 +158,8 @@
 		B6A4CEBC204141A700A9AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yabusaka.mp3; sourceTree = "<group>"; };
 		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
+		B6C67B91205AA6AF002E89E9 /* jump.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = jump.sks; sourceTree = "<group>"; };
+		B6C67B92205AA6AF002E89E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6D0C6142053A09B0007F8D1 /* Impact.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Impact.sks; sourceTree = "<group>"; };
 		B6D0C6152053A09B0007F8D1 /* Particle.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Particle.xcassets; sourceTree = "<group>"; };
 		B6DE6285203B15E100A1B13F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
@@ -412,6 +416,8 @@
 			children = (
 				B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */,
 				B6D0C6142053A09B0007F8D1 /* Impact.sks */,
+				B6C67B91205AA6AF002E89E9 /* jump.sks */,
+				B6C67B92205AA6AF002E89E9 /* Assets.xcassets */,
 			);
 			path = Particles;
 			sourceTree = "<group>";
@@ -551,6 +557,7 @@
 				B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */,
 				A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */,
 				B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */,
+				B6C67B93205AA6AF002E89E9 /* jump.sks in Resources */,
 				B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */,
 				B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */,
 				B661084D204A777E008B3767 /* BackgroundView.xcassets in Resources */,
@@ -565,6 +572,7 @@
 				B6958ABB2045A49C00573D8D /* piano31.mp3 in Resources */,
 				B6958AB720459DE000573D8D /* move1.mp3 in Resources */,
 				B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */,
+				B6C67B94205AA6AF002E89E9 /* Assets.xcassets in Resources */,
 				B6958AB120459D6500573D8D /* jump10.mp3 in Resources */,
 				B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */,
 			);
