@@ -54,14 +54,15 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                 print("画面サイズ１＝\(frame1)")
 */
         //self.gameScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
-        
-
-
-		//self.gameScene.scaleMode = .aspectFill
-		//シーンをビューと同じサイズに調整する
-		//self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
-        self.gameScene = GameScene(size: CGSize(width: 2000,height: 2000))
-		// ゲームシーンを表示
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
+            self.gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
+            self.gameScene.scaleMode = .fill
+        }
+        else{
+            self.gameScene = GameScene(size: frame.size)
+            self.gameScene.scaleMode = .aspectFill
+        }
+        // ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
         print("GameSceneがコントローラで呼ばれたよ")
         print("画面サイズ＝\(frame)")
