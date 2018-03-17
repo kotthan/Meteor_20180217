@@ -28,6 +28,7 @@
 		A3DBAE87203B1CB50025B9DD /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBAE86203B1CB50025B9DD /* Credits.swift */; };
 		A3DCB55B204A2AE2008C8262 /* pod.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3DCB55A204A2AE2008C8262 /* pod.xcassets */; };
 		A3DCB55F204AC317008C8262 /* GaugeView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3DCB55E204AC317008C8262 /* GaugeView.xcassets */; };
+		B61D434D205D089B00EE5FDF /* LaunchScreen.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B61D434C205D089B00EE5FDF /* LaunchScreen.xcassets */; };
 		B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFD642037390800F0F90E /* AppDelegate.swift */; };
 		B63CFD702037390800F0F90E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD6E2037390800F0F90E /* Main.storyboard */; };
 		B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD732037390800F0F90E /* LaunchScreen.storyboard */; };
@@ -43,7 +44,7 @@
 		B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCC20373D2C00F0F90E /* GameViewController.swift */; };
 		B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD920373DC000F0F90E /* shining_star.mp3 */; };
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
-		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
+		B63CFDF42037E28D00F0F90E /* Asset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Asset.xcassets */; };
 		B6511693204ACEB7008C6571 /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6511692204ACEB7008C6571 /* Player.xcassets */; };
 		B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B661083E2046A8B0008B3767 /* TitleNode.swift */; };
 		B6610841204829AA008B3767 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6610840204829AA008B3767 /* GaugeView.swift */; };
@@ -113,6 +114,7 @@
 		A3DBAE86203B1CB50025B9DD /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
 		A3DCB55A204A2AE2008C8262 /* pod.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = pod.xcassets; sourceTree = "<group>"; };
 		A3DCB55E204AC317008C8262 /* GaugeView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = GaugeView.xcassets; sourceTree = "<group>"; };
+		B61D434C205D089B00EE5FDF /* LaunchScreen.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LaunchScreen.xcassets; sourceTree = "<group>"; };
 		B63CFD612037390800F0F90E /* Meteor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63CFD642037390800F0F90E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B63CFD6F2037390800F0F90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -134,7 +136,7 @@
 		B63CFDCC20373D2C00F0F90E /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B63CFDD920373DC000F0F90E /* shining_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shining_star.mp3; sourceTree = "<group>"; };
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
-		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B63CFDF32037E28D00F0F90E /* Asset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Asset.xcassets; sourceTree = "<group>"; };
 		B6511692204ACEB7008C6571 /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
 		B661083E2046A8B0008B3767 /* TitleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleNode.swift; sourceTree = "<group>"; };
 		B6610840204829AA008B3767 /* GaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
@@ -343,7 +345,8 @@
 		B63CFD9F20373AFB00F0F90E /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				B63CFDF32037E28D00F0F90E /* Assets.xcassets */,
+				B63CFDF32037E28D00F0F90E /* Asset.xcassets */,
+				B61D434C205D089B00EE5FDF /* LaunchScreen.xcassets */,
 				B6511692204ACEB7008C6571 /* Player.xcassets */,
 				B6D0C6152053A09B0007F8D1 /* Particle.xcassets */,
 				B661084C204A777E008B3767 /* BackgroundView.xcassets */,
@@ -548,7 +551,7 @@
 			files = (
 				B6958AB320459D8000573D8D /* bougyo01.mp3 in Resources */,
 				B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */,
-				B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */,
+				B63CFDF42037E28D00F0F90E /* Asset.xcassets in Resources */,
 				B6D0C6162053A09B0007F8D1 /* Impact.sks in Resources */,
 				B6958AB92045A0FA00573D8D /* button01.mp3 in Resources */,
 				B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */,
@@ -562,6 +565,7 @@
 				B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */,
 				B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */,
 				B661084D204A777E008B3767 /* BackgroundView.xcassets in Resources */,
+				B61D434D205D089B00EE5FDF /* LaunchScreen.xcassets in Resources */,
 				A3DCB55B204A2AE2008C8262 /* pod.xcassets in Resources */,
 				B6958AAB2045885E00573D8D /* explore16.mp3 in Resources */,
 				B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */,
