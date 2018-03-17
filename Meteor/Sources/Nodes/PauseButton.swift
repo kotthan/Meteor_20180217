@@ -15,12 +15,15 @@ class PauseButton: SKNode
     var PauseButton: SKSpriteNode!
     private var resume: (() -> Void)?               //再開時に呼ばれる関数
     private var pause: (() -> Void)?                //停止時に呼ばれる関数
-    let pauseAnimation = "pause"
-    let restartAnimation = "restart"
+    private let pauseTexture: SKTexture
+    private let resumeTexture: SKTexture
+    var isPushed = false
     init(frame: CGRect)
     {
+        pauseTexture = SKTexture(imageNamed: "pause")
+        resumeTexture = SKTexture(imageNamed: "restart")
         super.init()
-        PauseButton = SKSpriteNode(imageNamed: "pause")
+        PauseButton = SKSpriteNode(texture: pauseTexture)
         PauseButton.name = "PauseButton"
         PauseButton.size.width = 50.0
         PauseButton.size.height = 50.0
@@ -43,34 +46,25 @@ class PauseButton: SKNode
         self.resume = action
     }
     
-    func animation(name: String) {
-        var ary: [SKTexture] = []
-            ary.append(SKTexture(imageNamed: name))
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.PauseButton.run(action)
-    }
-    
     func pauseAction(){
-        isPaused = true
-        animation(name: pauseAnimation)
+        isPushed = true
+        PauseButton.texture = resumeTexture
         self.pause?()
     }
     func resumeAction(){
-        isPaused = false
-        animation(name: restartAnimation)
+        isPushed = false
+        PauseButton.texture = pauseTexture
         self.resume?()
     }
     
     func tapped() {
-        isPaused = !isPaused
+        isPushed = !isPushed
         print("pausebutton.tapped()したよ")
-        if( isPaused == true ){
-            animation(name:  restartAnimation)
-            self.pause?()
+        if( isPushed == true ){//動作中からポーズ
+            pauseAction()
         }
-        else{
-            animation(name: pauseAnimation)
-            self.resume?()
+        else{//ポーズから動作
+            resumeAction()
         }
     }
     
