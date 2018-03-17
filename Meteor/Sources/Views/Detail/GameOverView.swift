@@ -40,8 +40,6 @@ class GameOverView: SKNode
         background.zPosition = 10000
         self.addChild(background)
         //広告
-        adBanner.frame.origin.x = frame.size.width / 2 - adBanner.frame.size.width / 2
-        adBanner.frame.origin.y = 0 + frame.size.height - adBanner.frame.size.height - 20
         adBanner.isHidden = false
         //スコアラベル
         let scoreLabel = SKLabelNode()
