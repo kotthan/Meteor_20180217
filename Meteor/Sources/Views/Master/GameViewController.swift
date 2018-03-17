@@ -10,15 +10,26 @@ import GoogleMobileAds
 var adBanner: GADBannerView!
 class GameViewController: UIViewController, GADBannerViewDelegate {
 
-	var gameView: GameView!     //SKView
+	/*var gameView: GameView!     //SKView
     var gameScene: GameScene!   //SKScene, SKPhysicsContactDelegate
+ */
     override func viewDidLoad() {
 		super.viewDidLoad()
+        let scene = GameScene(size:CGSize(width: 750, height: 1334))
+        let skView = self.view as! SKView
+        scene.scaleMode = .aspectFit
+        skView.presentScene(scene)
+        /*
         let frame = UIScreen.main.bounds
 		//===================
 		//Game View作成
 		//===================
-		self.gameView = GameView(frame: CGRect(x: 0,y: 0,width: frame.size.width,height: frame.size.height))
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
+            self.gameView = GameView(frame: CGRect(x: 0, y: 0,width: frame.size.width + 100, height: frame.size.height + 100))
+        }
+        else{
+            self.gameView = GameView(frame: CGRect(x: 0,y: 0,width: frame.size.width,height: frame.size.height))
+        }
 		self.gameView.allowsTransparency = true
 		self.gameView.ignoresSiblingOrder = true
 		self.view.addSubview(self.gameView)
@@ -31,31 +42,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 		//===================
 		// Game Scene作成
 		//===================
-        /*
-            if (UIDevice.current.model.range(of: "iPad") != nil){
-                gameScene.scaleMode = .fill
-            } else {
-                self.gameScene = GameScene(size: CGSize(width: frame1.size.width,height: frame1.size.height))
-                self.gameScene.scaleMode = .aspectFill
-                //シーンをビューと同じサイズに調整する
-                self.gameScene.size = CGSize(width: frame1.size.width, height: frame1.size.height)
-                // ゲームシーンを表示
-                self.gameView.presentScene(self.gameScene)
-                print("画面サイズ＝\(frame)")
-                print("画面サイズ１＝\(frame1)")
-            }
-                self.gameScene = GameScene(size: CGSize(width: frame1.size.width,height: frame1.size.height))
-                self.gameScene.scaleMode = .aspectFill
-                //シーンをビューと同じサイズに調整する
-                self.gameScene.size = CGSize(width: frame1.size.width, height: frame1.size.height)
-                // ゲームシーンを表示
-                self.gameView.presentScene(self.gameScene)
-                print("画面サイズ＝\(frame)")
-                print("画面サイズ１＝\(frame1)")
-*/
-        //self.gameScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
         if (UIDevice.current.model.range(of: "iPad") != nil) {
-            self.gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
+            self.gameScene = GameScene(size: CGSize(width: 750.0, height: 1334.0))
             self.gameScene.scaleMode = .fill
         }
         else{
@@ -68,6 +56,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         print("画面サイズ＝\(frame)")
         //広告の表示
         self.showAd()
+ */
     }
 
 	override func viewDidAppear(_ animated: Bool)

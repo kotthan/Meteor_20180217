@@ -39,7 +39,6 @@
 		B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC120373CB800F0F90E /* PauseButton.swift */; };
 		B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC520373CEF00F0F90E /* GuardPod.swift */; };
 		B63CFDC820373CF800F0F90E /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC720373CF800F0F90E /* HUDView.swift */; };
-		B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCA20373D2C00F0F90E /* GameView.swift */; };
 		B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCB20373D2C00F0F90E /* PauseView.swift */; };
 		B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCC20373D2C00F0F90E /* GameViewController.swift */; };
 		B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD920373DC000F0F90E /* shining_star.mp3 */; };
@@ -129,7 +128,6 @@
 		B63CFDC120373CB800F0F90E /* PauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
 		B63CFDC520373CEF00F0F90E /* GuardPod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuardPod.swift; sourceTree = "<group>"; };
 		B63CFDC720373CF800F0F90E /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
-		B63CFDCA20373D2C00F0F90E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		B63CFDCB20373D2C00F0F90E /* PauseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		B63CFDCC20373D2C00F0F90E /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B63CFDD920373DC000F0F90E /* shining_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shining_star.mp3; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 		B63CFD9B20373A5900F0F90E /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				B63CFDCA20373D2C00F0F90E /* GameView.swift */,
 				B63CFDCC20373D2C00F0F90E /* GameViewController.swift */,
 			);
 			path = Master;
@@ -607,7 +604,6 @@
 				A38E0CD020518C1300467A61 /* Meteor.swift in Sources */,
 				B661084320484ECA008B3767 /* Ground.swift in Sources */,
 				A3DBAE87203B1CB50025B9DD /* Credits.swift in Sources */,
-				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
 				B6610841204829AA008B3767 /* GaugeView.swift in Sources */,
 				B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */,
