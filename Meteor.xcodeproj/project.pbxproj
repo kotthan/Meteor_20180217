@@ -42,7 +42,6 @@
 		B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCA20373D2C00F0F90E /* GameView.swift */; };
 		B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCB20373D2C00F0F90E /* PauseView.swift */; };
 		B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCC20373D2C00F0F90E /* GameViewController.swift */; };
-		B63CFDD220373D2C00F0F90E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCD20373D2C00F0F90E /* ViewController.swift */; };
 		B63CFDE220373DC100F0F90E /* shining_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDD920373DC000F0F90E /* shining_star.mp3 */; };
 		B63CFDE820373EAC00F0F90E /* MeteorBroken.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */; };
 		B63CFDF42037E28D00F0F90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDF32037E28D00F0F90E /* Assets.xcassets */; };
@@ -133,7 +132,6 @@
 		B63CFDCA20373D2C00F0F90E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		B63CFDCB20373D2C00F0F90E /* PauseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		B63CFDCC20373D2C00F0F90E /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		B63CFDCD20373D2C00F0F90E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B63CFDD920373DC000F0F90E /* shining_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shining_star.mp3; sourceTree = "<group>"; };
 		B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeteorBroken.sks; sourceTree = "<group>"; };
 		B63CFDF32037E28D00F0F90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -303,7 +301,6 @@
 		B63CFD9B20373A5900F0F90E /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				B63CFDCD20373D2C00F0F90E /* ViewController.swift */,
 				B63CFDCA20373D2C00F0F90E /* GameView.swift */,
 				B63CFDCC20373D2C00F0F90E /* GameViewController.swift */,
 			);
@@ -612,7 +609,6 @@
 				A3DBAE87203B1CB50025B9DD /* Credits.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
-				B63CFDD220373D2C00F0F90E /* ViewController.swift in Sources */,
 				B6610841204829AA008B3767 /* GaugeView.swift in Sources */,
 				B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */,
 				B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */,

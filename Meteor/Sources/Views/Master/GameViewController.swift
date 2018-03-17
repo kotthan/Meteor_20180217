@@ -12,26 +12,18 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 
 	var gameView: GameView!     //SKView
     var gameScene: GameScene!   //SKScene, SKPhysicsContactDelegate
-	
-	class func gameViewController() -> GameViewController {
-		let gameView = GameViewController(nibName: "GameViewController", bundle: nil)
-		let frame = UIScreen.main.bounds
-		gameView.view.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-		return gameView
-	}
-	
     override func viewDidLoad() {
 		super.viewDidLoad()
-
+        let frame = UIScreen.main.bounds
 		//===================
 		//Game View作成
 		//===================
-		let frame = UIScreen.main.bounds
 		self.gameView = GameView(frame: CGRect(x: 0,y: 0,width: frame.size.width,height: frame.size.height))
 		self.gameView.allowsTransparency = true
 		self.gameView.ignoresSiblingOrder = true
 		self.view.addSubview(self.gameView)
 		self.view.sendSubview(toBack: self.gameView)
+        print("GameViewがコントローラに追加されたよ")
 		//デバッグ表示
 //		self.gameView.showsFPS = true
 //		self.gameView.showsNodeCount = true
@@ -68,6 +60,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 		self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
 		// ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
+        print("GameSceneがコントローラで呼ばれたよ")
         print("画面サイズ＝\(frame)")
         //広告の表示
         self.showAd()
