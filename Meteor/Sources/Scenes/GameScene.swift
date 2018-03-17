@@ -1066,9 +1066,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func newGame()
     {
-        let scene = GameScene(size: self.scene!.size)
-        scene.scaleMode = SKSceneScaleMode.aspectFill
-        self.view?.presentScene(scene)
+        var gameScene: GameScene!
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
+            gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
+            gameScene.scaleMode = .fill
+        }
+        else{
+            gameScene = GameScene(size: frame.size)
+            gameScene.scaleMode = .aspectFill
+        }
+        self.view?.presentScene(gameScene)
     }
     
     func homeButtonAction()
@@ -1083,14 +1090,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func reStartButtonAction()
     {
-        let scene = GameScene(size: self.scene!.size)
-        scene.scaleMode = SKSceneScaleMode.aspectFill
-        scene.retryFlg = true
+        var gameScene: GameScene!
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
+            gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
+            gameScene.scaleMode = .fill
+        }
+        else{
+            gameScene = GameScene(size: frame.size)
+            gameScene.scaleMode = .aspectFill
+        }
+        gameScene.retryFlg = true
         let actions = SKAction.sequence([
             SKAction.run { self.playSound(soundName: "push_45") },
             SKAction.run { self.gameOverView.audioPlayer.stop() },
             SKAction.run { adBanner.isHidden = true },
-            SKAction.run { self.view!.presentScene(scene)}
+            SKAction.run { self.view!.presentScene(gameScene)}
             ])
         run(actions)
     }
