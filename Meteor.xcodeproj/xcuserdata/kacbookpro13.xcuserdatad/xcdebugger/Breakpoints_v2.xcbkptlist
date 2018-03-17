@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Meteor/Sources/Scenes/GameScene.swift"
-            timestampString = "542966687.273241"
+            timestampString = "542353685.8424079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "627"
-            endingLineNumber = "627"
+            startingLineNumber = "634"
+            endingLineNumber = "634"
             landmarkName = "didBegin(_:)"
             landmarkType = "7">
          </BreakpointContent>
