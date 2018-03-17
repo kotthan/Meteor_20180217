@@ -82,6 +82,14 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         //let customAdSize = GADAdSizeFromCGSize(CGSize(width: 300, height: 300))
         //adBanner = GADBannerView(adSize: customAdSize)
         adBanner = GADBannerView(adSize: kGADAdSizeMediumRectangle)//300×250
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
+            //でかいので小さくしておく
+            adBanner.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        }
+        //配置設定
+        let frame = UIScreen.main.bounds
+        adBanner.frame.origin.x = frame.size.width / 2 - adBanner.frame.size.width / 2
+        adBanner.frame.origin.y = frame.size.height - adBanner.frame.size.height - 20
         adBanner.adUnitID = "ca-app-pub-2945918043757109/9447056281"
         adBanner.delegate = self
         adBanner.rootViewController = self
