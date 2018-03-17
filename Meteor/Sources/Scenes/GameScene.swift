@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardPod: GuardPod!
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
+    var pauseButton: PauseButton!
     var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
     var attackShapeName: String = "attackShape"
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
@@ -44,7 +45,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var combo = 0                                                   //スコア
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
     var highScore = 0                                               //ハイスコア
-    var pauseButton: PauseButton!                                   //ポーズボタン
     //MARK: 画面
     var pauseView: PauseView!                                       //ポーズ画面
     var gameOverView: GameOverView!
@@ -74,10 +74,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //スタート時にplayerが空中の場合に待つためのフラグ
     var creditFlg = false
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
-    
-    //MARK: - プロパティ
-	//MARK: プレイヤーキャラプロパティ
-    //MARK: 隕石・プレイヤー動作プロパティ
 
     //調整用パラメータ
     var gravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
@@ -256,13 +252,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         //MARK: ポーズ画面
         //===================
+        //pauseview
         pauseView = PauseView(frame: self.frame)
         pauseView.isHidden = true
         self.camera?.addChild(pauseView)
-        //　ポーズボタン
-        pauseButton = PauseButton()
-        pauseButton.layer.anchorPoint = CGPoint(x: 1, y: 0)//右上
-        pauseButton.layer.position = CGPoint(x: frame.maxX - 10, y: 25)
+        //pauseButton
+        pauseButton = PauseButton(frame:self.frame)
         pauseButton.setPauseFunc{
             self.sliderHidden = !self.sliderHidden
             self.pauseView.isHidden = self.sliderHidden
@@ -276,8 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.mainBgmPlayer.play()
         }
         pauseButton.isHidden = true     //タイトル画面では非表示
-        self.view!.addSubview(pauseButton)
-        
+        self.camera?.addChild(pauseButton)
         // アプリがバックグラウンドから復帰した際に呼ぶ関数の登録
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(becomeActive(_:)),
@@ -305,7 +299,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         isPaused = true     //ポーズ状態にする
         if( sliderHidden == true ){ //ポーズボタンが押されていなかった
             if( gameoverFlg == false ){ //ゲームオーバになっていない時
-                pauseButton.pauseAction()
+               pauseButton.pauseAction()
             }
         }
     }
@@ -362,13 +356,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
-        /*guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
-            return
-        }*/
-        //ポーズでなければ次の処理に進む
-        /*guard ( self.view!.scene?.isPaused == false ) else {
-            return
-        }*/
         
         if let touch = touches.first as UITouch?
         {
@@ -469,6 +456,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     homeButtonAction()
                 case let node where node ==  gameOverView?.ReStartButton :
                     reStartButtonAction()
+                case let node where node == pauseButton?.PauseButton :
+                    pauseButton.tapped()
                 default:
                     buttonPushFlg = false
                 }

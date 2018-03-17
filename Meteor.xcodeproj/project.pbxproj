@@ -36,7 +36,6 @@
 		B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B63CFDA520373BA400F0F90E /* GameScene.sks */; };
 		B63CFDA820373BAC00F0F90E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDA720373BAC00F0F90E /* GameScene.swift */; };
 		B63CFDBE20373C9400F0F90E /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDBD20373C9400F0F90E /* IconButton.swift */; };
-		B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC120373CB800F0F90E /* PauseButton.swift */; };
 		B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC520373CEF00F0F90E /* GuardPod.swift */; };
 		B63CFDC820373CF800F0F90E /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDC720373CF800F0F90E /* HUDView.swift */; };
 		B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFDCA20373D2C00F0F90E /* GameView.swift */; };
@@ -68,6 +67,8 @@
 		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
 		B6C67B93205AA6AF002E89E9 /* jump.sks in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B91205AA6AF002E89E9 /* jump.sks */; };
 		B6C67B94205AA6AF002E89E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B92205AA6AF002E89E9 /* Assets.xcassets */; };
+		B6C67B98205CE98F002E89E9 /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C67B97205CE98F002E89E9 /* PauseButton.swift */; };
+		B6C67B9A205CEAAE002E89E9 /* PauseButton.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B99205CEAAE002E89E9 /* PauseButton.xcassets */; };
 		B6D0C6162053A09B0007F8D1 /* Impact.sks in Resources */ = {isa = PBXBuildFile; fileRef = B6D0C6142053A09B0007F8D1 /* Impact.sks */; };
 		B6D0C6172053A09B0007F8D1 /* Particle.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6D0C6152053A09B0007F8D1 /* Particle.xcassets */; };
 		B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DE6285203B15E100A1B13F /* GameOverView.swift */; };
@@ -126,7 +127,6 @@
 		B63CFDA520373BA400F0F90E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B63CFDA720373BAC00F0F90E /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B63CFDBD20373C9400F0F90E /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
-		B63CFDC120373CB800F0F90E /* PauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
 		B63CFDC520373CEF00F0F90E /* GuardPod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuardPod.swift; sourceTree = "<group>"; };
 		B63CFDC720373CF800F0F90E /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		B63CFDCA20373D2C00F0F90E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -158,6 +158,8 @@
 		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
 		B6C67B91205AA6AF002E89E9 /* jump.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = jump.sks; sourceTree = "<group>"; };
 		B6C67B92205AA6AF002E89E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B6C67B97205CE98F002E89E9 /* PauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
+		B6C67B99205CEAAE002E89E9 /* PauseButton.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PauseButton.xcassets; sourceTree = "<group>"; };
 		B6D0C6142053A09B0007F8D1 /* Impact.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Impact.sks; sourceTree = "<group>"; };
 		B6D0C6152053A09B0007F8D1 /* Particle.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Particle.xcassets; sourceTree = "<group>"; };
 		B6DE6285203B15E100A1B13F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				A3DCB55A204A2AE2008C8262 /* pod.xcassets */,
 				B6610846204A67F0008B3767 /* GameOverView.xcassets */,
 				A3DCB55E204AC317008C8262 /* GaugeView.xcassets */,
+				B6C67B99205CEAAE002E89E9 /* PauseButton.xcassets */,
 				B63CFDA020373B1400F0F90E /* Base.lproj */,
 			);
 			path = Images;
@@ -402,8 +405,8 @@
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
 				B63CFDC520373CEF00F0F90E /* GuardPod.swift */,
-				B63CFDC120373CB800F0F90E /* PauseButton.swift */,
 				A3DBAE86203B1CB50025B9DD /* Credits.swift */,
+				B6C67B97205CE98F002E89E9 /* PauseButton.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
 				B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */,
 				A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */,
+				B6C67B9A205CEAAE002E89E9 /* PauseButton.xcassets in Resources */,
 				B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */,
 				B6C67B93205AA6AF002E89E9 /* jump.sks in Resources */,
 				B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */,
@@ -607,10 +611,10 @@
 				A38E0CD020518C1300467A61 /* Meteor.swift in Sources */,
 				B661084320484ECA008B3767 /* Ground.swift in Sources */,
 				A3DBAE87203B1CB50025B9DD /* Credits.swift in Sources */,
+				B6C67B98205CE98F002E89E9 /* PauseButton.swift in Sources */,
 				B63CFDCF20373D2C00F0F90E /* GameView.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
 				B6610841204829AA008B3767 /* GaugeView.swift in Sources */,
-				B63CFDC220373CB800F0F90E /* PauseButton.swift in Sources */,
 				B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */,
 				B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */,
 				B63CFDC620373CEF00F0F90E /* GuardPod.swift in Sources */,

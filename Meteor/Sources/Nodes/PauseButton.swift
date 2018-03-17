@@ -1,36 +1,38 @@
 //
-//  PauseButton.swift
+//  File.swift
 //  Meteor
 //
-//  Created by Ryota on 2018/02/11.
+//  Created by Kazuaki Oe on 2018/03/02.
 //  Copyright © 2018年 Kazuaki Oe. All rights reserved.
 //
 
-import UIKit
+import SpriteKit
 
-class PauseButton: UIButton {
-    
-    let pauseImage = UIImage(named:"pause")         //ポーズ時の画像
-    let restartImage = UIImage(named:"restart")     //再開時の画像
-    let buttonSize = CGSize(width: 50, height: 50)  //ボタンのサイズ
-    var isPaused = false                            //ポーズ中かどうか
+@available(iOS 9.0, *)
+
+class PauseButton: SKNode
+{
+    var PauseButton: SKSpriteNode!
     private var resume: (() -> Void)?               //再開時に呼ばれる関数
-    private var pause: (() -> Void)?               //再開時に呼ばれる関数
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        //サイズ設定
-        self.frame = CGRect(origin: .zero, size: buttonSize)
-        //ポーズボタン画像を設定
-        self.setImage(pauseImage, for: .normal)
-        //frameサイズに画像を合わせる
-        self.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        //背景は透明
-        self.backgroundColor = UIColor.clear
-        //ボタン押下時に呼ばれる関数の設定
-        self.addTarget(self, action: #selector(self.tapped(sender:)), for: .touchUpInside)
+    private var pause: (() -> Void)?                //停止時に呼ばれる関数
+    let pauseAnimation = "pause"
+    let restartAnimation = "restart"
+    init(frame: CGRect)
+    {
+        super.init()
+        PauseButton = SKSpriteNode(imageNamed: "pause")
+        PauseButton.name = "PauseButton"
+        PauseButton.size.width = 50.0
+        PauseButton.size.height = 50.0
+        PauseButton.setzPos(.PauseButton)
+        PauseButton.position = CGPoint(
+            x: frame.size.width/2 - PauseButton.size.width/2 - 15, y: frame.size.height/2 - PauseButton.size.width/2 - 15)
+        PauseButton.xScale = 1
+        PauseButton.yScale = 1
+        self.addChild(PauseButton)
+        print("pauseButtonを作ったよ\(PauseButton.position)")
     }
-
+    
     //ポーズ時の動作を設定する関数
     func setPauseFunc(action: @escaping () -> Void) {
         self.pause = action
@@ -40,31 +42,40 @@ class PauseButton: UIButton {
     func setResumeFunc(action: @escaping () -> Void) {
         self.resume = action
     }
-
+    
+    func animation(name: String) {
+        var ary: [SKTexture] = []
+            ary.append(SKTexture(imageNamed: name))
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.PauseButton.run(action)
+    }
+    
     func pauseAction(){
         isPaused = true
-        self.setImage(restartImage, for: .normal)
+        animation(name: pauseAnimation)
         self.pause?()
     }
     func resumeAction(){
         isPaused = false
-        self.setImage(pauseImage, for: .normal)
+        animation(name: restartAnimation)
         self.resume?()
     }
     
-    @objc func tapped(sender: PauseButton) {
+    func tapped() {
         isPaused = !isPaused
+        print("pausebutton.tapped()したよ")
         if( isPaused == true ){
-            self.setImage(restartImage, for: .normal)
+            animation(name:  restartAnimation)
             self.pause?()
         }
         else{
-            self.setImage(pauseImage, for: .normal)
+            animation(name: pauseAnimation)
             self.resume?()
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
 }

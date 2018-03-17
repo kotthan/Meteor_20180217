@@ -32,7 +32,8 @@ extension SKNode {
         case Gauge = 1000
         case GameOverCircle = 1500
         case PauseView = 9999
-        case GameOverView = 10000
+        case PauseButton = 10001
+        case GameOverView = 10010
     }
     
     func setzPos(_ zPos: zPos){
