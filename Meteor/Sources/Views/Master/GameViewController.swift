@@ -28,7 +28,6 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 //		self.gameView.showsFPS = true
 //		self.gameView.showsNodeCount = true
 //		self.gameView.showsPhysics = true
-		
 		//===================
 		// Game Scene作成
 		//===================
@@ -54,10 +53,14 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                 print("画面サイズ＝\(frame)")
                 print("画面サイズ１＝\(frame1)")
 */
-        self.gameScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
-		self.gameScene.scaleMode = .aspectFill
+        //self.gameScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
+        
+
+
+		//self.gameScene.scaleMode = .aspectFill
 		//シーンをビューと同じサイズに調整する
-		self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
+		//self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height)
+        self.gameScene = GameScene(size: CGSize(width: 2000,height: 2000))
 		// ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
         print("GameSceneがコントローラで呼ばれたよ")
