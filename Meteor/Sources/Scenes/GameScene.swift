@@ -77,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //調整用パラメータ
 
-    var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var speedFromMeteorAtGuard : CGFloat = 350                      //隕石を防御した時にプレイヤーが受ける隕石の速度
     var cameraMax : CGFloat = 1450                                  //カメラの上限
     //MARK: タッチ関係プロパティ
@@ -929,36 +928,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (self.guardPod.guardStatus == .guarding)
         {
             playSound(soundName: "bougyo01")
-            //隕石を爆発させる
-            let impact = SKEmitterNode(fileNamed: "Impact.sks")
-            //接触座標にパーティクルを放出するようにする。
-            impact!.position = CGPoint(x: player.position.x,
-                                       y: player.position.y + (guardShape.position.y))
-            //0.7秒後にシーンから消すアクションを作成する。
-            let action11 = SKAction.wait(forDuration: 0.5)
-            let action21 = SKAction.removeFromParent()
-            let actionAll1 = SKAction.sequence([action11, action21])
-            //パーティクルをシーンに追加する。
-            self.addChild(impact!)
-            //アクションを実行する。
-            impact!.run(actionAll1)
+            meteorBase.guarded(guardPos: CGPoint(x: player.position.x,
+                                       y: player.position.y + (guardShape.position.y)))
             guardPod.subCount()
             //ガードシェイプ削除
             guardNode.removeFromParent()
             self.player.guardEnd()
-            for i in meteorBase.meteores
-            {
-                i.removeAllActions()
-                if player.actionStatus != .Standing {
-                    self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
-                    let meteor = self.meteorBase.meteores.first
-                    let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
+            if player.actionStatus != .Standing {
+                self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
+                if let meteor = self.meteorBase.meteores.first {
+                    let meteorMinY = meteor.position.y - (meteor.size.height / 2)
                     let playerHalfSize = self.player.size.height / 2
                     self.player.position.y = meteorMinY - playerHalfSize - 1
                 }
-                self.meteorBase.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
-                self.combo = 0
             }
+            self.combo = 0
         }
         else
         {
@@ -1110,23 +1094,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var debugView = UIView()
     let playerPosLabel = UILabel()                                  //プレイヤーの座標表示用ラベル
     let paramNames = ["ジャンプ速度",
-                      "ガード時の隕石速度",
                       "ガード時のプレイヤー速度"]
     var params = [UnsafeMutablePointer<CGFloat>]()
     let paramMin:[Float] = [0,       //pleyer.jumpVeloctiy
-                            0,       //meteorSpeedAtGuard
                             0]       //speedFromMeteorOnGuard
     let paramMax:[Float] = [2000,    //pleyer.jumpVeloctiy
-                            1000,    //meteorSpeedAtGuard
                             1000]    //speedFromMeteorOnGuard
     let paramTrans = [ {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
                        {(a: Float) -> CGFloat in return CGFloat(Int(a)) }
     ]
-    let paramInv = [ {(a: CGFloat) -> Float in return -Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) },
+    let paramInv = [  {(a: CGFloat) -> Float in return Float(a) },
                      {(a: CGFloat) -> Float in return Float(a) }
     ]
     //調整用スライダー
@@ -1146,7 +1123,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     @objc func setDefaultParam(){
         //調整用パラメータ
         player.jumpVelocity = 1500                       //プレイヤーのジャンプ時の初速
-        meteorSpeedAtGuard = 100                     //隕石が防御された時の速度
         speedFromMeteorAtGuard = -500                //隕石を防御した時にプレイヤーの速度
         var ix = 0
         for slider in paramSliders {

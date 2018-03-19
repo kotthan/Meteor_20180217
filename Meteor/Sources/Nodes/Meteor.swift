@@ -14,6 +14,7 @@ class Meteor: SKNode{
     var meteores: [SKSpriteNode] = []
     let texture: SKTexture
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
+    var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
     var meteorInt: Int = 0
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
@@ -106,7 +107,27 @@ class Meteor: SKNode{
         impact!.run(actionAll1)
         //spriteを削除する
         self.meteores.remove(at: 0)
-        
+
+    }
+    
+    func guarded(guardPos: CGPoint){
+        //隕石を爆発させる
+        let impact = SKEmitterNode(fileNamed: "Impact.sks")
+        //接触座標にパーティクルを放出するようにする。
+        impact!.position = guardPos
+        //0.7秒後にシーンから消すアクションを作成する。
+        let action11 = SKAction.wait(forDuration: 0.5)
+        let action21 = SKAction.removeFromParent()
+        let actionAll1 = SKAction.sequence([action11, action21])
+        //パーティクルをシーンに追加する。
+        self.addChild(impact!)
+        //アクションを実行する。
+        impact!.run(actionAll1)
+        for i in meteores
+        {
+            i.removeAllActions()
+        }
+        meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
     }
     
     required init?(coder aDecoder: NSCoder) {
