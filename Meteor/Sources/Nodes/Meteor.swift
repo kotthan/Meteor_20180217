@@ -17,6 +17,7 @@ class Meteor: SKNode{
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
     var meteorInt: Int = 0
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
+    var baseGravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
@@ -63,6 +64,17 @@ class Meteor: SKNode{
             meteorZ -= 0.001
         }
         meteorInt += 1
+    }
+
+    func update(){
+        if ( !self.meteores.isEmpty ){
+            //速度計算
+            self.meteorSpeed += self.baseGravity * self.meteorGravityCoefficient / 60
+            //位置計算
+            for m in self.meteores {
+                m.position.y += self.meteorSpeed / 60
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
