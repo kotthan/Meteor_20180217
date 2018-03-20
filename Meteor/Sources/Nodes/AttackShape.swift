@@ -13,8 +13,6 @@ class AttackShape: SKShapeNode {
     init(size: CGSize){
         super.init()
         self.name = "attackShape"
-        self.fillColor = UIColor.clear
-        self.strokeColor = UIColor.clear
         self.setzPos(.AttackShape)
         self.physicsBody = SKPhysicsBody(rectangleOf: size)
         self.physicsBody?.affectedByGravity = false      //重力判定を無視

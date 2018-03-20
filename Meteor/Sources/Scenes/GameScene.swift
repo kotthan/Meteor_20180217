@@ -36,8 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gaugeview: GaugeView!
     var pauseButton: PauseButton!
     var attackShape: AttackShape!                                   //攻撃判定シェイプノード
-    var guardShape: SKShapeNode!                                    //防御判定シェイプノード
-    var guardShapeName: String = "guardShape"
+    var guardShape: GuardShape!                                    //防御判定シェイプノード
     var creditButton = SKLabelNode()
     var creditBackButton = SKLabelNode()
     var score = 0                                                   //スコア
@@ -167,9 +166,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(self.meteorBase)
         //攻撃判定用シェイプ
         self.attackShape = AttackShape(size: self.player.size)
-        self.attackShape.position.y += self.player.size.height
+        self.attackShape.position.y = self.player.size.height
         //ガード判定用シェイプ
-        guardShapeMake()
+        self.guardShape = GuardShape(size: self.player.size)
         //タイトルノード
         titleNode = TitleNode()
         self.baseNode.addChild(titleNode)
@@ -849,25 +848,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     //MARK: 防御
-    func guardShapeMake()
-    {
-        let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height + 10))
-        guardShape.name = guardShapeName
-        let physicsBody = SKPhysicsBody(rectangleOf: guardShape.frame.size)
-        guardShape.position = CGPoint(x: 0, y: 0)
-        guardShape.fillColor = UIColor.clear
-        guardShape.strokeColor = UIColor.clear
-        guardShape.setzPos(.GuardShape)
-        guardShape.physicsBody = physicsBody
-        guardShape.physicsBody?.affectedByGravity = false      //重力判定を無視
-        guardShape.physicsBody?.isDynamic = false              //固定物に設定
-        guardShape.physicsBody?.categoryBitMask = 0b100000     //接触判定用マスク設定
-        guardShape.physicsBody?.collisionBitMask = 0b0000      //接触対象をなしに設定
-        guardShape.physicsBody?.contactTestBitMask = 0b1000    //接触対象をmeteorに設定
-        self.guardShape = guardShape
-        //print("---guardShapeを生成しました---")
-    }
-    
     func guardAction(endFlg: Bool)
     {
         guard gameoverFlg != true else { return }
@@ -875,7 +855,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch ( self.guardPod.guardStatus ){
         case .enable:   //ガード開始
             self.guardPod.guardStatus = .guarding
-            if player.childNode(withName: guardShapeName) == nil {
+            if player.childNode(withName: guardShape.name!) == nil {
                 player.addChild( guardShape )
             }
             //アニメーション
@@ -889,7 +869,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if( endFlg == true )
         {
-            if let guardNode = player.childNode(withName: guardShapeName) {
+            if let guardNode = player.childNode(withName: guardShape.name!) {
                 guardNode.removeFromParent()
             }
             self.guardPod.guardStatus = .enable
@@ -901,7 +881,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func guardMeteor()
     {
         guard gameoverFlg != true else { return }
-        guard let guardNode = player.childNode(withName: guardShapeName) else {
+        guard let guardNode = player.childNode(withName: guardShape.name!) else {
             //print("guardShapeなしガード")
             return
         }
