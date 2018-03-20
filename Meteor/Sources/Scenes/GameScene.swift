@@ -35,8 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
     var pauseButton: PauseButton!
-    var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
-    var attackShapeName: String = "attackShape"
+    var attackShape: AttackShape!                                   //攻撃判定シェイプノード
     var guardShape: SKShapeNode!                                    //防御判定シェイプノード
     var guardShapeName: String = "guardShape"
     var creditButton = SKLabelNode()
@@ -167,7 +166,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //隕石ベース
         self.addChild(self.meteorBase)
         //攻撃判定用シェイプ
-        attackShapeMake()
+        self.attackShape = AttackShape(size: self.player.size)
+        self.attackShape.position.y += self.player.size.height
         //ガード判定用シェイプ
         guardShapeMake()
         //タイトルノード
@@ -715,25 +715,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: 攻撃
-    func attackShapeMake()
-    {
-        let attackShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height))
-        attackShape.name = attackShapeName
-        let physicsBody = SKPhysicsBody(rectangleOf: attackShape.frame.size)
-        attackShape.position = CGPoint(x: 0, y: self.player.size.height)
-        attackShape.fillColor = UIColor.clear
-        attackShape.strokeColor = UIColor.clear
-        attackShape.setzPos(.AttackShape)
-        attackShape.physicsBody = physicsBody
-        attackShape.physicsBody?.affectedByGravity = false      //重力判定を無視
-        attackShape.physicsBody?.isDynamic = false              //固定物に設定
-        attackShape.physicsBody?.categoryBitMask = 0b10000      //接触判定用マスク設定
-        attackShape.physicsBody?.collisionBitMask = 0b0000      //接触対象をなしに設定
-        attackShape.physicsBody?.contactTestBitMask = 0b1000    //接触対象をmeteorに設定
-        //print("---attackShapeを生成しました---")
-        self.attackShape = attackShape
-    }
-    
     func attackAction()
     {
         if gameoverFlg == true
@@ -746,7 +727,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.attackFlg = true
             self.player.attack()
             playSound(soundName: "attack03")
-            if player.childNode(withName: attackShapeName) == nil {
+            if player.childNode(withName: attackShape.name!) == nil {
                 self.player.addChild(attackShape)
                 //print("add attackShape")
                 let action1 = SKAction.wait(forDuration: 0.3)
@@ -771,7 +752,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 if player.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
                 {
-                    if let attackNode = player.childNode(withName: attackShapeName)
+                    if let attackNode = player.childNode(withName: attackShape.name!)
                     {
                         attackNode.removeAllActions()
                         attackNode.removeFromParent()
@@ -839,7 +820,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func ultraAttackJump(){
         //攻撃Shapeを出す
         self.attackFlg = true
-        if let attackNode = player.childNode(withName: attackShapeName) {
+        if let attackNode = player.childNode(withName: attackShape.name!) {
             attackNode.removeAllActions()
             attackNode.removeFromParent()
         }
@@ -855,7 +836,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func ultraAttackEnd(){
         self.attackFlg = false
         //attackShapeを消す
-        if let attackNode = player.childNode(withName: attackShapeName)
+        if let attackNode = player.childNode(withName: attackShape.name!)
         {
             attackNode.removeFromParent()
             //print("remove ultra attackShape")
