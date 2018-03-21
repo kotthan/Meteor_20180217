@@ -107,6 +107,10 @@ class Meteor: SKNode{
         impact!.run(actionAll1)
         //spriteを削除する
         self.meteores.remove(at: 0)
+        //音
+        playSound("broken1")
+        //振動
+        //vibrate()
 
     }
     

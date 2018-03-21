@@ -713,8 +713,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.score += 1
                 //コンボ
                 self.combo += 1
-                playSound("broken1")
-                vibrate()
             }
             if meteorBase.meteores.isEmpty == true
             {

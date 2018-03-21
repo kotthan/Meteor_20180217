@@ -12,7 +12,7 @@ import AudioToolbox
 extension SKNode {
     
     func vibrate() {
-        //AudioServicesPlaySystemSound(1519)
-        //AudioServicesDisposeSystemSoundID(1519)
+        AudioServicesPlaySystemSound(1519)
+        AudioServicesDisposeSystemSoundID(1519)
     }
 }
