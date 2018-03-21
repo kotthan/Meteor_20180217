@@ -28,6 +28,24 @@ class Ground: SKNode
         Ground.physicsBody?.contactTestBitMask = 0b0100
         self.addChild(Ground)
     }
+    
+    //ジャンプ時のパーティクル
+    func jumpParticle(pos: CGPoint){
+        //パーティクル
+        let particles = SKEmitterNode(fileNamed: "jump.sks")
+        particles!.setzPos(.Player)
+        //接触座標にパーティクルを放出するようにする。
+        particles!.position = pos
+        //0.7秒後にシーンから消すアクションを作成する。
+        let action11 = SKAction.wait(forDuration: 0.5)
+        let action21 = SKAction.removeFromParent()
+        let actionAll1 = SKAction.sequence([action11, action21])
+        //パーティクルをシーンに追加する。
+        self.addChild(particles!)
+        //アクションを実行する。
+        particles!.run(actionAll1)
+    }
+    
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")

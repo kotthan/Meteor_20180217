@@ -492,18 +492,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             case .swipeUp where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.jump()
-                let particles = SKEmitterNode(fileNamed: "jump.sks")
-                //接触座標にパーティクルを放出するようにする。
-                particles!.position = CGPoint(x: player.position.x,
-                                           y: player.position.y)
-                //0.7秒後にシーンから消すアクションを作成する。
-                let action11 = SKAction.wait(forDuration: 0.5)
-                let action21 = SKAction.removeFromParent()
-                let actionAll1 = SKAction.sequence([action11, action21])
-                //パーティクルをシーンに追加する。
-                self.addChild(particles!)
-                //アクションを実行する。
-                particles!.run(actionAll1)
+                self.ground.jumpParticle(pos: player.position)
             case .swipeLeft where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.moveToLeft()
             case .swipeRight where player.actionStatus == .Standing://ジャンプしてない場合のみ

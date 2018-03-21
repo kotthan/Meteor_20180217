@@ -127,13 +127,14 @@ class Player: SKNode {
     
     //ジャンプ
     func jump() {
-        if self.actionStatus == .Standing {
-            self.jumpAnimation()
-            self.moving = false
-            self.actionStatus = .Jumping
-            self.velocity = self.jumpVelocity
-            self.run(self.jumpSound)
-        }
+        //地面にたっている時だけジャンプする
+        guard self.actionStatus == .Standing else { return }
+        
+        self.jumpAnimation()
+        self.moving = false
+        self.actionStatus = .Jumping
+        self.velocity = self.jumpVelocity
+        self.run(self.jumpSound)
     }
     
     func jumpAnimation() {
