@@ -174,6 +174,26 @@ class Player: SKNode {
         let landingEffect = LandingEffect()
         landingEffect.position.y -= self.size.height / 2
         self.addChild(landingEffect)
+        //必殺技処理
+        switch ( self.ultraAttackStatus )
+        {
+        case .landing:
+            self.ultraAttackStatus = .attacking
+            self.position.y = self.defaultYPosition
+            self.ultraAttackJump()
+            break
+        case .attacking:
+            self.ultraAttackEnd()
+
+            break
+        case .none:
+            //何もしない
+            break
+        }
+        //アニメーション
+        if self.attackFlg == false{
+            self.stand()
+        }
     }
     
     //立ちアニメ
@@ -219,6 +239,53 @@ class Player: SKNode {
             attackShape.run(actions)
         }
         self.playSound("attack03")
+    }
+    
+    //MARK:必殺技
+    func ultraAttack(){
+        //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
+        self.ultraPower = 0
+        //入力を受け付けないようにフラグを立てる
+        self.ultraAttackStatus = .landing
+        if( self.actionStatus != .Standing ) //空中にいる場合
+        {
+            //地面に戻る
+            self.velocity = -2000
+        }
+        else
+        {
+            self.ultraAttackStatus = .attacking
+            //大ジャンプ
+            self.ultraAttackJump()
+        }
+        //ultraAttackフラグは地面に着いた時に落とす
+    }
+    func ultraAttackJump(){
+        //攻撃Shapeを出す
+        self.attackFlg = true
+        if let attackNode = self.childNode(withName: self.attackShape.name!) {
+            attackNode.removeAllActions()
+            attackNode.removeFromParent()
+        }
+        self.addChild(self.attackShape)
+        //print("add ultra attackShape")
+        //大ジャンプ
+        self.moving = false
+        self.actionStatus = .Jumping
+        self.velocity = self.ultraAttackSpped
+        //サウンド
+        self.playSound("jump10")
+    }
+    func ultraAttackEnd(){
+        self.attackFlg = false
+        //attackShapeを消す
+        if let attackNode = self.childNode(withName: self.attackShape.name!)
+        {
+            attackNode.removeFromParent()
+            //print("remove ultra attackShape")
+        }
+        //フラグを落とす
+        self.ultraAttackStatus = .none
     }
     
     func guardStart() {

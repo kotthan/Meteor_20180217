@@ -430,12 +430,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         gameFlg = true
                     }
                     guard gameoverFlg == false else{ break }
-                    ultraAttack()
+                    gaugeview.setMeteorGaugeScale(to: 0)
+                    self.player.ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
                 case let node where node?.name == "BackTitle":
                     gameFlg = true
-                    ultraAttack()
+                    gaugeview.setMeteorGaugeScale(to: 0)
+                    self.player.ultraAttack()
                 case let node where node == gameOverView?.HomeButton :
                     homeButtonAction()
                 case let node where node ==  gameOverView?.ReStartButton :
@@ -590,26 +592,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b0001 || bitB == 0b0001)
         {
             //print("---Playerと地面が接触しました---")
+            if self.player.ultraAttackStatus == .attacking {
+                if( meteorBase.meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
+                    //次のmeteorBase.meteores生成
+                    self.meteorBase.buildFlg = true
+                }
+            }
             self.player.landing()
             if( gameWaitFlag == true ){
                 gameStart()
-            }
-            switch ( player.ultraAttackStatus )
-            {
-            case .landing:
-                player.ultraAttackStatus = .attacking
-                player.position.y = player.defaultYPosition
-                ultraAttackJump()
-                break
-            case .attacking:
-                ultraAttackEnd()
-                break
-            case .none:
-                //何もしない
-                break
-            }
-            if self.player.attackFlg == false{
-                self.player.stand()
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -768,57 +759,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    //必殺技
-    func ultraAttack(){
-        //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
-        self.player.ultraPower = 0
-        gaugeview.setMeteorGaugeScale(to: 0)
-        //入力を受け付けないようにフラグを立てる
-        player.ultraAttackStatus = .landing
-        if( player.actionStatus != .Standing ) //空中にいる場合
-        {
-            //地面に戻る
-            player.velocity = -2000
-        }
-        else
-        {
-            player.ultraAttackStatus = .attacking
-            //大ジャンプ
-            ultraAttackJump()
-        }
-        //ultraAttackフラグは地面に着いた時に落とす
-    }
-    func ultraAttackJump(){
-        //攻撃Shapeを出す
-        self.player.attackFlg = true
-        if let attackNode = player.childNode(withName: player.attackShape.name!) {
-            attackNode.removeAllActions()
-            attackNode.removeFromParent()
-        }
-        self.player.addChild(player.attackShape)
-        //print("add ultra attackShape")
-        //大ジャンプ
-        player.moving = false
-        player.actionStatus = .Jumping
-        player.velocity = self.player.ultraAttackSpped
-        //サウンド
-        playSound("jump10")
-    }
-    func ultraAttackEnd(){
-        self.player.attackFlg = false
-        //attackShapeを消す
-        if let attackNode = player.childNode(withName: player.attackShape.name!)
-        {
-            attackNode.removeFromParent()
-            //print("remove ultra attackShape")
-        }
-        //フラグを落とす
-        player.ultraAttackStatus = .none
-        if( meteorBase.meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
-            //次のmeteorBase.meteores生成
-            self.meteorBase.buildFlg = true
-        }
-    }
     //MARK: 防御
     func guardAction(endFlg: Bool)
     {
