@@ -30,7 +30,7 @@ class Player: SKNode {
     let jumpSound = SKAction.playSoundFileNamed("jump10", waitForCompletion: true)
     let landingSound = SKAction.playSoundFileNamed("tyakuti1", waitForCompletion: true)
     //横位置
-    enum PosState: Double {
+    enum PosState: CGFloat {
         case left = 93.75
         case center = 187.5
         case right = 281.25
@@ -56,12 +56,22 @@ class Player: SKNode {
     
     override init() {
         super.init()
+        setSprite()
+        self.stand()
     }
     
-    func setSprite(sprite: SKSpriteNode){
-        self.sprite = sprite
+    func setSprite(){
+        
+        //MARK: SKSファイルを読み込み
+        if let scene = SKScene(fileNamed: "GameScene.sks")
+        {
+            scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
+                self.sprite = node as! SKSpriteNode
+            })
+        }
+        //self.sprite = SKSpriteNode(imageNamed: "player00")
         //baseNodeをspriteの位置にする
-        self.position = sprite.position
+        self.position = self.sprite.position
         sprite.position = CGPoint(x:0,y:0)
         sprite.name = "player"
         //sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64), center: CGPoint(x: 0, y: 0))
@@ -83,6 +93,7 @@ class Player: SKNode {
         let groundY: CGFloat = 145.5
         self.defaultYPosition = groundY + 27
         self.addChild(sprite)
+        self.position.x = PosState.center.rawValue
         //攻撃判定用シェイプ
         self.attackShape = AttackShape(size: self.size)
         self.attackShape.position.y = self.size.height

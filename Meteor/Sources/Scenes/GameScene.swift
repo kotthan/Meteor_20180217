@@ -140,21 +140,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         titleBgmPlayer.numberOfLoops = -1
         titleBgmPlayer.prepareToPlay()
         titleBgmPlayer.play()
-
-		//MARK: SKSファイルを読み込み
-		if let scene = SKScene(fileNamed: "GameScene.sks")
-        {
-            //===================
-			//MARK: プレイヤー
-			//===================
-			scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
-				let player = node as! SKSpriteNode
-                self.player.setSprite(sprite: player)
-                //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
-                //アニメーション
-                self.player.stand()
-            })
-		}
         
         //MARK: カメラ
         let camera = SKCameraNode()
@@ -288,7 +273,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         { //リトライ時はそのままスタートする
             startButtonAction()
         }
-        view.showsPhysics = false
+        //view.showsPhysics = true
 	}
     
     //アプリがバックグラウンドから復帰した際に呼ばれる関数
