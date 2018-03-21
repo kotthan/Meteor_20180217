@@ -87,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //調整用パラメータ
 
-    var speedFromMeteorAtGuard : CGFloat = 350                      //隕石を防御した時にプレイヤーが受ける隕石の速度
+    var speedFromMeteorAtGuard : CGFloat = -500  //隕石を防御した時にプレイヤーが受ける隕石の速度
     var cameraMax : CGFloat = 1450                                  //カメラの上限
     //MARK: タッチ関係プロパティ
     var beganPos: CGPoint = CGPoint.zero
@@ -155,9 +155,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //アニメーション
                 self.player.stand()
             })
-            if( debug ){ //デバッグ用
-                //addBodyFrame(node: player)  //枠表示
-            }
 		}
         
         //MARK: カメラ
@@ -265,15 +262,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //pauseButton
         pauseButton = PauseButton(frame:self.frame)
         pauseButton.setPauseFunc{
-            self.sliderHidden = !self.sliderHidden
-            self.pauseView.isHidden = self.sliderHidden
-            self.view!.scene?.isPaused = !self.sliderHidden
+            self.pauseView.isHidden = false
+            self.view!.scene?.isPaused = true
             self.mainBgmPlayer.pause()
         }
         pauseButton.setResumeFunc{
-            self.sliderHidden = !self.sliderHidden
-            self.pauseView.isHidden = self.sliderHidden
-            self.view!.scene?.isPaused = !self.sliderHidden
+            self.pauseView.isHidden = true
+            self.view!.scene?.isPaused = false
             self.mainBgmPlayer.play()
         }
         pauseButton.isHidden = true     //タイトル画面では非表示
@@ -290,7 +285,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerBaseShape.zPosition = -50
             player.addChild( playerBaseShape )
         }
-        setDefaultParam()
         if( retryFlg )
         { //リトライ時はそのままスタートする
             startButtonAction()
@@ -303,7 +297,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     @objc func becomeActive(_ notification: Notification) {
         guard gameFlg == true else{ return } // ゲーム中でなければなにもせず抜ける
         isPaused = true     //ポーズ状態にする
-        if( sliderHidden == true ){ //ポーズボタンが押されていなかった
+        if( pauseButton.isPushed == false ){ //ポーズボタンが押されていなかった
             if( gameoverFlg == false ){ //ゲームオーバになっていない時
                pauseButton.pauseAction()
             }
@@ -916,75 +910,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func vibrate() {
         //AudioServicesPlaySystemSound(1519)
         //AudioServicesDisposeSystemSoundID(1519)
-    }
-
-    //MARK:デバッグ用
-    //SKShapeNodeのサイズの四角を追加する
-    func addBodyFrame(node: SKSpriteNode){
-        let frameRect = SKShapeNode(rect: CGRect(x: -node.size.width / 2,
-                                                 y: -node.size.height / 2,
-                                                 width: node.size.width,
-                                                 height: node.size.height))
-        frameRect.fillColor = UIColor.clear
-        frameRect.lineWidth = 2.0
-        frameRect.xScale = 1 / node.xScale  //縮小されている場合はその分拡大する
-        frameRect.yScale = 1 / node.yScale  //縮小されている場合はその分拡大する
-        frameRect.zPosition = 1500          //とにかく手前
-        frameRect.name = "frame"
-        node.addChild( frameRect )
-    }
-    //デバッグ表示用view
-    var debugView = UIView()
-    let playerPosLabel = UILabel()                                  //プレイヤーの座標表示用ラベル
-    let paramNames = ["ジャンプ速度",
-                      "ガード時のプレイヤー速度"]
-    var params = [UnsafeMutablePointer<CGFloat>]()
-    let paramMin:[Float] = [0,       //pleyer.jumpVeloctiy
-                            0]       //speedFromMeteorOnGuard
-    let paramMax:[Float] = [2000,    //pleyer.jumpVeloctiy
-                            1000]    //speedFromMeteorOnGuard
-    let paramTrans = [ {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) }
-    ]
-    let paramInv = [  {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) }
-    ]
-    //調整用スライダー
-    var paramSliders = [UISlider]()
-    var paramLabals = [SKLabelNode]()
-    var collisionLine : SKShapeNode!
-
-    //削除
-    func removeParamSlider(){
-        debugView.removeFromSuperview()
-    }
-    var sliderHidden: Bool = true
-    @objc func sliderSwitchHidden( ){
-        sliderHidden = !sliderHidden
-        debugView.isHidden = sliderHidden
-    }
-    @objc func setDefaultParam(){
-        //調整用パラメータ
-        player.jumpVelocity = 1500                       //プレイヤーのジャンプ時の初速
-        speedFromMeteorAtGuard = -500                //隕石を防御した時にプレイヤーの速度
-        var ix = 0
-        for slider in paramSliders {
-            slider.setValue( paramInv[ix](params[ix].pointee), animated: true)  // デフォルト値の設定
-            let label = slider.subviews.last as! UILabel
-            label.text = paramNames[ix] + ": " + String( describing: params[ix].pointee )
-            label.sizeToFit()
-            ix += 1
-        }
-    }
-    // スライダーの値が変更された時の処理
-    @objc func sliderOnChange(_ sender: UISlider) {
-        //変更されたスライダーの配列のindex
-        let index = paramSliders.index(of: sender)
-        //
-        params[index!].pointee = paramTrans[index!](sender.value)
-        print("###set \(paramNames[index!]): \(sender.value) -> \(params[index!].pointee)")
-        let label = sender.subviews.last as! UILabel
-        label.text = paramNames[index!] + ": " + String( describing: params[index!].pointee )
-        label.sizeToFit()
     }
 }

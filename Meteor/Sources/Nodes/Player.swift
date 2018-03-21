@@ -22,7 +22,7 @@ class Player: SKNode {
     let guardEndAnimationTextureNames = ["player00"]
     let jumpAnimationTextureNames = ["jump00","jump01"]
     let fallAnimationTextureNames = ["fall01","fall02"]
-    var jumpVelocity:CGFloat = 9.8 * 150 * 1.2  //プレイヤーのジャンプ時の初速
+    let jumpVelocity:CGFloat = 1500  //プレイヤーのジャンプ時の初速
     var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
     var moving: Bool = false                                        //移動中フラグ
