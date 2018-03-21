@@ -29,7 +29,7 @@ extension SKNode {
         case CreditBuckButton = 51
         case Title = 60
         case TitleMeteor = 61
-        case Gauge = 1000
+        case Gauge = 100
         case GameOverCircle = 1500
         case PauseView = 9999
         case PauseButton = 10001

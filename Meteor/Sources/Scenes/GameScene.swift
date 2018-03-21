@@ -9,7 +9,6 @@
 import UIKit
 import SpriteKit
 import AVFoundation
-import AudioToolbox
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -35,14 +34,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
     var pauseButton: PauseButton!
-    var attackShape: SKShapeNode!                                   //攻撃判定シェイプノード
-    var attackShapeName: String = "attackShape"
-    var guardShape: SKShapeNode!                                    //防御判定シェイプノード
-    var guardShapeName: String = "guardShape"
+    var guardShape: GuardShape!                                    //防御判定シェイプノード
     var creditButton = SKLabelNode()
     var creditBackButton = SKLabelNode()
-    var score = 0                                                   //スコア
-    var combo = 0                                                   //スコア
+    var score = 0 {                                                 //スコア
+        didSet {
+            //更新時に表示も更新する
+            self.hudView.drawScore( score: self.score )
+        }
+    }
+    var combo = 0 {                                                 //コンボ
+        didSet{
+            guard combo != 0 else { return }
+            //0以外が設定されていたら表示も更新する
+            let comboLabel = ComboLabel(self.combo)
+            comboLabel.position.x = 100
+            comboLabel.position.y = self.player.size.height/2
+            self.player.addChild(comboLabel)
+        }
+    }
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
     var highScore = 0                                               //ハイスコア
     //MARK: 画面
@@ -68,7 +78,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var sceneState:SceneState = .Title
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
-    var attackFlg : Bool = false                                    //攻撃フラグ
     var gameFlg:Bool = false
     var gameWaitFlag = false
     //スタート時にplayerが空中の場合に待つためのフラグ
@@ -76,11 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var retryFlg = false                                            //リトライするときにそのままゲームスタートさせる
 
     //調整用パラメータ
-    var gravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
-    var meteorPos :CGFloat = 1320.0                                 //隕石の初期位置(1500.0)
 
-    var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
-    var speedFromMeteorAtGuard : CGFloat = 350                      //隕石を防御した時にプレイヤーが受ける隕石の速度
+    var speedFromMeteorAtGuard : CGFloat = -500  //隕石を防御した時にプレイヤーが受ける隕石の速度
     var cameraMax : CGFloat = 1450                                  //カメラの上限
     //MARK: タッチ関係プロパティ
     var beganPos: CGPoint = CGPoint.zero
@@ -134,24 +140,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         titleBgmPlayer.numberOfLoops = -1
         titleBgmPlayer.prepareToPlay()
         titleBgmPlayer.play()
-
-		//MARK: SKSファイルを読み込み
-		if let scene = SKScene(fileNamed: "GameScene.sks")
-        {
-            //===================
-			//MARK: プレイヤー
-			//===================
-			scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
-				let player = node as! SKSpriteNode
-                self.player.setSprite(sprite: player)
-                //print("---SKSファイルよりプレイヤー＝\(player)を読み込みました---")
-                //アニメーション
-                self.player.stand()
-            })
-            if( debug ){ //デバッグ用
-                //addBodyFrame(node: player)  //枠表示
-            }
-		}
         
         //MARK: カメラ
         let camera = SKCameraNode()
@@ -169,10 +157,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(lowestShape)
         //隕石ベース
         self.addChild(self.meteorBase)
-        //攻撃判定用シェイプ
-        attackShapeMake()
         //ガード判定用シェイプ
-        guardShapeMake()
+        self.guardShape = GuardShape(size: self.player.size)
         //タイトルノード
         titleNode = TitleNode()
         self.baseNode.addChild(titleNode)
@@ -182,6 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gaugeview.position.y -= gaugeview.size.height
         self.camera!.addChild(gaugeview)
         gaugeview.isHidden = true
+        self.player.gaugeview = gaugeview
         
         //===================
         //MARK: credit表示ボタン
@@ -259,15 +246,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //pauseButton
         pauseButton = PauseButton(frame:self.frame)
         pauseButton.setPauseFunc{
-            self.sliderHidden = !self.sliderHidden
-            self.pauseView.isHidden = self.sliderHidden
-            self.view!.scene?.isPaused = !self.sliderHidden
+            self.pauseView.isHidden = false
+            self.view!.scene?.isPaused = true
             self.mainBgmPlayer.pause()
         }
         pauseButton.setResumeFunc{
-            self.sliderHidden = !self.sliderHidden
-            self.pauseView.isHidden = self.sliderHidden
-            self.view!.scene?.isPaused = !self.sliderHidden
+            self.pauseView.isHidden = true
+            self.view!.scene?.isPaused = false
             self.mainBgmPlayer.play()
         }
         pauseButton.isHidden = true     //タイトル画面では非表示
@@ -284,37 +269,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerBaseShape.zPosition = -50
             player.addChild( playerBaseShape )
         }
-        setDefaultParam()
         if( retryFlg )
         { //リトライ時はそのままスタートする
             startButtonAction()
         }
-        view.showsPhysics = false
+        //view.showsPhysics = true
 	}
     
     //アプリがバックグラウンドから復帰した際に呼ばれる関数
     //起動時にも呼ばれる
     @objc func becomeActive(_ notification: Notification) {
         guard gameFlg == true else{ return } // ゲーム中でなければなにもせず抜ける
+        guard creditFlg == false else { return }//クレジット中もポーズにしない
         isPaused = true     //ポーズ状態にする
-        if( sliderHidden == true ){ //ポーズボタンが押されていなかった
-            if( gameoverFlg == false ){ //ゲームオーバになっていない時
-               pauseButton.pauseAction()
-            }
+        if( pauseButton.isPushed == false ){ //ポーズボタンが押されていなかった
+            pauseButton.pauseAction()
         }
     }
     
     //MARK: シーンのアップデート時に呼ばれる関数
     override func update(_ currentTime: TimeInterval)
     {
-        if ( !meteorBase.meteores.isEmpty )
-        {
-            self.meteorBase.meteorSpeed += self.gravity * meteorBase.meteorGravityCoefficient / 60
-            for m in meteorBase.meteores
-            {
-                m.position.y += self.meteorBase.meteorSpeed / 60
-            }
-        }
+        self.meteorBase.update()
         self.player.update(meteor: self.meteorBase.meteores.first, meteorSpeed: self.meteorBase.meteorSpeed)
         
         if (gameFlg == false)
@@ -446,12 +422,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         gameFlg = true
                     }
                     guard gameoverFlg == false else{ break }
-                    ultraAttack()
+                    self.player.ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
                 case let node where node?.name == "BackTitle":
                     gameFlg = true
-                    ultraAttack()
+                    self.player.ultraAttack()
                 case let node where node == gameOverView?.HomeButton :
                     homeButtonAction()
                 case let node where node ==  gameOverView?.ReStartButton :
@@ -482,13 +458,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             }
                         ])
                     run(actions)
-                } else { attackAction() }
+                } else {
+                    if gameoverFlg == false{
+                        self.player.attack()
+                    }
+                }
             case .swipeDown:
                 if gameFlg == true{
                     guardAction(endFlg: true)
                 }
             case .swipeUp where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.jump()
+<<<<<<< HEAD
                 let node = SKSpriteNode(imageNamed: "jump2")
                 node.position = CGPoint(x: player.position.x, y: player.position.y)
                 node.xScale = 1.5
@@ -500,6 +481,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 )
                 self.addChild(node)
                 node.run(actions)
+=======
+                self.ground.jumpParticle(pos: player.position)
+>>>>>>> master
             case .swipeLeft where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.moveToLeft()
             case .swipeRight where player.actionStatus == .Standing://ジャンプしてない場合のみ
@@ -601,26 +585,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b0001 || bitB == 0b0001)
         {
             //print("---Playerと地面が接触しました---")
+            if self.player.ultraAttackStatus == .attacking {
+                if( meteorBase.meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
+                    //次のmeteorBase.meteores生成
+                    self.meteorBase.buildFlg = true
+                }
+            }
             self.player.landing()
             if( gameWaitFlag == true ){
                 gameStart()
-            }
-            switch ( player.ultraAttackStatus )
-            {
-            case .landing:
-                player.ultraAttackStatus = .attacking
-                player.position.y = player.defaultYPosition
-                ultraAttackJump()
-                break
-            case .attacking:
-                ultraAttackEnd()
-                break
-            case .none:
-                //何もしない
-                break
-            }
-            if attackFlg == false{
-                self.player.stand()
             }
         }
         else if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b1000 || bitB == 0b1000)
@@ -648,7 +621,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         //MARK: ゲーム進行関係
         self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
-        playSound(soundName: "button01")
+        playSound("button01")
         self.titleBgmPlayer.stop()
         self.mainBgmPlayer.play()
         if( retryFlg == false )
@@ -723,125 +696,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
-    //MARK: 攻撃
-    func attackShapeMake()
-    {
-        let attackShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height))
-        attackShape.name = attackShapeName
-        let physicsBody = SKPhysicsBody(rectangleOf: attackShape.frame.size)
-        attackShape.position = CGPoint(x: 0, y: self.player.size.height)
-        attackShape.fillColor = UIColor.clear
-        attackShape.strokeColor = UIColor.clear
-        attackShape.setzPos(.AttackShape)
-        attackShape.physicsBody = physicsBody
-        attackShape.physicsBody?.affectedByGravity = false      //重力判定を無視
-        attackShape.physicsBody?.isDynamic = false              //固定物に設定
-        attackShape.physicsBody?.categoryBitMask = 0b10000      //接触判定用マスク設定
-        attackShape.physicsBody?.collisionBitMask = 0b0000      //接触対象をなしに設定
-        attackShape.physicsBody?.contactTestBitMask = 0b1000    //接触対象をmeteorに設定
-        //print("---attackShapeを生成しました---")
-        self.attackShape = attackShape
-    }
-    
-    func attackAction()
-    {
-        if gameoverFlg == true
-        {
-            return
-        }
-        if attackFlg == false
-        {
-            //print("---アタックフラグをON---")
-            self.attackFlg = true
-            self.player.attack()
-            playSound(soundName: "attack03")
-            if player.childNode(withName: attackShapeName) == nil {
-                self.player.addChild(attackShape)
-                //print("add attackShape")
-                let action1 = SKAction.wait(forDuration: 0.3)
-                let action2 = SKAction.removeFromParent()
-                let action3 = SKAction.run{
-                    self.attackFlg = false
-                    //print("remove attackShape")
-                }
-                let actions = SKAction.sequence([action1,action2,action3])
-                attackShape.run(actions)
-            }
-        }
-    }
-    
+    //MARK: 攻撃    
     func attackMeteor()
     {
         guard gameoverFlg != true else{ return }
-        guard attackFlg == true else{ return }
+        guard self.player.attackFlg == true else{ return }
         
             //print("---隕石を攻撃---")
             if meteorBase.meteores.isEmpty == false
             {
-                if player.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
-                {
-                    if let attackNode = player.childNode(withName: attackShapeName)
-                    {
-                        attackNode.removeAllActions()
-                        attackNode.removeFromParent()
-                    }
-                    attackFlg = false
-                    //print("---アタックフラグをOFF---")
-                }
-                meteorBase.meteores[0].physicsBody?.categoryBitMask = 0
-                meteorBase.meteores[0].physicsBody?.contactTestBitMask = 0
-                meteorBase.meteores[0].removeFromParent()
-                //隕石を爆発させる
-                let particle = SKEmitterNode(fileNamed: "MeteorBroken.sks")
-                //接触座標にパーティクルを放出するようにする。
-                particle!.position = CGPoint(x: player.position.x,
-                                             y: player.position.y + (attackShape.position.y))
-                //0.7秒後にシーンから消すアクションを作成する。
-                let action1 = SKAction.wait(forDuration: 0.5)
-                let action2 = SKAction.removeFromParent()
-                let actionAll = SKAction.sequence([action1, action2])
-                //パーティクルをシーンに追加する。
-                self.addChild(particle!)
-                particle!.run(actionAll)
-                //隕石を爆発させる
-                let impact = SKEmitterNode(fileNamed: "Impact.sks")
-                //接触座標にパーティクルを放出するようにする。
-                impact!.position = CGPoint(x: player.position.x,
-                                             y: player.position.y + (attackShape.position.y))
-                //0.7秒後にシーンから消すアクションを作成する。
-                let action11 = SKAction.wait(forDuration: 0.5)
-                let action21 = SKAction.removeFromParent()
-                let actionAll1 = SKAction.sequence([action11, action21])
-                //パーティクルをシーンに追加する。
-                self.addChild(impact!)
-                //アクションを実行する。
-                impact!.run(actionAll1)
-                //print("---消すノードは\(meteorBase.meteores[0])です---")
-                meteorBase.meteores.remove(at: 0)
-                //self.meteorGravityCoefficient -= 0.06                   //数が減るごとに隕石の速度を遅くする
+                self.player.attackMeteor()
+                meteorBase.broken(attackPos: CGPoint(x: player.position.x,
+                                                     y: player.position.y + (player.attackShape.position.y)))
                 //スコア
-                self.score += 1;
-                self.hudView.drawScore( score: self.score )
+                self.score += 1
                 //コンボ
-                self.combo += 1;
-                let comboLabel = ComboLabel(self.combo)
-                comboLabel.position.x = 100
-                comboLabel.position.y = self.player.size.height/2
-                self.player.addChild(comboLabel)
-                //必殺技
-                if( player.ultraAttackStatus == .none )
-                {
-                    self.player.ultraPower += 1
-                    gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0 )
-                }
-                playSound(soundName: "broken1")
-                vibrate()
-                //隕石と接触していたら速度を0にする
-                if( self.player.meteorCollisionFlg )
-                {
-                    self.player.meteorCollisionFlg = false
-                    player.velocity = 0;
-                }
+                self.combo += 1
             }
             if meteorBase.meteores.isEmpty == true
             {
@@ -854,77 +724,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    //必殺技
-    func ultraAttack(){
-        //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
-        self.player.ultraPower = 0
-        gaugeview.setMeteorGaugeScale(to: 0)
-        //入力を受け付けないようにフラグを立てる
-        player.ultraAttackStatus = .landing
-        if( player.actionStatus != .Standing ) //空中にいる場合
-        {
-            //地面に戻る
-            player.velocity = -2000
-        }
-        else
-        {
-            player.ultraAttackStatus = .attacking
-            //大ジャンプ
-            ultraAttackJump()
-        }
-        //ultraAttackフラグは地面に着いた時に落とす
-    }
-    func ultraAttackJump(){
-        //攻撃Shapeを出す
-        self.attackFlg = true
-        if let attackNode = player.childNode(withName: attackShapeName) {
-            attackNode.removeAllActions()
-            attackNode.removeFromParent()
-        }
-        self.player.addChild(attackShape)
-        //print("add ultra attackShape")
-        //大ジャンプ
-        player.moving = false
-        player.actionStatus = .Jumping
-        player.velocity = self.player.ultraAttackSpped
-        //サウンド
-        playSound(soundName: "jump10")
-    }
-    func ultraAttackEnd(){
-        self.attackFlg = false
-        //attackShapeを消す
-        if let attackNode = player.childNode(withName: attackShapeName)
-        {
-            attackNode.removeFromParent()
-            //print("remove ultra attackShape")
-        }
-        //フラグを落とす
-        player.ultraAttackStatus = .none
-        if( meteorBase.meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
-            //次のmeteorBase.meteores生成
-            self.meteorBase.buildFlg = true
-        }
-    }
     //MARK: 防御
-    func guardShapeMake()
-    {
-        let guardShape = SKShapeNode(rect: CGRect(x: 0.0 - self.player.size.width/2, y: 0.0 - self.player.size.height/2, width: self.player.size.width, height: self.player.size.height + 10))
-        guardShape.name = guardShapeName
-        let physicsBody = SKPhysicsBody(rectangleOf: guardShape.frame.size)
-        guardShape.position = CGPoint(x: 0, y: 0)
-        guardShape.fillColor = UIColor.clear
-        guardShape.strokeColor = UIColor.clear
-        guardShape.setzPos(.GuardShape)
-        guardShape.physicsBody = physicsBody
-        guardShape.physicsBody?.affectedByGravity = false      //重力判定を無視
-        guardShape.physicsBody?.isDynamic = false              //固定物に設定
-        guardShape.physicsBody?.categoryBitMask = 0b100000     //接触判定用マスク設定
-        guardShape.physicsBody?.collisionBitMask = 0b0000      //接触対象をなしに設定
-        guardShape.physicsBody?.contactTestBitMask = 0b1000    //接触対象をmeteorに設定
-        self.guardShape = guardShape
-        //print("---guardShapeを生成しました---")
-    }
-    
     func guardAction(endFlg: Bool)
     {
         guard gameoverFlg != true else { return }
@@ -932,10 +732,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch ( self.guardPod.guardStatus ){
         case .enable:   //ガード開始
             self.guardPod.guardStatus = .guarding
-            if player.childNode(withName: guardShapeName) == nil {
+            if player.childNode(withName: guardShape.name!) == nil {
                 player.addChild( guardShape )
             }
-            //アニメーション
             self.player.guardStart()
         case .guarding: //ガード中
             self.guardPod.subCount(0.4)
@@ -946,11 +745,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if( endFlg == true )
         {
-            if let guardNode = player.childNode(withName: guardShapeName) {
+            if let guardNode = player.childNode(withName: guardShape.name!) {
                 guardNode.removeFromParent()
             }
             self.guardPod.guardStatus = .enable
-            //アニメーション
             self.player.guardEnd()
         }
     }
@@ -958,44 +756,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func guardMeteor()
     {
         guard gameoverFlg != true else { return }
-        guard let guardNode = player.childNode(withName: guardShapeName) else {
+        guard let guardNode = player.childNode(withName: guardShape.name!) else {
             //print("guardShapeなしガード")
             return
         }
         
         if (self.guardPod.guardStatus == .guarding)
         {
-            playSound(soundName: "bougyo01")
-            //隕石を爆発させる
-            let impact = SKEmitterNode(fileNamed: "Impact.sks")
-            //接触座標にパーティクルを放出するようにする。
-            impact!.position = CGPoint(x: player.position.x,
-                                       y: player.position.y + (guardShape.position.y))
-            //0.7秒後にシーンから消すアクションを作成する。
-            let action11 = SKAction.wait(forDuration: 0.5)
-            let action21 = SKAction.removeFromParent()
-            let actionAll1 = SKAction.sequence([action11, action21])
-            //パーティクルをシーンに追加する。
-            self.addChild(impact!)
-            //アクションを実行する。
-            impact!.run(actionAll1)
+            playSound("bougyo01")
+            meteorBase.guarded(guardPos: CGPoint(x: player.position.x,
+                                       y: player.position.y + (guardShape.position.y)))
             guardPod.subCount()
             //ガードシェイプ削除
             guardNode.removeFromParent()
             self.player.guardEnd()
-            for i in meteorBase.meteores
-            {
-                i.removeAllActions()
-                if player.actionStatus != .Standing {
-                    self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
-                    let meteor = self.meteorBase.meteores.first
-                    let meteorMinY = (meteor?.position.y)! - ((meteor?.size.height)!/2)
+            if player.actionStatus != .Standing {
+                self.player.velocity = self.speedFromMeteorAtGuard  //プレイヤーの速度が上がる
+                if let meteor = self.meteorBase.meteores.first {
+                    let meteorMinY = meteor.position.y - (meteor.size.height / 2)
                     let playerHalfSize = self.player.size.height / 2
                     self.player.position.y = meteorMinY - playerHalfSize - 1
                 }
-                self.meteorBase.meteorSpeed = self.meteorSpeedAtGuard       //上に持ちあげる
-                self.combo = 0
             }
+            self.combo = 0
         }
         else
         {
@@ -1030,7 +813,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             circle.fillColor = UIColor.white
             self.addChild(circle)
             let actions = SKAction.sequence(
-                [   SKAction.run{self.playSound(soundName: "explore16")},
+                [   SKAction.run{self.playSound("explore16")},
                     SKAction.scale(to: 2000, duration: 2.5),
                   //SKAction.wait(forDuration: 0.5),
                   SKAction.group(
@@ -1069,7 +852,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func homeButtonAction()
     {
         let actions = SKAction.sequence([
-            SKAction.run { self.playSound(soundName: "push_45") },
+            SKAction.run { self.playSound("push_45") },
             SKAction.run { self.gameOverView.audioPlayer.stop() },
             SKAction.run { adBanner.isHidden = true },
             SKAction.run { self.newGame() }
@@ -1089,18 +872,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         gameScene.retryFlg = true
         let actions = SKAction.sequence([
-            SKAction.run { self.playSound(soundName: "push_45") },
+            SKAction.run { self.playSound("push_45") },
             SKAction.run { self.gameOverView.audioPlayer.stop() },
             SKAction.run { adBanner.isHidden = true },
             SKAction.run { self.view!.presentScene(gameScene)}
             ])
         run(actions)
-    }
-    //MARK: 音楽
-    func playSound(soundName: String)
-    {
-        let mAction = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
-        self.run(mAction)
     }
     
     func playBgm(soundName: String)
@@ -1120,101 +897,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         mainBgmPlayer.stop()
         mainBgmPlayer.currentTime = 0
-    }
-    
-    
-    func vibrate() {
-        //AudioServicesPlaySystemSound(1519)
-        //AudioServicesDisposeSystemSoundID(1519)
-    }
-
-    //MARK:デバッグ用
-    //SKShapeNodeのサイズの四角を追加する
-    func addBodyFrame(node: SKSpriteNode){
-        let frameRect = SKShapeNode(rect: CGRect(x: -node.size.width / 2,
-                                                 y: -node.size.height / 2,
-                                                 width: node.size.width,
-                                                 height: node.size.height))
-        frameRect.fillColor = UIColor.clear
-        frameRect.lineWidth = 2.0
-        frameRect.xScale = 1 / node.xScale  //縮小されている場合はその分拡大する
-        frameRect.yScale = 1 / node.yScale  //縮小されている場合はその分拡大する
-        frameRect.zPosition = 1500          //とにかく手前
-        frameRect.name = "frame"
-        node.addChild( frameRect )
-    }
-    //デバッグ表示用view
-    var debugView = UIView()
-    let playerPosLabel = UILabel()                                  //プレイヤーの座標表示用ラベル
-    let paramNames = ["重力",
-                      "隕石の発生位置",
-                      "隕石の重力受ける率",
-                      "ジャンプ速度",
-                      "プレイヤーの重力受ける率",
-                      "ガード時の隕石速度",
-                      "ガード時のプレイヤー速度"]
-    var params = [UnsafeMutablePointer<CGFloat>]()
-    let paramMin:[Float] = [0,       //gravity
-                            0,       //meteorPos
-                            0,       //pleyer.jumpVeloctiy
-                            0,       //meteorSpeedAtGuard
-                            0]       //speedFromMeteorOnGuard
-    let paramMax:[Float] = [1000,    //gravity
-                            5000,    //meteorPos
-                            2000,    //pleyer.jumpVeloctiy
-                            1000,    //meteorSpeedAtGuard
-                            1000]    //speedFromMeteorOnGuard
-    let paramTrans = [ {(a: Float) -> CGFloat in return -CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) },
-                       {(a: Float) -> CGFloat in return CGFloat(Int(a)) }
-    ]
-    let paramInv = [ {(a: CGFloat) -> Float in return -Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) },
-                     {(a: CGFloat) -> Float in return Float(a) }
-    ]
-    //調整用スライダー
-    var paramSliders = [UISlider]()
-    var paramLabals = [SKLabelNode]()
-    var collisionLine : SKShapeNode!
-
-    //削除
-    func removeParamSlider(){
-        debugView.removeFromSuperview()
-    }
-    var sliderHidden: Bool = true
-    @objc func sliderSwitchHidden( ){
-        sliderHidden = !sliderHidden
-        debugView.isHidden = sliderHidden
-    }
-    @objc func setDefaultParam(){
-        //調整用パラメータ
-        gravity = -900                               //重力 9.8 [m/s^2] * 150 [pixels/m]
-        meteorPos = 2400                             //隕石の初期位置
-        player.jumpVelocity = 1500                       //プレイヤーのジャンプ時の初速
-        meteorSpeedAtGuard = 100                     //隕石が防御された時の速度
-        speedFromMeteorAtGuard = -500                //隕石を防御した時にプレイヤーの速度
-        var ix = 0
-        for slider in paramSliders {
-            slider.setValue( paramInv[ix](params[ix].pointee), animated: true)  // デフォルト値の設定
-            let label = slider.subviews.last as! UILabel
-            label.text = paramNames[ix] + ": " + String( describing: params[ix].pointee )
-            label.sizeToFit()
-            ix += 1
-        }
-    }
-    // スライダーの値が変更された時の処理
-    @objc func sliderOnChange(_ sender: UISlider) {
-        //変更されたスライダーの配列のindex
-        let index = paramSliders.index(of: sender)
-        //
-        params[index!].pointee = paramTrans[index!](sender.value)
-        print("###set \(paramNames[index!]): \(sender.value) -> \(params[index!].pointee)")
-        let label = sender.subviews.last as! UILabel
-        label.text = paramNames[index!] + ": " + String( describing: params[index!].pointee )
-        label.sizeToFit()
     }
 }
