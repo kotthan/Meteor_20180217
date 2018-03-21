@@ -44,6 +44,7 @@ class Player: SKNode {
     }
     var actionStatus = ActionState.Standing
     var attackFlg : Bool = false                                    //攻撃フラグ
+    var attackShape: AttackShape!                                   //攻撃判定シェイプノード
     let ultraAttackSpped : CGFloat = 9.8 * 150 * 2            //プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
@@ -81,7 +82,9 @@ class Player: SKNode {
         let groundY: CGFloat = 145.5
         self.defaultYPosition = groundY + 27
         self.addChild(sprite)
-        
+        //攻撃判定用シェイプ
+        self.attackShape = AttackShape(size: self.size)
+        self.attackShape.position.y = self.size.height
     }
 
     func update(meteor: SKSpriteNode?, meteorSpeed: CGFloat){
@@ -198,6 +201,19 @@ class Player: SKNode {
         }
         let actions = SKAction.sequence([action,stand])
         self.sprite.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
+        //attackShape処理
+        if self.childNode(withName: self.attackShape.name!) == nil {
+            self.addChild(attackShape)
+            //print("add attackShape")
+            let action1 = SKAction.wait(forDuration: 0.3)
+            let action2 = SKAction.removeFromParent()
+            let action3 = SKAction.run{
+                self.attackFlg = false
+                //print("remove attackShape")
+            }
+            let actions = SKAction.sequence([action1,action2,action3])
+            attackShape.run(actions)
+        }
     }
     
     func guardStart() {

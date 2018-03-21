@@ -35,7 +35,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var titleNode: TitleNode!
     var gaugeview: GaugeView!
     var pauseButton: PauseButton!
-    var attackShape: AttackShape!                                   //攻撃判定シェイプノード
     var guardShape: GuardShape!                                    //防御判定シェイプノード
     var creditButton = SKLabelNode()
     var creditBackButton = SKLabelNode()
@@ -163,9 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(lowestShape)
         //隕石ベース
         self.addChild(self.meteorBase)
-        //攻撃判定用シェイプ
-        self.attackShape = AttackShape(size: self.player.size)
-        self.attackShape.position.y = self.player.size.height
         //ガード判定用シェイプ
         self.guardShape = GuardShape(size: self.player.size)
         //タイトルノード
@@ -725,18 +721,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.attackFlg = true
             self.player.attack()
             playSound(soundName: "attack03")
-            if player.childNode(withName: attackShape.name!) == nil {
-                self.player.addChild(attackShape)
-                //print("add attackShape")
-                let action1 = SKAction.wait(forDuration: 0.3)
-                let action2 = SKAction.removeFromParent()
-                let action3 = SKAction.run{
-                    self.player.attackFlg = false
-                    //print("remove attackShape")
-                }
-                let actions = SKAction.sequence([action1,action2,action3])
-                attackShape.run(actions)
-            }
         }
     }
     
@@ -750,7 +734,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 if player.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
                 {
-                    if let attackNode = player.childNode(withName: attackShape.name!)
+                    if let attackNode = player.childNode(withName: player.attackShape.name!)
                     {
                         attackNode.removeAllActions()
                         attackNode.removeFromParent()
@@ -759,7 +743,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //print("---アタックフラグをOFF---")
                 }
                 meteorBase.broken(attackPos: CGPoint(x: player.position.x,
-                                                     y: player.position.y + (attackShape.position.y)))
+                                                     y: player.position.y + (player.attackShape.position.y)))
                 //スコア
                 self.score += 1;
                 self.hudView.drawScore( score: self.score )
@@ -818,11 +802,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func ultraAttackJump(){
         //攻撃Shapeを出す
         self.player.attackFlg = true
-        if let attackNode = player.childNode(withName: attackShape.name!) {
+        if let attackNode = player.childNode(withName: player.attackShape.name!) {
             attackNode.removeAllActions()
             attackNode.removeFromParent()
         }
-        self.player.addChild(attackShape)
+        self.player.addChild(player.attackShape)
         //print("add ultra attackShape")
         //大ジャンプ
         player.moving = false
@@ -834,7 +818,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func ultraAttackEnd(){
         self.player.attackFlg = false
         //attackShapeを消す
-        if let attackNode = player.childNode(withName: attackShape.name!)
+        if let attackNode = player.childNode(withName: player.attackShape.name!)
         {
             attackNode.removeFromParent()
             //print("remove ultra attackShape")
