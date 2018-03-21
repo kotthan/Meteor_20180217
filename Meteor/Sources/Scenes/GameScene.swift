@@ -633,7 +633,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         //MARK: ゲーム進行関係
         self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
-        playSound(soundName: "button01")
+        playSound("button01")
         self.titleBgmPlayer.stop()
         self.mainBgmPlayer.play()
         if( retryFlg == false )
@@ -720,7 +720,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---アタックフラグをON---")
             self.player.attackFlg = true
             self.player.attack()
-            playSound(soundName: "attack03")
         }
     }
     
@@ -759,7 +758,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.player.ultraPower += 1
                     gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0 )
                 }
-                playSound(soundName: "broken1")
+                playSound("broken1")
                 vibrate()
                 //隕石と接触していたら速度を0にする
                 if( self.player.meteorCollisionFlg )
@@ -813,7 +812,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.actionStatus = .Jumping
         player.velocity = self.player.ultraAttackSpped
         //サウンド
-        playSound(soundName: "jump10")
+        playSound("jump10")
     }
     func ultraAttackEnd(){
         self.player.attackFlg = false
@@ -871,7 +870,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (self.guardPod.guardStatus == .guarding)
         {
-            playSound(soundName: "bougyo01")
+            playSound("bougyo01")
             meteorBase.guarded(guardPos: CGPoint(x: player.position.x,
                                        y: player.position.y + (guardShape.position.y)))
             guardPod.subCount()
@@ -921,7 +920,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             circle.fillColor = UIColor.white
             self.addChild(circle)
             let actions = SKAction.sequence(
-                [   SKAction.run{self.playSound(soundName: "explore16")},
+                [   SKAction.run{self.playSound("explore16")},
                     SKAction.scale(to: 2000, duration: 2.5),
                   //SKAction.wait(forDuration: 0.5),
                   SKAction.group(
@@ -960,7 +959,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func homeButtonAction()
     {
         let actions = SKAction.sequence([
-            SKAction.run { self.playSound(soundName: "push_45") },
+            SKAction.run { self.playSound("push_45") },
             SKAction.run { self.gameOverView.audioPlayer.stop() },
             SKAction.run { adBanner.isHidden = true },
             SKAction.run { self.newGame() }
@@ -980,18 +979,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         gameScene.retryFlg = true
         let actions = SKAction.sequence([
-            SKAction.run { self.playSound(soundName: "push_45") },
+            SKAction.run { self.playSound("push_45") },
             SKAction.run { self.gameOverView.audioPlayer.stop() },
             SKAction.run { adBanner.isHidden = true },
             SKAction.run { self.view!.presentScene(gameScene)}
             ])
         run(actions)
-    }
-    //MARK: 音楽
-    func playSound(soundName: String)
-    {
-        let mAction = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
-        self.run(mAction)
     }
     
     func playBgm(soundName: String)

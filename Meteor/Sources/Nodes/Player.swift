@@ -214,6 +214,7 @@ class Player: SKNode {
             let actions = SKAction.sequence([action1,action2,action3])
             attackShape.run(actions)
         }
+        self.playSound("attack03")
     }
     
     func guardStart() {

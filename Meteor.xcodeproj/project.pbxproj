@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A36B6E672060032900466321 /* AttackShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E662060032900466321 /* AttackShape.swift */; };
 		A36B6E692060035300466321 /* GuardShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E682060035300466321 /* GuardShape.swift */; };
+		A36B6E6B2061F51300466321 /* SKNode+playSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E6A2061F51300466321 /* SKNode+playSound.swift */; };
 		A38E0CD020518C1300467A61 /* Meteor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38E0CCF20518C1300467A61 /* Meteor.swift */; };
 		A38E0CD22053904800467A61 /* SKNode+zPos.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38E0CD12053904800467A61 /* SKNode+zPos.swift */; };
 		A3A0DA09204142EE0044D397 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA08204142ED0044D397 /* AdSupport.framework */; };
@@ -97,6 +98,7 @@
 /* Begin PBXFileReference section */
 		A36B6E662060032900466321 /* AttackShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackShape.swift; sourceTree = "<group>"; };
 		A36B6E682060035300466321 /* GuardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardShape.swift; sourceTree = "<group>"; };
+		A36B6E6A2061F51300466321 /* SKNode+playSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+playSound.swift"; sourceTree = "<group>"; };
 		A38E0CCF20518C1300467A61 /* Meteor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meteor.swift; sourceTree = "<group>"; };
 		A38E0CD12053904800467A61 /* SKNode+zPos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+zPos.swift"; sourceTree = "<group>"; };
 		A3A0DA08204142ED0044D397 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -402,6 +404,7 @@
 		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				A36B6E6A2061F51300466321 /* SKNode+playSound.swift */,
 				A36B6E682060035300466321 /* GuardShape.swift */,
 				A36B6E662060032900466321 /* AttackShape.swift */,
 				A38E0CD12053904800467A61 /* SKNode+zPos.swift */,
@@ -617,6 +620,7 @@
 				B6DE6286203B15E100A1B13F /* GameOverView.swift in Sources */,
 				B661084B204A771D008B3767 /* LowestShape.swift in Sources */,
 				B661083F2046A8B0008B3767 /* TitleNode.swift in Sources */,
+				A36B6E6B2061F51300466321 /* SKNode+playSound.swift in Sources */,
 				A3DBAE83203946960025B9DD /* Player.swift in Sources */,
 				A38E0CD020518C1300467A61 /* Meteor.swift in Sources */,
 				B661084320484ECA008B3767 /* Ground.swift in Sources */,
