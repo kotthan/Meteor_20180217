@@ -466,7 +466,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             }
                         ])
                     run(actions)
-                } else { attackAction() }
+                } else {
+                    if gameoverFlg == false{
+                        self.player.attack()
+                    }
+                }
             case .swipeDown:
                 if gameFlg == true{
                     guardAction(endFlg: true)
@@ -708,21 +712,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
-    //MARK: 攻撃
-    func attackAction()
-    {
-        if gameoverFlg == true
-        {
-            return
-        }
-        if self.player.attackFlg == false
-        {
-            //print("---アタックフラグをON---")
-            self.player.attackFlg = true
-            self.player.attack()
-        }
-    }
-    
+    //MARK: 攻撃    
     func attackMeteor()
     {
         guard gameoverFlg != true else{ return }

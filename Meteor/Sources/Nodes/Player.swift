@@ -188,6 +188,10 @@ class Player: SKNode {
     }
     
     func attack() {
+        //すでにAttack中なら何もせず抜ける
+        guard self.attackFlg == false else{ return }
+        //AttackフラグON
+        self.attackFlg = true
         self.sprite.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
         for name in self.attackAnimationTextureNames {
