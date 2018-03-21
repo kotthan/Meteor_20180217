@@ -164,13 +164,6 @@ class Player: SKNode {
     func attack() {
         //すでにAttack中なら何もせず抜ける
         guard self.attackFlg == false else{ return }
-        //AttackフラグON
-        self.attackFlg = true
-        if self.actionStatus == .Jumping {
-            self.sprite.jumpAttackAnimation()
-        } else {
-            self.sprite.attackAnimation()
-        }
         //attackShape処理
         if self.childNode(withName: self.attackShape.name!) == nil {
             self.addChild(attackShape)
@@ -185,6 +178,15 @@ class Player: SKNode {
             attackShape.run(actions)
         }
         self.playSound("attack03")
+        //AttackフラグON
+        self.attackFlg = true
+        if self.actionStatus == .Jumping {
+            self.sprite.jumpAttackAnimation()
+        } else if self.actionStatus == .Falling {
+            self.sprite.jumpAttackAnimation()
+        } else {
+            self.sprite.attackAnimation()
+        }
     }
     
     func attackMeteor(){

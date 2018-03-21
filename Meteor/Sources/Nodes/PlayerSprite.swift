@@ -12,7 +12,7 @@ class PlayerSprite: SKSpriteNode {
     
     let standAnimationTextureNames = ["stand01","stand02"]
     let attackAnimationTextureNames = ["attack01","attack02","stand01"]
-    let jumpAttackAnimationTextureNames = ["jumpattack01","jumpattack02","jump00"]
+    let jumpAttackAnimationTextureNames = ["jumpattack01","jumpattack02"]
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
     let jumpAnimationTextureNames = ["jump00"]
