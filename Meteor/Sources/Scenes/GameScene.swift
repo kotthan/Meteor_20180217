@@ -296,11 +296,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //起動時にも呼ばれる
     @objc func becomeActive(_ notification: Notification) {
         guard gameFlg == true else{ return } // ゲーム中でなければなにもせず抜ける
+        guard creditFlg == false else { return }//クレジット中もポーズにしない
         isPaused = true     //ポーズ状態にする
         if( pauseButton.isPushed == false ){ //ポーズボタンが押されていなかった
-            if( gameoverFlg == false ){ //ゲームオーバになっていない時
-               pauseButton.pauseAction()
-            }
+            pauseButton.pauseAction()
         }
     }
     
