@@ -43,6 +43,7 @@ class Player: SKNode {
         case Falling
     }
     var actionStatus = ActionState.Standing
+    var attackFlg : Bool = false                                    //攻撃フラグ
     let ultraAttackSpped : CGFloat = 9.8 * 150 * 2            //プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動

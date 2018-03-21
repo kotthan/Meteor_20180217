@@ -66,7 +66,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var sceneState:SceneState = .Title
     var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
-    var attackFlg : Bool = false                                    //攻撃フラグ
     var gameFlg:Bool = false
     var gameWaitFlag = false
     //スタート時にplayerが空中の場合に待つためのフラグ
@@ -609,7 +608,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //何もしない
                 break
             }
-            if attackFlg == false{
+            if self.player.attackFlg == false{
                 self.player.stand()
             }
         }
@@ -720,10 +719,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             return
         }
-        if attackFlg == false
+        if self.player.attackFlg == false
         {
             //print("---アタックフラグをON---")
-            self.attackFlg = true
+            self.player.attackFlg = true
             self.player.attack()
             playSound(soundName: "attack03")
             if player.childNode(withName: attackShape.name!) == nil {
@@ -732,7 +731,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let action1 = SKAction.wait(forDuration: 0.3)
                 let action2 = SKAction.removeFromParent()
                 let action3 = SKAction.run{
-                    self.attackFlg = false
+                    self.player.attackFlg = false
                     //print("remove attackShape")
                 }
                 let actions = SKAction.sequence([action1,action2,action3])
@@ -744,7 +743,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func attackMeteor()
     {
         guard gameoverFlg != true else{ return }
-        guard attackFlg == true else{ return }
+        guard self.player.attackFlg == true else{ return }
         
             //print("---隕石を攻撃---")
             if meteorBase.meteores.isEmpty == false
@@ -756,7 +755,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         attackNode.removeAllActions()
                         attackNode.removeFromParent()
                     }
-                    attackFlg = false
+                    self.player.attackFlg = false
                     //print("---アタックフラグをOFF---")
                 }
                 meteorBase.broken(attackPos: CGPoint(x: player.position.x,
@@ -818,7 +817,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func ultraAttackJump(){
         //攻撃Shapeを出す
-        self.attackFlg = true
+        self.player.attackFlg = true
         if let attackNode = player.childNode(withName: attackShape.name!) {
             attackNode.removeAllActions()
             attackNode.removeFromParent()
@@ -833,7 +832,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playSound(soundName: "jump10")
     }
     func ultraAttackEnd(){
-        self.attackFlg = false
+        self.player.attackFlg = false
         //attackShapeを消す
         if let attackNode = player.childNode(withName: attackShape.name!)
         {
