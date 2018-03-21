@@ -75,12 +75,17 @@ class PlayerSprite: SKSpriteNode {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        let stand = SKAction.run{
-            if( self.animationStatus == .Standing ){
+        let nextAction = SKAction.run{
+            switch self.animationStatus {
+            case .Standing:
                 self.stand()
+            case .Jumping:
+                self.jumpAnimation()
+            case .Falling:
+                self.fallAinmation()
             }
         }
-        let actions = SKAction.sequence([action,stand])
+        let actions = SKAction.sequence([action,nextAction])
         self.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
     }
     
@@ -107,8 +112,19 @@ class PlayerSprite: SKSpriteNode {
                 ary.append(SKTexture(imageNamed: name))
             }
         }
+        let nextAction = SKAction.run{
+            switch self.animationStatus {
+            case .Standing:
+                self.stand()
+            case .Jumping:
+                self.jumpAnimation()
+            case .Falling:
+                self.fallAinmation()
+            }
+        }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+        let actions = SKAction.sequence([action,nextAction])
+        self.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
     }
     
     required init?(coder aDecoder: NSCoder) {
