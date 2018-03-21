@@ -61,22 +61,14 @@ class Player: SKNode {
     }
     
     func setSprite(){
-        
-        //MARK: SKSファイルを読み込み
-        if let scene = SKScene(fileNamed: "GameScene.sks")
-        {
-            scene.enumerateChildNodes(withName: "player", using: { (node, stop) -> Void in
-                self.sprite = node as! SKSpriteNode
-            })
-        }
-        //self.sprite = SKSpriteNode(imageNamed: "player00")
+        self.sprite = SKSpriteNode(imageNamed: "player00")
         //baseNodeをspriteの位置にする
         self.position = self.sprite.position
         sprite.position = CGPoint(x:0,y:0)
         sprite.name = "player"
         //sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64), center: CGPoint(x: 0, y: 0))
         let texture = SKTexture(imageNamed: "player00")
-        let physicsBody = SKPhysicsBody(texture: texture, size: sprite.size)
+        let physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: 65, height: 65))
         physicsBody.friction = 1.0                      //摩擦
         physicsBody.allowsRotation = false              //回転禁止
         physicsBody.restitution = 0.0                   //跳ね返り値
