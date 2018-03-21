@@ -469,21 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             case .swipeUp where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.jump()
-<<<<<<< HEAD
-                let node = SKSpriteNode(imageNamed: "jump2")
-                node.position = CGPoint(x: player.position.x, y: player.position.y)
-                node.xScale = 1.5
-                node.yScale = 1.5
-                let actions = SKAction.sequence(
-                    [   SKAction.wait(forDuration: 0.5),
-                        SKAction.removeFromParent()
-                    ]
-                )
-                self.addChild(node)
-                node.run(actions)
-=======
-                self.ground.jumpParticle(pos: player.position)
->>>>>>> master
+                self.ground.jumpSprite(pos: player.position)
             case .swipeLeft where player.actionStatus == .Standing: //ジャンプしてない場合のみ
                 self.player.moveToLeft()
             case .swipeRight where player.actionStatus == .Standing://ジャンプしてない場合のみ
