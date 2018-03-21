@@ -721,7 +721,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if player.childNode(withName: guardShape.name!) == nil {
                 player.addChild( guardShape )
             }
-            //アニメーション
             self.player.guardStart()
         case .guarding: //ガード中
             self.guardPod.subCount(0.4)
@@ -736,7 +735,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 guardNode.removeFromParent()
             }
             self.guardPod.guardStatus = .enable
-            //アニメーション
             self.player.guardEnd()
         }
     }

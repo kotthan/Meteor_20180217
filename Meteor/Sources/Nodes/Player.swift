@@ -13,15 +13,9 @@ class Player: SKNode {
     var velocity: CGFloat = 0.0
     var ultraPower: Int = 0         //必殺技判定用
     let gravity: CGFloat = -900
-    var sprite: SKSpriteNode!
+    let sprite = PlayerSprite()
     var size: CGSize!
     let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
-    let standAnimationTextureNames = ["stand01","stand02"]
-    let attackAnimationTextureNames = ["attack01","attack02","stand01"]
-    let guardStartAnimationTextureNames = ["guard01"]
-    let guardEndAnimationTextureNames = ["player00"]
-    let jumpAnimationTextureNames = ["jump00","jump01"]
-    let fallAnimationTextureNames = ["fall01","fall02"]
     let jumpVelocity:CGFloat = 1500  //プレイヤーのジャンプ時の初速
     var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
@@ -56,17 +50,6 @@ class Player: SKNode {
     
     override init() {
         super.init()
-        setSprite()
-        self.stand()
-    }
-    
-    func setSprite(){
-        self.sprite = SKSpriteNode(imageNamed: "player00")
-        //baseNodeをspriteの位置にする
-        self.position = self.sprite.position
-        sprite.position = CGPoint(x:0,y:0)
-        sprite.name = "player"
-        //sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64), center: CGPoint(x: 0, y: 0))
         let texture = SKTexture(imageNamed: "player00")
         let physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: 65, height: 65))
         physicsBody.friction = 1.0                      //摩擦
@@ -77,9 +60,6 @@ class Player: SKNode {
         physicsBody.collisionBitMask = 0b0001           //接触対象を地面に設定
         physicsBody.contactTestBitMask = 0b1000 | 0b0001//接触対象を地面｜meteorに設定
         self.physicsBody = physicsBody
-        //シーンから削除して再配置
-        sprite.removeFromParent()
-        sprite.isPaused = false
         //スプライトのサイズをbaseのサイズにする
         self.size = sprite.size
         let groundY: CGFloat = 145.5
@@ -133,21 +113,11 @@ class Player: SKNode {
         //地面にたっている時だけジャンプする
         guard self.actionStatus == .Standing else { return }
         
-        self.jumpAnimation()
+        self.sprite.jumpAnimation()
         self.moving = false
         self.actionStatus = .Jumping
         self.velocity = self.jumpVelocity
         self.run(self.jumpSound)
-    }
-    
-    func jumpAnimation() {
-        self.sprite.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in self.jumpAnimationTextureNames {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
     func fall() {
@@ -155,17 +125,7 @@ class Player: SKNode {
         guard actionStatus != .Falling else{ return }
 
         actionStatus = .Falling
-        fallAinmation()
-    }
-    
-    func fallAinmation(){
-        self.sprite.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in self.fallAnimationTextureNames {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+        self.sprite.fallAinmation()
     }
     
     //着地
@@ -197,19 +157,8 @@ class Player: SKNode {
         }
         //アニメーション
         if self.attackFlg == false{
-            self.stand()
+            self.sprite.stand()
         }
-    }
-    
-    //立ちアニメ
-    func stand() {
-        sprite.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in self.standAnimationTextureNames {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 1.0, resize: false, restore: false)
-        sprite.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
     //MARK:攻撃
@@ -218,19 +167,7 @@ class Player: SKNode {
         guard self.attackFlg == false else{ return }
         //AttackフラグON
         self.attackFlg = true
-        self.sprite.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in self.attackAnimationTextureNames {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        let stand = SKAction.run{
-            if( self.actionStatus == .Standing ){
-                self.stand()
-            }
-        }
-        let actions = SKAction.sequence([action,stand])
-        self.sprite.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
+        self.sprite.attackAnimation()
         //attackShape処理
         if self.childNode(withName: self.attackShape.name!) == nil {
             self.addChild(attackShape)
@@ -317,34 +254,14 @@ class Player: SKNode {
         //フラグを落とす
         self.ultraAttackStatus = .none
     }
-    
-    func guardStart() {
-        self.sprite.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        for name in self.guardStartAnimationTextureNames {
-            ary.append(SKTexture(imageNamed: name))
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
-    }
-    
-    func guardEnd() {
-        self.sprite.removeAction(forKey: "textureAnimation")
-        var ary: [SKTexture] = []
-        if( self.actionStatus != .Standing ){
-            for name in guardEndAnimationTextureNames {
-                ary.append(SKTexture(imageNamed: name))
-            }
-        }
-        else{
-            for name in standAnimationTextureNames {
-                ary.append(SKTexture(imageNamed: name))
-            }
-        }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
-        self.sprite.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
-    }
 
+    func guardStart(){
+        self.sprite.guardStartAnimation()
+    }
+    func guardEnd(){
+        self.sprite.guardEndAnimation()
+    }
+    
     func moveToRight()
     {
         switch self.posStatus {
@@ -383,7 +300,7 @@ class Player: SKNode {
     //MARK: - 停止
     func moveStop() {
         self.moving = false
-        self.stand()
+        self.sprite.stand()
     }
     
     //隕石との衝突
