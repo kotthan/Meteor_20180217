@@ -112,7 +112,6 @@ class Player: SKNode {
     func jump() {
         //地面にたっている時だけジャンプする
         guard self.actionStatus == .Standing else { return }
-        
         self.sprite.jumpAnimation()
         self.moving = false
         self.actionStatus = .Jumping
@@ -167,7 +166,11 @@ class Player: SKNode {
         guard self.attackFlg == false else{ return }
         //AttackフラグON
         self.attackFlg = true
-        self.sprite.attackAnimation()
+        if self.actionStatus == .Jumping {
+            self.sprite.jumpAttackAnimation()
+        } else {
+            self.sprite.attackAnimation()
+        }
         //attackShape処理
         if self.childNode(withName: self.attackShape.name!) == nil {
             self.addChild(attackShape)

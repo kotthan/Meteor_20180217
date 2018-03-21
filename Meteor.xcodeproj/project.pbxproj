@@ -408,7 +408,6 @@
 		B63CFDF52037E2FD00F0F90E /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				A36B6E7020624F2000466321 /* PlayerSprite.swift */,
 				A36B6E6A2061F51300466321 /* SKNode+playSound.swift */,
 				A36B6E682060035300466321 /* GuardShape.swift */,
 				A36B6E662060032900466321 /* AttackShape.swift */,
@@ -419,6 +418,7 @@
 				B661084A204A771D008B3767 /* LowestShape.swift */,
 				A38E0CCF20518C1300467A61 /* Meteor.swift */,
 				B661083E2046A8B0008B3767 /* TitleNode.swift */,
+				A36B6E7020624F2000466321 /* PlayerSprite.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
