@@ -12,9 +12,10 @@ class PlayerSprite: SKSpriteNode {
     
     let standAnimationTextureNames = ["stand01","stand02"]
     let attackAnimationTextureNames = ["attack01","attack02","stand01"]
+    let jumpAttackAnimationTextureNames = ["jumpattack01","jumpattack02"]
     let guardStartAnimationTextureNames = ["guard01"]
     let guardEndAnimationTextureNames = ["player00"]
-    let jumpAnimationTextureNames = ["jump00","jump01"]
+    let jumpAnimationTextureNames = ["jump00"]
     let fallAnimationTextureNames = ["fall01","fall02"]
     
     enum AnimationState{
@@ -72,6 +73,27 @@ class PlayerSprite: SKSpriteNode {
         self.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
         for name in self.attackAnimationTextureNames {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        let nextAction = SKAction.run{
+            switch self.animationStatus {
+            case .Standing:
+                self.stand()
+            case .Jumping:
+                self.jumpAnimation()
+            case .Falling:
+                self.fallAinmation()
+            }
+        }
+        let actions = SKAction.sequence([action,nextAction])
+        self.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
+    }
+    
+    func jumpAttackAnimation(){
+        self.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in self.jumpAttackAnimationTextureNames {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
