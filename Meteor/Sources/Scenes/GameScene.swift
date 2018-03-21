@@ -38,8 +38,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var guardShape: GuardShape!                                    //防御判定シェイプノード
     var creditButton = SKLabelNode()
     var creditBackButton = SKLabelNode()
-    var score = 0                                                   //スコア
-    var combo = 0                                                   //スコア
+    var score = 0 {                                                 //スコア
+        didSet {
+            //更新時に表示も更新する
+            self.hudView.drawScore( score: self.score )
+        }
+    }
+    var combo = 0 {                                                 //コンボ
+        didSet{
+            guard combo != 0 else { return }
+            //0以外が設定されていたら表示も更新する
+            let comboLabel = ComboLabel(self.combo)
+            comboLabel.position.x = 100
+            comboLabel.position.y = self.player.size.height/2
+            self.player.addChild(comboLabel)
+        }
+    }
     let highScoreLabel = SKLabelNode()                              //ハイスコア表示ラベル
     var highScore = 0                                               //ハイスコア
     //MARK: 画面
@@ -173,6 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gaugeview.position.y -= gaugeview.size.height
         self.camera!.addChild(gaugeview)
         gaugeview.isHidden = true
+        self.player.gaugeview = gaugeview
         
         //===================
         //MARK: credit表示ボタン
@@ -430,13 +445,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         gameFlg = true
                     }
                     guard gameoverFlg == false else{ break }
-                    gaugeview.setMeteorGaugeScale(to: 0)
                     self.player.ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
                 case let node where node?.name == "BackTitle":
                     gameFlg = true
-                    gaugeview.setMeteorGaugeScale(to: 0)
                     self.player.ultraAttack()
                 case let node where node == gameOverView?.HomeButton :
                     homeButtonAction()
@@ -712,41 +725,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---隕石を攻撃---")
             if meteorBase.meteores.isEmpty == false
             {
-                if player.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
-                {
-                    if let attackNode = player.childNode(withName: player.attackShape.name!)
-                    {
-                        attackNode.removeAllActions()
-                        attackNode.removeFromParent()
-                    }
-                    self.player.attackFlg = false
-                    //print("---アタックフラグをOFF---")
-                }
+                self.player.attackMeteor()
                 meteorBase.broken(attackPos: CGPoint(x: player.position.x,
                                                      y: player.position.y + (player.attackShape.position.y)))
                 //スコア
-                self.score += 1;
-                self.hudView.drawScore( score: self.score )
+                self.score += 1
                 //コンボ
-                self.combo += 1;
-                let comboLabel = ComboLabel(self.combo)
-                comboLabel.position.x = 100
-                comboLabel.position.y = self.player.size.height/2
-                self.player.addChild(comboLabel)
-                //必殺技
-                if( player.ultraAttackStatus == .none )
-                {
-                    self.player.ultraPower += 1
-                    gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0 )
-                }
+                self.combo += 1
                 playSound("broken1")
                 vibrate()
-                //隕石と接触していたら速度を0にする
-                if( self.player.meteorCollisionFlg )
-                {
-                    self.player.meteorCollisionFlg = false
-                    player.velocity = 0;
-                }
             }
             if meteorBase.meteores.isEmpty == true
             {

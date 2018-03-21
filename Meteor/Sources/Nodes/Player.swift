@@ -52,6 +52,7 @@ class Player: SKNode {
         case attacking  //攻撃中
     }
     var ultraAttackStatus = UltraAttackState.none   //必殺技発動中フラグ
+    var gaugeview: GaugeView?
     
     override init() {
         super.init()
@@ -207,6 +208,7 @@ class Player: SKNode {
         sprite.run(SKAction.repeatForever(action), withKey: "textureAnimation")
     }
     
+    //MARK:攻撃
     func attack() {
         //すでにAttack中なら何もせず抜ける
         guard self.attackFlg == false else{ return }
@@ -241,10 +243,34 @@ class Player: SKNode {
         self.playSound("attack03")
     }
     
+    func attackMeteor(){
+        if self.ultraAttackStatus == .none //必殺技のときは続けて攻撃するため
+        {
+            //attackShapeオフ
+            if let attackNode = self.childNode(withName: self.attackShape.name!)
+            {
+                attackNode.removeAllActions()
+                attackNode.removeFromParent()
+            }
+            self.attackFlg = false
+            //print("---アタックフラグをOFF---")
+            //必殺技ゲージ増加
+            self.ultraPower += 1
+            self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 10.0 )
+        }
+        //隕石と接触していたら速度を0にする
+        if( self.meteorCollisionFlg )
+        {
+            self.meteorCollisionFlg = false
+            self.velocity = 0;
+        }
+    }
+    
     //MARK:必殺技
     func ultraAttack(){
         //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
         self.ultraPower = 0
+        gaugeview?.setMeteorGaugeScale(to: 0)
         //入力を受け付けないようにフラグを立てる
         self.ultraAttackStatus = .landing
         if( self.actionStatus != .Standing ) //空中にいる場合
