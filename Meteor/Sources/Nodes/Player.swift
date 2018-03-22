@@ -138,8 +138,6 @@ class Player: SKNode {
         self.actionStatus = .Standing
         self.velocity = 0.0
         self.position.y = self.defaultYPosition
-        //アニメーション
-        self.sprite.landingAnimation()
         //SE
         self.run(landingSound)
         //着地エフェクト
@@ -163,9 +161,7 @@ class Player: SKNode {
             break
         }
         //アニメーション
-        if self.attackFlg == false{
-            self.sprite.stand()
-        }
+        self.sprite.landingAnimation()
     }
     
     //MARK:攻撃

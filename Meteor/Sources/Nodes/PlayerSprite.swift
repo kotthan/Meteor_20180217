@@ -17,8 +17,8 @@ class PlayerSprite: SKSpriteNode {
     let guardEndAnimationTextureNames = ["player00"]
     let jumpAnimationTextureNames = ["jump00"]
     let fallAnimationTextureNames = ["fall01","fall02"]
-    let landingAnimaitonTextureNames = ["landing"]
-    let squatAnimaitonTextureNames = ["squat"]
+    let landingAnimationTextureNames = ["landing"]
+    let squatAnimationTextureNames = ["squat"]
     
     enum AnimationState{
         case Standing
@@ -83,6 +83,7 @@ class PlayerSprite: SKSpriteNode {
 
     //着地
     func landingAnimation(){
+        print("landingAnimation")
         self.animationStatus = .Standing
         self.removeAction(forKey: "textureAnimation")
         var ary: [SKTexture] = []
@@ -92,7 +93,7 @@ class PlayerSprite: SKSpriteNode {
         let nextAction = SKAction.run{
             self.stand()
         }
-        let action = SKAction.animate(with: ary, timePerFrame: 0.5, resize: false, restore: false)
+        let action = SKAction.animate(with: ary, timePerFrame: 0.3, resize: false, restore: false)
         let actions = SKAction.sequence([action,nextAction])
         self.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
     }
