@@ -107,6 +107,12 @@ class Player: SKNode {
         }
         self.sprite.position = CGPoint.zero //playerの位置がだんだん上に上がる対策
     }
+
+    //しゃがみ
+    func squat() {
+        guard self.actionStatus == .Standing else { return }
+        self.sprite.squat()
+    }
     
     //ジャンプ
     func jump() {

@@ -18,6 +18,7 @@ class PlayerSprite: SKSpriteNode {
     let jumpAnimationTextureNames = ["jump00"]
     let fallAnimationTextureNames = ["fall01","fall02"]
     let landingAnimaitonTextureNames = ["landing"]
+    let squatAnimaitonTextureNames = ["squat"]
     
     enum AnimationState{
         case Standing
@@ -43,6 +44,17 @@ class PlayerSprite: SKSpriteNode {
         }
         let action = SKAction.animate(with: ary, timePerFrame: 1.0, resize: false, restore: false)
         self.run(SKAction.repeatForever(action), withKey: "textureAnimation")
+    }
+
+    func squat() {
+        self.animationStatus = .Standing
+        self.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in self.squatAnimationTextureNames {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.5, resize: false, restore: false)
+        self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
     //ジャンプ
@@ -81,7 +93,8 @@ class PlayerSprite: SKSpriteNode {
             self.stand()
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.5, resize: false, restore: false)
-        self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+        let actions = SKAction.sequence([action,nextAction])
+        self.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
     }
     
     //攻撃
