@@ -18,7 +18,7 @@ class PlayerSprite: SKSpriteNode {
     let jumpAnimationTextureNames = ["jump00"]
     let fallAnimationTextureNames = ["fall01","fall02"]
     let landingAnimationTextureNames = ["landing"]
-    let squatAnimationTextureNames = ["squat"]
+    let squatAnimationTextureNames = ["landing"]
     
     enum AnimationState{
         case Standing

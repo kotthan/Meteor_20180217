@@ -382,8 +382,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if gameFlg == true{
                     guardAction(endFlg: false)
                 }
-            case .swipeUp: //ジャンプしてない場合のみ
-                break   //何もしない
+            case .swipeUp:
+                self.player.squat()//しゃがみ
             case .swipeLeft: //ジャンプしてない場合のみ
                 break   //何もしない
             case .swipeRight://ジャンプしてない場合のみ
