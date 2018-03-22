@@ -132,6 +132,8 @@ class Player: SKNode {
         self.actionStatus = .Standing
         self.velocity = 0.0
         self.position.y = self.defaultYPosition
+        //アニメーション
+        self.sprite.landingAnimation()
         //SE
         self.run(landingSound)
         //着地エフェクト

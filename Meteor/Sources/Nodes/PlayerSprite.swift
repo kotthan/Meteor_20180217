@@ -17,6 +17,7 @@ class PlayerSprite: SKSpriteNode {
     let guardEndAnimationTextureNames = ["player00"]
     let jumpAnimationTextureNames = ["jump00"]
     let fallAnimationTextureNames = ["fall01","fall02"]
+    let landingAnimaitonTextureNames = ["landing"]
     
     enum AnimationState{
         case Standing
@@ -65,6 +66,21 @@ class PlayerSprite: SKSpriteNode {
             ary.append(SKTexture(imageNamed: name))
         }
         let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: false, restore: false)
+        self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
+
+    //着地
+    func landingAnimation(){
+        self.animationStatus = .Standing
+        self.removeAction(forKey: "textureAnimation")
+        var ary: [SKTexture] = []
+        for name in self.landingAnimationTextureNames {
+            ary.append(SKTexture(imageNamed: name))
+        }
+        let nextAction = SKAction.run{
+            self.stand()
+        }
+        let action = SKAction.animate(with: ary, timePerFrame: 0.5, resize: false, restore: false)
         self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
