@@ -216,7 +216,7 @@ class Player: SKNode {
     func ultraAttack(){
         //print("!!!!!!!!!!ultraAttack!!!!!!!!!")
         self.ultraPower = 0
-        gaugeview?.setMeteorGaugeScale(to: 0)
+        gaugeview?.useMeteorGauge()
         //入力を受け付けないようにフラグを立てる
         self.ultraAttackStatus = .landing
         if( self.actionStatus != .Standing ) //空中にいる場合

@@ -151,6 +151,18 @@ class GaugeView: SKSpriteNode {
         }
     }
     
+    func useMeteorGauge(){
+        //Push!の文字は隠す
+        ultraAttackPush.isHidden = true
+        //Iconの下の分のメータはあらかじめ減らしておく
+        meteorGaugeMask.xScale = 0.69
+        let gaugeScale = SKAction.scaleX(to: 0, duration: 4.5)
+        let iconHidden = SKAction.run{
+            self.ultraAttackIcon.isHidden = true
+        }
+        meteorGaugeMask.run(SKAction.sequence([gaugeScale,iconHidden]))
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
