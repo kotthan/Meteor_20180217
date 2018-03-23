@@ -152,6 +152,12 @@ class PlayerSprite: SKSpriteNode {
         let actions = SKAction.sequence([action,nextAction])
         self.run(SKAction.repeat(actions, count:1), withKey: "textureAnimation")
     }
+
+    func ultraAttackAnimation(){
+        self.removeAction(forKey: "textureAnimation")
+        let action = SKAction.animate(with: jumpAttackTextures, timePerFrame: 0.1, resize: false, restore: false)
+        self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
+    }
     
     //ガード
     func guardStartAnimation(){

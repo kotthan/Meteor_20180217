@@ -154,14 +154,10 @@ class Player: SKNode {
             break
         case .attacking:
             self.ultraAttackEnd()
-
-            break
+            self.sprite.landingAnimation()
         case .none:
-            //何もしない
-            break
+            self.sprite.landingAnimation()
         }
-        //アニメーション
-        self.sprite.landingAnimation()
     }
     
     //MARK:攻撃
@@ -208,8 +204,8 @@ class Player: SKNode {
             self.ultraPower += 1
             self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 10.0 )
         }
-        //隕石と接触していたら速度を0にする
-        if( self.meteorCollisionFlg )
+        //必殺技以外で隕石と接触していたら速度を0にする
+        if ( self.ultraAttackStatus == .none ) && ( self.meteorCollisionFlg )
         {
             self.meteorCollisionFlg = false
             self.velocity = 0;
@@ -227,6 +223,7 @@ class Player: SKNode {
         {
             //地面に戻る
             self.velocity = -2000
+            self.sprite.fallAinmation()
         }
         else
         {
@@ -237,20 +234,29 @@ class Player: SKNode {
         //ultraAttackフラグは地面に着いた時に落とす
     }
     func ultraAttackJump(){
-        //攻撃Shapeを出す
-        self.attackFlg = true
-        if let attackNode = self.childNode(withName: self.attackShape.name!) {
-            attackNode.removeAllActions()
-            attackNode.removeFromParent()
+        let squat = SKAction.run{
+            self.sprite.squat()
         }
-        self.addChild(self.attackShape)
-        //print("add ultra attackShape")
-        //大ジャンプ
-        self.moving = false
-        self.actionStatus = .Jumping
-        self.velocity = self.ultraAttackSpped
-        //サウンド
-        self.playSound("jump10")
+        let wait = SKAction.wait(forDuration: 0.2)
+        let attack = SKAction.run{
+            //攻撃Shapeを出す
+            self.attackFlg = true
+            if let attackNode = self.childNode(withName: self.attackShape.name!) {
+                attackNode.removeAllActions()
+                attackNode.removeFromParent()
+            }
+            self.addChild(self.attackShape)
+            //print("add ultra attackShape")
+            //大ジャンプ
+            self.moving = false
+            self.actionStatus = .Jumping
+            self.velocity = self.ultraAttackSpped
+            //サウンド
+            self.playSound("jump10")
+            //アニメーション
+            self.sprite.ultraAttackAnimation()
+        }
+        self.run(SKAction.sequence([squat,wait,attack]))
     }
     func ultraAttackEnd(){
         self.attackFlg = false
