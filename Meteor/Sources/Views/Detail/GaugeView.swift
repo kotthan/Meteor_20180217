@@ -6,6 +6,7 @@
 //  Copyright © 2018年 Kazuaki Oe. All rights reserved.
 //
 import SpriteKit
+import CoreImage
 
 @available(iOS 9.0, *)
 class GaugeView: SKSpriteNode {
@@ -14,6 +15,7 @@ class GaugeView: SKSpriteNode {
     let podGaugeMask: SKShapeNode
     let podIcon: SKSpriteNode
     let ultraAttackIcon: SKSpriteNode
+    let ultraAttackMonoIcon: SKSpriteNode
     let ultraAttackPush: SKSpriteNode
     
     init(frame: CGRect) {
@@ -66,8 +68,22 @@ class GaugeView: SKSpriteNode {
         podIcon.position.x -= 255
         podIcon.zRotation += 10 / 180 * CGFloat.pi
         //必殺技アイコン
-        ultraAttackIcon = SKSpriteNode(imageNamed: "ultraAttackIcon")
+        let texture = SKTexture(imageNamed: "ultraAttackIcon")
+        ultraAttackIcon = SKSpriteNode(texture: texture)
         ultraAttackIcon.name = "ultraOKbutton"
+        //普段の必殺技アイコン
+        //モノクロのフィルタをかける
+        let filter:CIFilter = CIFilter(name: "CIColorMonochrome")!
+        filter.setValue(CIImage(image: #imageLiteral(resourceName: "ultraAttackIcon")), forKey: kCIInputImageKey)
+        filter.setValue(CIColor(red: 0.75, green: 0.75, blue: 0.75), forKey: kCIInputColorKey)
+        filter.setValue(1.0, forKey: kCIInputIntensityKey)
+        let ciContext:CIContext = CIContext(options: nil)
+        let cgimg = ciContext.createCGImage(filter.outputImage!, from:filter.outputImage!.extent)
+        ultraAttackMonoIcon = SKSpriteNode(texture: SKTexture(image: UIImage(cgImage: cgimg!)))
+        //フィルタをかけるとサイズがおかしくなるので
+        ultraAttackMonoIcon.xScale = ultraAttackIcon.size.width / ultraAttackMonoIcon.size.width
+        ultraAttackMonoIcon.yScale = ultraAttackIcon.size.height / ultraAttackMonoIcon.size.height
+        ultraAttackMonoIcon.name = "ultrabutton"
         //podアイコンゲージSprite
         let podGaugeSprite = SKSpriteNode(imageNamed: "podGauge")
         podGaugeSprite.yScale = 2.75
@@ -93,6 +109,8 @@ class GaugeView: SKSpriteNode {
         ultraAttackIcon.position.x += 219
         ultraAttackIcon.position.y -= 0.5
         ultraAttackIcon.isHidden = true
+        //背景で常に表示するIcon
+        ultraAttackMonoIcon.position = ultraAttackIcon.position
         //必殺技Push
         ultraAttackPush = SKSpriteNode(imageNamed: "ultraAttackPush")
         ultraAttackPush.xScale = 2.0
@@ -116,6 +134,7 @@ class GaugeView: SKSpriteNode {
         podBase.xScale = 0.95
         podIcon.addChild(podBase)
         addChild(ultraAttackIcon)
+        addChild(ultraAttackMonoIcon)
         addChild(ultraAttackPush)
         //zPosion設定
         setzPos(.Gauge)
@@ -128,7 +147,8 @@ class GaugeView: SKSpriteNode {
         podGlass.zPosition = zPosition + 0.52
         podTop.zPosition = zPosition + 0.53
         podBottom.zPosition = zPosition + 0.54
-        ultraAttackIcon.zPosition = zPosition + 0.6
+        ultraAttackMonoIcon.zPosition = zPosition + 0.6
+        ultraAttackIcon.zPosition = zPosition + 0.61
         ultraAttackPush.zPosition = zPosition + 0.7
         //スケール調整
         xScale = 0.58
