@@ -688,25 +688,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameoverFlg != true else{ return }
         guard self.player.attackFlg == true else{ return }
         
-            //print("---隕石を攻撃---")
-            if meteorBase.meteores.isEmpty == false
-            {
-                self.player.attackMeteor()
-                meteorBase.broken(attackPos: CGPoint(x: player.position.x,
-                                                     y: player.position.y + (player.attackShape.position.y)))
+        //print("---隕石を攻撃---")
+        if meteorBase.meteores.isEmpty == false
+        {
+            self.player.attackMeteor()
+                meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)))
                 //スコア
                 self.score += 1
                 //コンボ
                 self.combo += 1
-            }
-            if meteorBase.meteores.isEmpty == true
+        }
+        if meteorBase.meteores.isEmpty == true
+        {
+            if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
             {
-                if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
-                {
-                    self.meteorBase.buildFlg = true
+                self.meteorBase.buildFlg = true
                     //print("---meteorBase.meteoresが空だったのでビルドフラグON---")
-                }
             }
+        }
         
     }
     
