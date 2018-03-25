@@ -15,7 +15,7 @@ class HUDView: UIView {
         super.init(frame:frame)
         //scoreLabel
         scoreLabel.textColor = UIColor.black
-        scoreLabel.text = "0"
+        scoreLabel.text = String(format: "%05d", 0)
         scoreLabel.font = UIFont(name: "GillSansStd-ExtraBold", size: 50)
         scoreLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)//左上
         scoreLabel.layer.position = CGPoint(x: 23, y: 58)//iPhoneX基準で調整
@@ -48,7 +48,7 @@ class HUDView: UIView {
     }
 
     func drawScore(score: Int){
-        scoreLabel.text = String(score)
+        scoreLabel.text = String(format: "%05d", score)
         stringSizeChange()
         scoreLabel.sizeToFit()
     }
