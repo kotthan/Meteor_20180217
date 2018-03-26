@@ -44,6 +44,9 @@ class GameOverScene: SKScene, SKPhysicsContactDelegate {
             print("------------hidh score!------------")
             UserDefaults.standard.set(self.highScore, forKey: self.keyHighScore) //データの保存
         }
+        else{
+            self.highScore = highScore
+        }
     }
     
     override func didMove(to view: SKView) {
