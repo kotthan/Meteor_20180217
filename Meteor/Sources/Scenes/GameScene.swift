@@ -57,7 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScore = 0                                               //ハイスコア
     //MARK: 画面
     var pauseView: PauseView!                                       //ポーズ画面
-    var gameOverView: GameOverView!
     var hudView = HUDView()                                         //HUD
     
     var mainBgmPlayer: AVAudioPlayer!
@@ -428,10 +427,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 case let node where node?.name == "BackTitle":
                     gameFlg = true
                     self.player.ultraAttack()
-                case let node where node == gameOverView?.HomeButton :
-                    homeButtonAction()
-                case let node where node ==  gameOverView?.ReStartButton :
-                    reStartButtonAction()
                 case let node where node == pauseButton?.PauseButton :
                     pauseButton.tapped()
                 default:
@@ -688,25 +683,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameoverFlg != true else{ return }
         guard self.player.attackFlg == true else{ return }
         
-            //print("---隕石を攻撃---")
-            if meteorBase.meteores.isEmpty == false
+        //print("---隕石を攻撃---")
+        if meteorBase.meteores.isEmpty == false
+        {
+            //コンボ
+            self.combo += 1
+            let comboBonus:Float = 1 + (Float(self.combo) / 10)
+            //スコア
+            self.score += Int(Float( 1 + self.meteorBase.meteores.count ) * comboBonus )
+            self.player.attackMeteor()
+            meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)))
+        }
+        if meteorBase.meteores.isEmpty == true
+        {
+            if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
             {
-                self.player.attackMeteor()
-                meteorBase.broken(attackPos: CGPoint(x: player.position.x,
-                                                     y: player.position.y + (player.attackShape.position.y)))
-                //スコア
-                self.score += 1
-                //コンボ
-                self.combo += 1
-            }
-            if meteorBase.meteores.isEmpty == true
-            {
-                if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
-                {
-                    self.meteorBase.buildFlg = true
+                self.meteorBase.buildFlg = true
                     //print("---meteorBase.meteoresが空だったのでビルドフラグON---")
-                }
             }
+        }
         
     }
     
@@ -781,15 +776,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             pauseButton.isHidden = true//ポーズボタンを非表示にする
             hudView.scoreLabel.isHidden = true
             hudView.highScoreLabel.isHidden = true
-            //ハイスコア更新
-            print("------------score:\(self.score) high:\(self.highScore)------------")
-            if( self.score > self.highScore ){
-                self.highScore = self.score
-                self.highScoreLabel.text = String(self.highScore)
-                print("------------hidh score!------------")
-                UserDefaults.standard.set(self.highScore, forKey: self.keyHighScore) //データの保存
-            }
-            print("------------gameover------------")
             self.mainBgmPlayer.stop()
             //墜落演出
             let circle = SKShapeNode(circleOfRadius:1)
@@ -810,60 +796,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         },
                       ]),
                   SKAction.run {
-                    self.gameOverView = GameOverView(frame: self.frame, score: self.score, highScore: self.highScore )
-                    self.camera?.addChild(self.gameOverView)
+                    let gameOverScene = GameOverScene(size: self.frame.size)
+                    gameOverScene.setScore(score: self.score, highScore: self.highScore)
+                    self.view?.presentScene(gameOverScene)
                     },
                   //SKAction.run{self.isPaused = true},
-                  SKAction.run{self.gameOverView.isHidden = false},
 
                 ])
             circle.run(actions)
         }
-    }
-
-    func newGame()
-    {
-        var gameScene: GameScene!
-        if (UIDevice.current.model.range(of: "iPad") != nil) {
-            gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
-            gameScene.scaleMode = .fill
-        }
-        else{
-            gameScene = GameScene(size: frame.size)
-            gameScene.scaleMode = .aspectFill
-        }
-        self.view?.presentScene(gameScene)
-    }
-    
-    func homeButtonAction()
-    {
-        let actions = SKAction.sequence([
-            SKAction.run { self.playSound("push_45") },
-            SKAction.run { self.gameOverView.audioPlayer.stop() },
-            SKAction.run { adBanner.isHidden = true },
-            SKAction.run { self.newGame() }
-            ])
-        run(actions)
-    }
-    func reStartButtonAction()
-    {
-        var gameScene: GameScene!
-        if (UIDevice.current.model.range(of: "iPad") != nil) {
-            gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
-            gameScene.scaleMode = .fill
-        }
-        else{
-            gameScene = GameScene(size: frame.size)
-            gameScene.scaleMode = .aspectFill
-        }
-        gameScene.retryFlg = true
-        let actions = SKAction.sequence([
-            SKAction.run { self.playSound("push_45") },
-            SKAction.run { self.gameOverView.audioPlayer.stop() },
-            SKAction.run { adBanner.isHidden = true },
-            SKAction.run { self.view!.presentScene(gameScene)}
-            ])
-        run(actions)
     }
     
     func playBgm(soundName: String)

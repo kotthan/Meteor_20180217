@@ -29,8 +29,8 @@ class GameOverView: SKNode
         }
         audioPlayer.play()
 
-        self.position.x = -frame.size.width/2
-        self.position.y = -frame.size.height/2
+        self.position.x = 0
+        self.position.y = 0
         self.setzPos(.GameOverView)
         //背景ノード追加
         let background = SKSpriteNode(imageNamed: "gameover_back")
