@@ -73,10 +73,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case GameWait   //ゲーム開始待ち
         case Game       //ゲーム中
         case Pause      //ポーズ
-        case GameOver   //ゲームオーバー
     }
     var sceneState:SceneState = .Title
-    var gameoverFlg : Bool = false                                  //ゲームオーバーフラグ
     var gameFlg:Bool = false
     var gameWaitFlag = false
     //スタート時にplayerが空中の場合に待つためのフラグ
@@ -361,9 +359,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
-        guard ( gameoverFlg == false ) else {  //ゲームオーバでなければ次の処理に進む
-            return
-        }
         //ポーズでなければ次の処理に進む
         guard ( self.view!.scene?.isPaused == false ) else {
             return
@@ -420,7 +415,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if self.creditButton.childNode(withName: "credit") != nil {
                         gameFlg = true
                     }
-                    guard gameoverFlg == false else{ break }
                     self.player.ultraAttack()
                 case let node where node == creditButton.childNode(withName: "credit"):
                     creditAction()
@@ -442,7 +436,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             drawTouchPath(begin: beganPosOnView, end: endPosOnView)
             switch getTouchAction(begin: beganPosOnView, end: endPosOnView) {
             case .tap:
-                if gameFlg == false && gameoverFlg == false && creditFlg == false {
+                if gameFlg == false && creditFlg == false {
                     let actions = SKAction.sequence(
                         [ SKAction.run {
                             TitleNode.TapAction(self.titleNode.TitleNode, node2: self.titleNode.TitleMeteorNode)
@@ -454,9 +448,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         ])
                     run(actions)
                 } else {
-                    if gameoverFlg == false{
-                        self.player.attack()
-                    }
+                    self.player.attack()
                 }
             case .swipeDown:
                 if gameFlg == true{
@@ -680,7 +672,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: 攻撃    
     func attackMeteor()
     {
-        guard gameoverFlg != true else{ return }
         guard self.player.attackFlg == true else{ return }
         
         //print("---隕石を攻撃---")
@@ -708,7 +699,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: 防御
     func guardAction(endFlg: Bool)
     {
-        guard gameoverFlg != true else { return }
         
         switch ( self.guardPod.guardStatus ){
         case .enable:   //ガード開始
@@ -736,7 +726,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func guardMeteor()
     {
-        guard gameoverFlg != true else { return }
         guard let guardNode = player.childNode(withName: guardShape.name!) else {
             //print("guardShapeなしガード")
             return
@@ -769,42 +758,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func gameOver()
     {
-        if( !gameoverFlg ){ //既にGameOverの場合はなにもしない
-            self.gameoverFlg = true
-            self.gameFlg = false
-            self.meteorTimer?.invalidate()
-            pauseButton.isHidden = true//ポーズボタンを非表示にする
-            hudView.scoreLabel.isHidden = true
-            hudView.highScoreLabel.isHidden = true
-            self.mainBgmPlayer.stop()
-            //墜落演出
-            let circle = SKShapeNode(circleOfRadius:1)
-            circle.position.x = self.meteorBase.meteores[0].position.x
-            circle.position.y = self.meteorBase.meteores[0].position.y - self.meteorBase.meteores[0].size.height / 2
-            circle.setzPos(.GameOverCircle)
-            circle.fillColor = UIColor.white
-            self.addChild(circle)
-            let actions = SKAction.sequence(
-                [   SKAction.run{self.playSound("explore16")},
-                    SKAction.scale(to: 2000, duration: 2.5),
-                  //SKAction.wait(forDuration: 0.5),
-                  SKAction.group(
-                    [ SKAction.wait(forDuration: 0.2),
-                      SKAction.run{
-                        self.player.isHidden = true
-                        self.meteorBase.isHidden = true
-                        },
-                      ]),
-                  SKAction.run {
-                    let gameOverScene = GameOverScene(size: self.frame.size)
-                    gameOverScene.setScore(score: self.score, highScore: self.highScore)
-                    self.view?.presentScene(gameOverScene)
+        guard gameFlg == true else { return }
+        self.gameFlg = false
+        self.meteorTimer?.invalidate()
+        pauseButton.isHidden = true//ポーズボタンを非表示にする
+        hudView.scoreLabel.isHidden = true
+        hudView.highScoreLabel.isHidden = true
+        self.mainBgmPlayer.stop()
+        //墜落演出
+        let circle = SKShapeNode(circleOfRadius:1)
+        circle.position.x = self.meteorBase.meteores[0].position.x
+        circle.position.y = self.meteorBase.meteores[0].position.y - self.meteorBase.meteores[0].size.height / 2
+        circle.setzPos(.GameOverCircle)
+        circle.fillColor = UIColor.white
+        self.addChild(circle)
+        let actions = SKAction.sequence(
+            [   SKAction.run{self.playSound("explore16")},
+                SKAction.scale(to: 2000, duration: 2.5),
+              //SKAction.wait(forDuration: 0.5),
+              SKAction.group(
+                [ SKAction.wait(forDuration: 0.2),
+                  SKAction.run{
+                    self.player.isHidden = true
+                    self.meteorBase.isHidden = true
                     },
-                  //SKAction.run{self.isPaused = true},
+                  ]),
+              SKAction.run {
+                let gameOverScene = GameOverScene(size: self.frame.size)
+                gameOverScene.setScore(score: self.score, highScore: self.highScore)
+                self.view?.presentScene(gameOverScene)
+                },
+              //SKAction.run{self.isPaused = true},
 
-                ])
-            circle.run(actions)
-        }
+            ])
+        circle.run(actions)
     }
     
     func playBgm(soundName: String)
