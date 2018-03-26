@@ -691,12 +691,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print("---隕石を攻撃---")
         if meteorBase.meteores.isEmpty == false
         {
+            //コンボ
+            self.combo += 1
+            let comboBonus:Float = 1 + (Float(self.combo) / 10)
+            //スコア
+            self.score += Int(Float( 1 + self.meteorBase.meteores.count ) * comboBonus )
             self.player.attackMeteor()
-                meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)))
-                //スコア
-                self.score += 1
-                //コンボ
-                self.combo += 1
+            meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)))
         }
         if meteorBase.meteores.isEmpty == true
         {
