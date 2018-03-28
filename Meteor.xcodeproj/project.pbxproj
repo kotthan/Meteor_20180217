@@ -26,6 +26,7 @@
 		A3A0DA1C204143500044D397 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA12204143500044D397 /* MessageUI.framework */; };
 		A3A0DA1D204143500044D397 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA13204143500044D397 /* SystemConfiguration.framework */; };
 		A3A0DA1F204143750044D397 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A0DA1E204143750044D397 /* GoogleMobileAds.framework */; };
+		A3A24AC920690F0E000180F5 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A24AC820690F0E000180F5 /* GameOverScene.swift */; };
 		A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */; };
 		A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBAE80203926C50025B9DD /* LandingEffect.swift */; };
 		A3DBAE83203946960025B9DD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBAE82203946960025B9DD /* Player.swift */; };
@@ -117,6 +118,7 @@
 		A3A0DA12204143500044D397 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A3A0DA13204143500044D397 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A3A0DA1E204143750044D397 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		A3A24AC820690F0E000180F5 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		A3DBAE5A203883F90025B9DD /* GillSansStd-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GillSansStd-ExtraBold.otf"; sourceTree = "<group>"; };
 		A3DBAE80203926C50025B9DD /* LandingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingEffect.swift; sourceTree = "<group>"; };
 		A3DBAE82203946960025B9DD /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDA720373BAC00F0F90E /* GameScene.swift */,
+				A3A24AC820690F0E000180F5 /* GameOverScene.swift */,
 				B63CFDA520373BA400F0F90E /* GameScene.sks */,
 			);
 			path = Scenes;
@@ -644,6 +647,7 @@
 				A3DBAE81203926C50025B9DD /* LandingEffect.swift in Sources */,
 				A38E0CD22053904800467A61 /* SKNode+zPos.swift in Sources */,
 				A36B6E6D206232C100466321 /* SKNode+Vibrate.swift in Sources */,
+				A3A24AC920690F0E000180F5 /* GameOverScene.swift in Sources */,
 				A36B6E7120624F2000466321 /* PlayerSprite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
