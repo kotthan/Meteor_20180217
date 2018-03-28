@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameOverScene: SKScene, SKPhysicsContactDelegate {
+class GameOverScene: SKScene {
 
     private var score: Int = 0
     private var highScore: Int = 0
