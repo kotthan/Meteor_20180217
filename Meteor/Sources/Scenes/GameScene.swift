@@ -28,6 +28,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let baseNode = SKNode()
     var backgroundView: BackgroundView!
     let player = Player()
+    let normalCamera = SKCameraNode()
+    let gameCamera = SKCameraNode()
     var ground: Ground!
     var lowestShape: LowestShape!
     var guardPod: GuardPod!
@@ -105,8 +107,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var screenSpeed: CGFloat = 28.0
 	var screenSpeedScale: CGFloat = 1.0
     
-    var pCamera: SKCameraNode?
-    
     //MARK: データ保存
     var keyHighScore = "highScore"
     
@@ -139,10 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         titleBgmPlayer.play()
         
         //MARK: カメラ
-        let camera = SKCameraNode()
-        camera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
-        self.addChild(camera)
-        self.camera = camera
+        normalCamera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
+        self.addChild(normalCamera)
+        self.camera = normalCamera
         //背景
         backgroundView = BackgroundView(frame: self.frame)
         self.baseNode.addChild(backgroundView)
@@ -163,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gaugeview = GaugeView(frame: self.frame)
         gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0)
         gaugeview.position.y -= gaugeview.size.height
-        self.camera!.addChild(gaugeview)
+        self.gameCamera.addChild(gaugeview)
         gaugeview.isHidden = true
         self.player.gaugeview = gaugeview
         
@@ -239,7 +238,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //pauseview
         pauseView = PauseView(frame: self.frame)
         pauseView.isHidden = true
-        self.camera?.addChild(pauseView)
+        self.gameCamera.addChild(pauseView)
         //pauseButton
         pauseButton = PauseButton(frame:self.frame)
         pauseButton.setPauseFunc{
@@ -253,7 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.mainBgmPlayer.play()
         }
         pauseButton.isHidden = true     //タイトル画面では非表示
-        self.camera?.addChild(pauseButton)
+        self.gameCamera.addChild(pauseButton)
         // アプリがバックグラウンドから復帰した際に呼ぶ関数の登録
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(becomeActive(_:)),
@@ -296,7 +295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
             {
-                self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 150 );
+                self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 150 );
                 if ( self.creditFlg == true ) && ( self.player.ultraAttackStatus == .attacking ) &&
                     ( self.player.velocity < 0 ){
                     self.titleNode.isHidden = false
@@ -304,8 +303,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.childNode(withName: "credits")?.removeFromParent()
                     self.creditButton.isHidden = false
                     self.creditButton.alpha = 1.0
-                    if( self.camera!.position.y < titleNode.TitleNode?.position.y ){
-                        self.camera!.position = CGPoint(x: self.frame.size.width/2,y: (titleNode.TitleNode?.position.y)!)
+                    if( self.gameCamera.position.y < titleNode.TitleNode?.position.y ){
+                        self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: (titleNode.TitleNode?.position.y)!)
+                        //カメラ入れ替え
+                        self.setCamera(self.normalCamera)
                         self.gameFlg = false
                         self.creditFlg = false
                     }
@@ -314,7 +315,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else
         {
-            self.camera!.position = CGPoint(x: self.frame.size.width/2,y: self.frame.size.height/2)
+            self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: self.frame.size.height/2)
         }
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
@@ -335,7 +336,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.beganPosOnView = CGPoint(x: touch.location(in: view).x,
                                           y: frame.maxY - touch.location(in: view).y ) //y座標を反転する
             self.beganPos = touch.location(in: self)
-            self.beganPyPos = (camera?.position.y)!                     //カメラの移動量を計算するために覚えておく
+            self.beganPyPos = (self.camera?.position.y)!                     //カメラの移動量を計算するために覚えておく
             if( touchPath != nil ){ //すでにタッチの軌跡が描かれていれば削除
                 touchPath.removeFromParent()
             }
@@ -420,6 +421,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     creditAction()
                 case let node where node?.name == "BackTitle":
                     gameFlg = true
+                    self.setCamera(self.gameCamera)
                     self.player.ultraAttack()
                 case let node where node == pauseButton?.PauseButton :
                     pauseButton.tapped()
@@ -634,6 +636,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //pod回復スタート
         guardPod.startRecover()
         gaugeview.run( SKAction.moveTo(y: -frame.size.height / 2 + gaugeview.size.height / 2, duration: 0.5))
+        //カメラ入れ替え
+        self.setCamera(self.gameCamera)
     }
     
     func creditAction(){
@@ -653,7 +657,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.titleNode.isHidden = true
                 }
                 let actionAll = SKAction.sequence([action1,action2])
-                self.camera?.run(actionAll)
+                self.normalCamera.run(actionAll)
             }
             self.childNode(withName: "credits")?.run(SKAction.sequence([moveCredit,cameraAct]))
         }
@@ -792,6 +796,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             ])
         circle.run(actions)
+    }
+    
+    func setCamera(_ camera :SKCameraNode){
+        if let oldCamera = self.camera {
+            oldCamera.removeFromParent()
+            camera.position = oldCamera.position
+        }
+        self.addChild(camera)
+        self.camera = camera
     }
     
     func playBgm(soundName: String)
