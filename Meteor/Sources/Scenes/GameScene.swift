@@ -778,10 +778,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(circle)
         let actions = SKAction.sequence(
             [   SKAction.run{self.playSound("explore16")},
-                SKAction.scale(to: 2000, duration: 2.5),
+                SKAction.scale(to: 2000, duration: 1.5),
               //SKAction.wait(forDuration: 0.5),
               SKAction.group(
-                [ SKAction.wait(forDuration: 0.2),
+                [ SKAction.wait(forDuration: 0.1),
                   SKAction.run{
                     self.player.isHidden = true
                     self.meteorBase.isHidden = true
@@ -793,7 +793,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.view?.presentScene(gameOverScene)
                 },
               //SKAction.run{self.isPaused = true},
-
             ])
         circle.run(actions)
     }
