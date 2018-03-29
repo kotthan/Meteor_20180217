@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var backgroundView: BackgroundView!
     let player = Player()
     let normalCamera = SKCameraNode()
-    let gameCamera = SKCameraNode()
+    var gameCamera: GameCamera!
     var ground: Ground!
     var lowestShape: LowestShape!
     var guardPod: GuardPod!
@@ -86,7 +86,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //調整用パラメータ
 
     var speedFromMeteorAtGuard : CGFloat = -500  //隕石を防御した時にプレイヤーが受ける隕石の速度
-    var cameraMax : CGFloat = 1450                                  //カメラの上限
     //MARK: タッチ関係プロパティ
     var beganPos: CGPoint = CGPoint.zero
     var beganPosOnView: CGPoint = CGPoint.zero  //viewの座標系でのタッチ位置
@@ -142,6 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         normalCamera.position = CGPoint(x: self.frame.size.width/2,y: 1005)
         self.addChild(normalCamera)
         self.camera = normalCamera
+        self.gameCamera = GameCamera(player: self.player, defaultY: frame.size.height / 2)
         //背景
         backgroundView = BackgroundView(frame: self.frame)
         self.baseNode.addChild(backgroundView)
@@ -289,33 +289,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.meteorBase.update()
         self.player.update(meteor: self.meteorBase.meteores.first, meteorSpeed: self.meteorBase.meteorSpeed)
         
-        if (gameFlg == false)
-        { }
-        else if (player.actionStatus != .Standing) && (self.player.position.y + 200 > self.frame.size.height/2)
-        {
-            if( self.player.position.y < self.cameraMax ) //カメラの上限を超えない範囲で動かす
-            {
-                self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: self.player.position.y + 150 );
-                if ( self.creditFlg == true ) && ( self.player.ultraAttackStatus == .attacking ) &&
-                    ( self.player.velocity < 0 ){
-                    self.titleNode.isHidden = false
-                    self.titleNode.alpha = 1.0
-                    self.childNode(withName: "credits")?.removeFromParent()
-                    self.creditButton.isHidden = false
-                    self.creditButton.alpha = 1.0
-                    if( self.gameCamera.position.y < titleNode.TitleNode?.position.y ){
-                        self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: (titleNode.TitleNode?.position.y)!)
-                        //カメラ入れ替え
-                        self.setCamera(self.normalCamera)
-                        self.gameFlg = false
-                        self.creditFlg = false
-                    }
-                }
+        self.gameCamera.update()
+        if ( self.creditFlg == true ) && ( self.player.ultraAttackStatus == .attacking ) && ( self.player.velocity < 0 ){
+            self.titleNode.isHidden = false
+            self.titleNode.alpha = 1.0
+            self.childNode(withName: "credits")?.removeFromParent()
+            self.creditButton.isHidden = false
+            self.creditButton.alpha = 1.0
+            if( self.gameCamera.position.y < titleNode.TitleNode?.position.y ){
+                self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: (titleNode.TitleNode?.position.y)!)
+                //カメラ入れ替え
+                self.setCamera(self.normalCamera)
+                self.gameFlg = false
+                self.creditFlg = false
             }
-        }
-        else
-        {
-            self.gameCamera.position = CGPoint(x: self.frame.size.width/2,y: self.frame.size.height/2)
         }
     }
     //MARK: すべてのアクションと物理シミュレーション処理後、1フレーム毎に呼び出される
