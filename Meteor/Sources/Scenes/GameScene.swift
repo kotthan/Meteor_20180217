@@ -41,6 +41,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var creditBackButton = SKLabelNode()
     var score = 0 {                                                 //スコア
         didSet {
+            if score > 99999 {
+                score = 99999
+            }
             //更新時に表示も更新する
             self.hudView.drawScore( score: self.score )
         }
@@ -582,8 +585,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("---Playerと地面が接触しました---")
             if self.player.ultraAttackStatus == .attacking {
                 if( meteorBase.meteores.isEmpty ){ //全て壊せているはずだが一応チェックする
-                    //次のmeteorBase.meteores生成
-                    self.meteorBase.buildFlg = true
+                    if score >= 99999 {
+                        gameClear()
+                    }
+                    else{
+                        //次のmeteorBase.meteores生成
+                        self.meteorBase.buildFlg = true
+                    }
                 }
             }
             self.player.landing()
@@ -689,9 +697,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         guard gameFlg == true else { return }
 
-        if meteorBase.meteorInt < 20 {
-            meteorBase.buildMeteor(position: CGPoint(x:187, y: self.player.position.y + 760))
-        }
+        meteorBase.buildMeteor(position: CGPoint(x:187, y: self.player.position.y + 760))
     }
     
     //MARK: 攻撃    
@@ -714,7 +720,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
             {
-                if meteorBase.meteorInt >= 19 {
+                if score >= 99999 {
                     gameClear()
                 }
                 else{
