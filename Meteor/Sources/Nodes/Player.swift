@@ -12,7 +12,7 @@ class Player: SKNode {
     var ground:Ground!
     var velocity: CGFloat = 0.0
     var ultraPower: Int = 0         //必殺技判定用
-    let gravity: CGFloat = -900
+    var gravity: CGFloat = -900
     let sprite = PlayerSprite()
     var auraNode: SKSpriteNode!
     var size: CGSize!
@@ -38,9 +38,9 @@ class Player: SKNode {
         case Falling
     }
     var actionStatus = ActionState.Standing
-    var attackFlg : Bool = false                                    //攻撃フラグ
-    var attackShape: AttackShape!                                   //攻撃判定シェイプノード
-    let ultraAttackSpped : CGFloat = 9.8 * 150 * 1            //プレイヤーの必殺技ジャンプ時の初速
+    var attackFlg : Bool = false                                   //攻撃フラグ
+    var attackShape: AttackShape!                                  //攻撃判定シェイプノード
+    let ultraAttackSpped : CGFloat = 9.8 * 150 * 2.5//プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
         case landing    //最初の着地
@@ -203,7 +203,7 @@ class Player: SKNode {
             //print("---アタックフラグをOFF---")
             //必殺技ゲージ増加
             self.ultraPower += 1
-            self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 20 )
+            self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 1 )
         }
         //必殺技以外で隕石と接触していたら速度を0にする
         if ( self.ultraAttackStatus == .none ) && ( self.meteorCollisionFlg )
@@ -237,12 +237,9 @@ class Player: SKNode {
     func ultraAttackJump(){
         let squat = SKAction.run{
             self.sprite.squat()
-            self.ultraSonic()
         }
         let wait = SKAction.wait(forDuration: 0.2)
         let attack = SKAction.run{
-           // self.auraNode = SKSpriteNode(imageNamed:"aura")
-           //self.addChild(self.auraNode)
             //攻撃Shapeを出す
             self.attackFlg = true
             if let attackNode = self.childNode(withName: self.attackShape.name!) {
@@ -254,8 +251,10 @@ class Player: SKNode {
             //大ジャンプ
             self.moving = false
             self.actionStatus = .Jumping
+            self.gravity = -3500
             self.velocity = self.ultraAttackSpped
             //サウンド
+            self.ultraSonic()
             self.playSound("jump10")
             //アニメーション
             self.sprite.ultraAttackAnimation()
@@ -263,6 +262,7 @@ class Player: SKNode {
         self.run(SKAction.sequence([squat,wait,attack]))
     }
     func ultraAttackEnd(){
+        self.gravity = -900
         self.attackFlg = false
         //attackShapeを消す
         if let attackNode = self.childNode(withName: self.attackShape.name!)
@@ -276,30 +276,23 @@ class Player: SKNode {
     }
     
     func ultraSonic() {
-        let sonic1 = SKSpriteNode(imageNamed:"sonic1")
-        let sonic2 = SKSpriteNode(imageNamed:"sonic2")
-        let sonic3 = SKSpriteNode(imageNamed:"sonic3")
-        let sonic4 = SKSpriteNode(imageNamed:"sonic4")
-        sonic1
-        let action = SKAction.sequence(
-            [   SKAction.wait(forDuration: 0.1),
-                SKAction.run {
-                self.ground.addChild(sonic1)
-                },
-              SKAction.wait(forDuration: 0.1),
-              SKAction.run {
-                self.ground.addChild(sonic2)
-                },
-              SKAction.wait(forDuration: 0.1),
-              SKAction.run {
-                self.ground.addChild(sonic3)
-                },
-              SKAction.wait(forDuration: 0.1),
-              SKAction.run {
-                self.ground.addChild(sonic4)
+        let action = SKAction.run {
+                let sonic = SKSpriteNode(imageNamed:"sonic1")
+                sonic.position.x = self.position.x
+                sonic.position.y = self.position.y - 50
+                self.ground.addChild(sonic)
+                let scale = SKAction.scaleX(to: 3, duration: 0.5)
+                let fade = SKAction.fadeOut(withDuration: 0.5)
+                let group = SKAction.group([scale,fade])
+                let remove = SKAction.removeFromParent()
+                let wait = SKAction.wait(forDuration: 0.1)
+                let sequ = SKAction.sequence([group,wait,remove])
+                sonic.run(sequ)
                 }
-            ])
-        self.run(action)
+        let wait = SKAction.wait(forDuration: 0.05)
+        let actions = SKAction.sequence([action,wait])
+        let repeatAction = SKAction.repeat(actions, count: 15)
+        self.run(repeatAction)
     }
 
     func guardStart(){
