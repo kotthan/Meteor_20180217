@@ -99,15 +99,7 @@ class GameOverScene: SKScene {
     
     func reStartButtonAction()
     {
-        var gameScene: GameScene!
-        if (UIDevice.current.model.range(of: "iPad") != nil) {
-            gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
-            gameScene.scaleMode = .fill
-        }
-        else{
-            gameScene = GameScene(size: frame.size)
-            gameScene.scaleMode = .aspectFill
-        }
+        let gameScene = GameScene(size: frame.size)
         gameScene.retryFlg = true
         let actions = SKAction.sequence([
             SKAction.run { self.playSound("push_45") },
@@ -120,15 +112,7 @@ class GameOverScene: SKScene {
     
     func newGame()
     {
-        var gameScene: GameScene!
-        if (UIDevice.current.model.range(of: "iPad") != nil) {
-            gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
-            gameScene.scaleMode = .fill
-        }
-        else{
-            gameScene = GameScene(size: frame.size)
-            gameScene.scaleMode = .aspectFill
-        }
+        let gameScene = GameScene(size: frame.size)
         self.view?.presentScene(gameScene)
     }
     
