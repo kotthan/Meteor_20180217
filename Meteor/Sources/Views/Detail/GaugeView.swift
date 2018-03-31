@@ -181,7 +181,7 @@ class GaugeView: SKSpriteNode {
         ultraAttackPush.isHidden = true
         //Iconの下の分のメータはあらかじめ減らしておく
         meteorGaugeMask.xScale = 0.69
-        let gaugeScale = SKAction.scaleX(to: 0, duration: 2)
+        let gaugeScale = SKAction.scaleX(to: 0, duration: 0.5)
         let iconHidden = SKAction.run{
             self.ultraAttackIcon.isHidden = true
         }
