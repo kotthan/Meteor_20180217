@@ -41,6 +41,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var creditBackButton = SKLabelNode()
     var score = 0 {                                                 //スコア
         didSet {
+            if score > 99999 {
+                score = 99999
+            }
             //更新時に表示も更新する
             self.hudView.drawScore( score: self.score )
         }
