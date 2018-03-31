@@ -25,9 +25,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let debug = false  //デバッグフラグ
 	//MARK: - 基本構成
     //MARK: ノード
-    let baseNode = SKNode()
+    var baseNode: SKNode
     var backgroundView: BackgroundView!
-    let player = Player()
+    var player: Player
     let normalCamera = SKCameraNode()
     var gameCamera: GameCamera!
     var ground: Ground!
@@ -109,6 +109,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: データ保存
     var keyHighScore = "highScore"
     
+    init(from: GameScene) {
+        self.baseNode = from.baseNode
+        self.player = from.player
+        self.backgroundView = from.backgroundView
+        self.ground = from.ground
+        super.init(size: from.frame.size)
+    }
+    
+    override init(size: CGSize) {
+        self.baseNode = SKNode()
+        self.player = Player()
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - 関数定義 シーン関係
 	//MARK: シーンが表示されたときに呼ばれる関数
 	override func didMove(to view: SKView)
@@ -143,10 +161,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera = normalCamera
         self.gameCamera = GameCamera(player: self.player, defaultY: frame.size.height / 2)
         //背景
-        backgroundView = BackgroundView(frame: self.frame)
+        if self.backgroundView == nil {
+            self.backgroundView = BackgroundView(frame: self.frame)
+        }
         self.baseNode.addChild(backgroundView)
         //地面
-        ground = Ground(frame: self.frame)
+        if self.ground == nil {
+            self.ground = Ground(frame: self.frame)
+        }
         self.baseNode.addChild(ground)
         //LowestShape（ゲームオーバー判定用）
         lowestShape = LowestShape(frame: self.frame)
