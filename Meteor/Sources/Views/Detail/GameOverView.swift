@@ -45,8 +45,8 @@ class GameOverView: SKNode
         let scoreLabel = SKLabelNode()
         scoreLabel.zPosition = 10001
         scoreLabel.fontName = "GillSansStd-ExtraBold"
-        scoreLabel.fontSize = 60
-        scoreLabel.text = "Score: " + String( score )
+        scoreLabel.fontSize = 50
+        scoreLabel.text = "Score:" + String( score )
         scoreLabel.fontColor = UIColor.black
         scoreLabel.position.x = +frame.size.width/2
         scoreLabel.position.y = frame.size.height/2 - 30

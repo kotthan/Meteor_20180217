@@ -88,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //調整用パラメータ
 
-    var speedFromMeteorAtGuard : CGFloat = -500  //隕石を防御した時にプレイヤーが受ける隕石の速度
+    var speedFromMeteorAtGuard : CGFloat = -1500  //隕石を防御した時にプレイヤーが受ける隕石の速度
     //MARK: タッチ関係プロパティ
     var beganPos: CGPoint = CGPoint.zero
     var beganPosOnView: CGPoint = CGPoint.zero  //viewの座標系でのタッチ位置
@@ -623,7 +623,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func startButtonAction()
     {
         //MARK: ゲーム進行関係
-        self.meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)                                          //タイマー生成
+        self.meteorTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameScene.fallMeteor), userInfo: nil, repeats: true)
+        //タイマー生成
         playSound("button01")
         self.titleBgmPlayer.stop()
         self.mainBgmPlayer.play()
@@ -661,6 +662,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameStart(){
         gameWaitFlag = false
         gameFlg = true
+        fallMeteor()
         //pod回復スタート
         guardPod.startRecover()
         gaugeview.run( SKAction.moveTo(y: -frame.size.height / 2 + gaugeview.size.height / 2, duration: 0.5))
