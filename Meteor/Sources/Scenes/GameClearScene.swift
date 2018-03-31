@@ -52,6 +52,31 @@ class GameClearScene: SKScene {
         homeButton.xScale = 1
         homeButton.yScale = 1
         self.addChild(homeButton)
+        //クリアの文字
+        let labelBase = SKNode()
+        labelBase.position.x = self.frame.width * 0.5
+        labelBase.position.y = self.frame.height * 0.7
+        var clearLabels: [SKLabelNode] = []
+        var delay:Double = 0
+        var posX: CGFloat = 0
+        for char in "CLEAR!" {
+            let label = SKLabelNode(text: String(char))
+            label.fontName = "GillSansStd-ExtraBold"
+            label.fontSize = 60
+            label.position.x = posX
+            posX += 50
+            clearLabels.append(label)
+            labelBase.addChild(label)
+            let act1 = SKAction.moveBy(x: 0, y: 20, duration: 0.5)
+            act1.timingMode = .easeInEaseOut
+            let wait = SKAction.wait(forDuration: 3)
+            let acts = SKAction.sequence([act1,act1.reversed(),wait])
+            let wait2 = SKAction.wait(forDuration: delay)
+            label.run(SKAction.sequence([wait2,SKAction.repeatForever(acts)]))
+            delay += 0.5
+        }
+        labelBase.position.x -= CGFloat((clearLabels.count-1) * 50) / 2
+        self.addChild(labelBase)
     }
     
     override func update(_ currentTime: TimeInterval) {
