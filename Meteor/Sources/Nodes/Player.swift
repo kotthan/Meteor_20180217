@@ -14,6 +14,7 @@ class Player: SKNode {
     var ultraPower: Int = 0         //必殺技判定用
     let gravity: CGFloat = -900
     let sprite = PlayerSprite()
+    var auraNode: SKSpriteNode!
     var size: CGSize!
     let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
     let jumpVelocity:CGFloat = 1500  //プレイヤーのジャンプ時の初速
@@ -39,7 +40,7 @@ class Player: SKNode {
     var actionStatus = ActionState.Standing
     var attackFlg : Bool = false                                    //攻撃フラグ
     var attackShape: AttackShape!                                   //攻撃判定シェイプノード
-    let ultraAttackSpped : CGFloat = 9.8 * 150 * 2            //プレイヤーの必殺技ジャンプ時の初速
+    let ultraAttackSpped : CGFloat = 9.8 * 150 * 1            //プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
         case landing    //最初の着地
@@ -239,6 +240,8 @@ class Player: SKNode {
         }
         let wait = SKAction.wait(forDuration: 0.2)
         let attack = SKAction.run{
+           // self.auraNode = SKSpriteNode(imageNamed:"aura")
+           //self.addChild(self.auraNode)
             //攻撃Shapeを出す
             self.attackFlg = true
             if let attackNode = self.childNode(withName: self.attackShape.name!) {
@@ -266,6 +269,7 @@ class Player: SKNode {
             attackNode.removeFromParent()
             //print("remove ultra attackShape")
         }
+        //self.auraNode.removeFromParent()
         //フラグを落とす
         self.ultraAttackStatus = .none
     }
