@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3132924206F920500A66939 /* GameClearScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3132923206F920500A66939 /* GameClearScene.swift */; };
 		A36B6E672060032900466321 /* AttackShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E662060032900466321 /* AttackShape.swift */; };
 		A36B6E692060035300466321 /* GuardShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E682060035300466321 /* GuardShape.swift */; };
 		A36B6E6B2061F51300466321 /* SKNode+playSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E6A2061F51300466321 /* SKNode+playSound.swift */; };
@@ -101,6 +102,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3132923206F920500A66939 /* GameClearScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameClearScene.swift; path = Meteor/Sources/Scenes/GameClearScene.swift; sourceTree = SOURCE_ROOT; };
 		A36B6E662060032900466321 /* AttackShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackShape.swift; sourceTree = "<group>"; };
 		A36B6E682060035300466321 /* GuardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardShape.swift; sourceTree = "<group>"; };
 		A36B6E6A2061F51300466321 /* SKNode+playSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+playSound.swift"; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				B63CFDA720373BAC00F0F90E /* GameScene.swift */,
+				A3132923206F920500A66939 /* GameClearScene.swift */,
 				A3A24AC820690F0E000180F5 /* GameOverScene.swift */,
 				B63CFDA520373BA400F0F90E /* GameScene.sks */,
 			);
@@ -647,6 +650,7 @@
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
 				B6610841204829AA008B3767 /* GaugeView.swift in Sources */,
 				A36B6E672060032900466321 /* AttackShape.swift in Sources */,
+				A3132924206F920500A66939 /* GameClearScene.swift in Sources */,
 				B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */,
 				A36B6E692060035300466321 /* GuardShape.swift in Sources */,
 				B63CFDD120373D2C00F0F90E /* GameViewController.swift in Sources */,

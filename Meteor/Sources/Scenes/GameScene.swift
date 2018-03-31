@@ -689,8 +689,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         guard gameFlg == true else { return }
 
-        meteorBase.buildMeteor(position: CGPoint(x:187, y: self.player.position.y + 760))
-
+        if meteorBase.meteorInt < 20 {
+            meteorBase.buildMeteor(position: CGPoint(x:187, y: self.player.position.y + 760))
+        }
     }
     
     //MARK: 攻撃    
@@ -713,8 +714,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             if player.ultraAttackStatus == .none //必殺技中は着地後に生成する
             {
-                self.meteorBase.buildFlg = true
+                if meteorBase.meteorInt >= 19 {
+                    gameClear()
+                }
+                else{
+                    self.meteorBase.buildFlg = true
                     //print("---meteorBase.meteoresが空だったのでビルドフラグON---")
+                }
             }
         }
         
@@ -815,6 +821,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
               //SKAction.run{self.isPaused = true},
             ])
         circle.run(actions)
+    }
+    
+    func gameClear(){
+        //UIviewはScene移動しても残るので削除する
+        self.hudView.removeFromSuperview()
+        let clearScene = GameClearScene(from: self)
+        self.view!.presentScene( clearScene )
     }
     
     func setCamera(_ camera :SKCameraNode){
