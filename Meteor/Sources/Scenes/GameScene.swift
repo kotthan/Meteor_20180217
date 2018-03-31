@@ -180,6 +180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.ground = Ground(frame: self.frame)
         }
         self.baseNode.addChild(ground)
+        self.player.ground = self.ground
         //LowestShape（ゲームオーバー判定用）
         lowestShape = LowestShape(frame: self.frame)
         self.baseNode.addChild(lowestShape)

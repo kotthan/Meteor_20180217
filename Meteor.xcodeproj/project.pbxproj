@@ -73,6 +73,7 @@
 		B6A4CEBD204141A700A9AB0D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBB204141A700A9AB0D /* Launch Screen.storyboard */; };
 		B6A4CEBF2041D67900A9AB0D /* yabusaka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */; };
 		B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */; };
+		B6ADD758206F7E260017B753 /* ultraattack.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6ADD757206F7E260017B753 /* ultraattack.xcassets */; };
 		B6C67B93205AA6AF002E89E9 /* jump.sks in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B91205AA6AF002E89E9 /* jump.sks */; };
 		B6C67B94205AA6AF002E89E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C67B92205AA6AF002E89E9 /* Assets.xcassets */; };
 		B6C67B98205CE98F002E89E9 /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C67B97205CE98F002E89E9 /* PauseButton.swift */; };
@@ -172,6 +173,7 @@
 		B6A4CEBC204141A700A9AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B6A4CEBE2041D67900A9AB0D /* yabusaka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yabusaka.mp3; sourceTree = "<group>"; };
 		B6A4CEC02041DACA00A9AB0D /* crasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crasy.mp3; sourceTree = "<group>"; };
+		B6ADD757206F7E260017B753 /* ultraattack.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ultraattack.xcassets; sourceTree = "<group>"; };
 		B6C67B91205AA6AF002E89E9 /* jump.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = jump.sks; sourceTree = "<group>"; };
 		B6C67B92205AA6AF002E89E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6C67B97205CE98F002E89E9 /* PauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				B6511692204ACEB7008C6571 /* Player.xcassets */,
 				B6D0C6152053A09B0007F8D1 /* Particle.xcassets */,
 				B661084C204A777E008B3767 /* BackgroundView.xcassets */,
+				B6ADD757206F7E260017B753 /* ultraattack.xcassets */,
 				A3DCB55A204A2AE2008C8262 /* pod.xcassets */,
 				B6610846204A67F0008B3767 /* GameOverView.xcassets */,
 				A3DCB55E204AC317008C8262 /* GaugeView.xcassets */,
@@ -580,6 +583,7 @@
 				B63CFD702037390800F0F90E /* Main.storyboard in Resources */,
 				B6958AAD20459D0400573D8D /* attack03.mp3 in Resources */,
 				A3DBAE5B203883F90025B9DD /* GillSansStd-ExtraBold.otf in Resources */,
+				B6ADD758206F7E260017B753 /* ultraattack.xcassets in Resources */,
 				B6C67B9A205CEAAE002E89E9 /* PauseButton.xcassets in Resources */,
 				B63CFDA620373BA400F0F90E /* GameScene.sks in Resources */,
 				B6C67B93205AA6AF002E89E9 /* jump.sks in Resources */,

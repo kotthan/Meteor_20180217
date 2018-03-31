@@ -9,7 +9,7 @@
 import SpriteKit
 
 class Player: SKNode {
-    
+    var ground:Ground!
     var velocity: CGFloat = 0.0
     var ultraPower: Int = 0         //必殺技判定用
     let gravity: CGFloat = -900
@@ -203,7 +203,7 @@ class Player: SKNode {
             //print("---アタックフラグをOFF---")
             //必殺技ゲージ増加
             self.ultraPower += 1
-            self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 10.0 )
+            self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 20 )
         }
         //必殺技以外で隕石と接触していたら速度を0にする
         if ( self.ultraAttackStatus == .none ) && ( self.meteorCollisionFlg )
@@ -237,6 +237,7 @@ class Player: SKNode {
     func ultraAttackJump(){
         let squat = SKAction.run{
             self.sprite.squat()
+            self.ultraSonic()
         }
         let wait = SKAction.wait(forDuration: 0.2)
         let attack = SKAction.run{
@@ -272,6 +273,33 @@ class Player: SKNode {
         //self.auraNode.removeFromParent()
         //フラグを落とす
         self.ultraAttackStatus = .none
+    }
+    
+    func ultraSonic() {
+        let sonic1 = SKSpriteNode(imageNamed:"sonic1")
+        let sonic2 = SKSpriteNode(imageNamed:"sonic2")
+        let sonic3 = SKSpriteNode(imageNamed:"sonic3")
+        let sonic4 = SKSpriteNode(imageNamed:"sonic4")
+        sonic1
+        let action = SKAction.sequence(
+            [   SKAction.wait(forDuration: 0.1),
+                SKAction.run {
+                self.ground.addChild(sonic1)
+                },
+              SKAction.wait(forDuration: 0.1),
+              SKAction.run {
+                self.ground.addChild(sonic2)
+                },
+              SKAction.wait(forDuration: 0.1),
+              SKAction.run {
+                self.ground.addChild(sonic3)
+                },
+              SKAction.wait(forDuration: 0.1),
+              SKAction.run {
+                self.ground.addChild(sonic4)
+                }
+            ])
+        self.run(action)
     }
 
     func guardStart(){
