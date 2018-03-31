@@ -794,7 +794,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.isHidden = true//ポーズボタンを非表示にする
         hudView.scoreLabel.isHidden = true
         hudView.highScoreLabel.isHidden = true
-        self.mainBgmPlayer.stop()
+        MainStop()
         //墜落演出
         let circle = SKShapeNode(circleOfRadius:1)
         circle.position.x = self.meteorBase.meteores[0].position.x
