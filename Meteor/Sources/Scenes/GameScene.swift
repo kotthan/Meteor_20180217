@@ -193,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.baseNode.addChild(titleNode)
         //ゲージ関係
         gaugeview = GaugeView(frame: self.frame)
-        gaugeview.setMeteorGaugeScale(to: CGFloat(self.player.ultraPower) / 10.0)
+        gaugeview.setMeteorGaugeScale(ultraPower: CGFloat(self.player.ultraPower) )
         gaugeview.position.y -= gaugeview.size.height
         self.gameCamera.addChild(gaugeview)
         gaugeview.isHidden = true

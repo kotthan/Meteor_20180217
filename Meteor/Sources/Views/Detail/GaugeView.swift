@@ -157,9 +157,14 @@ class GaugeView: SKSpriteNode {
         position.y = -frame.size.height / 2 + size.height / 2
     }
     
-    func setMeteorGaugeScale(to: CGFloat){
-        if to < 1 {
-            meteorGaugeMask.run(SKAction.scaleX(to: to * 0.69 / (19 / 20), duration: 0.5))
+    func setMeteorGaugeScale(ultraPower: CGFloat){
+        print(ultraPower)
+        let ultraPowerMax:CGFloat = 20
+        if ultraPower < ultraPowerMax {
+            let ultraPowerRate:CGFloat = ultraPower / ultraPowerMax
+            let scale = ultraPowerRate * 0.69 / ( (ultraPowerMax-1) / ultraPowerMax )
+            print("scale\(scale)")
+            meteorGaugeMask.run(SKAction.scaleX(to: scale, duration: 0.5))
             ultraAttackIcon.isHidden = true
             ultraAttackPush.isHidden = true
         }
