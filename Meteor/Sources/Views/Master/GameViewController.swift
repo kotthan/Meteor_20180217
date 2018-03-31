@@ -31,37 +31,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 		//===================
 		// Game Scene作成
 		//===================
-        /*
-            if (UIDevice.current.model.range(of: "iPad") != nil){
-                gameScene.scaleMode = .fill
-            } else {
-                self.gameScene = GameScene(size: CGSize(width: frame1.size.width,height: frame1.size.height))
-                self.gameScene.scaleMode = .aspectFill
-                //シーンをビューと同じサイズに調整する
-                self.gameScene.size = CGSize(width: frame1.size.width, height: frame1.size.height)
-                // ゲームシーンを表示
-                self.gameView.presentScene(self.gameScene)
-                print("画面サイズ＝\(frame)")
-                print("画面サイズ１＝\(frame1)")
-            }
-                self.gameScene = GameScene(size: CGSize(width: frame1.size.width,height: frame1.size.height))
-                self.gameScene.scaleMode = .aspectFill
-                //シーンをビューと同じサイズに調整する
-                self.gameScene.size = CGSize(width: frame1.size.width, height: frame1.size.height)
-                // ゲームシーンを表示
-                self.gameView.presentScene(self.gameScene)
-                print("画面サイズ＝\(frame)")
-                print("画面サイズ１＝\(frame1)")
-*/
-        //self.gameScene = GameScene(size: CGSize(width: frame.size.width,height: frame.size.height))
-        if (UIDevice.current.model.range(of: "iPad") != nil) {
-            self.gameScene = GameScene(size: CGSize(width: 375.0, height: 667.0))
-            self.gameScene.scaleMode = .fill
-        }
-        else{
-            self.gameScene = GameScene(size: frame.size)
-            self.gameScene.scaleMode = .aspectFill
-        }
+        self.gameScene = GameScene(size: frame.size)
         // ゲームシーンを表示
 		self.gameView.presentScene(self.gameScene)
         print("GameSceneがコントローラで呼ばれたよ")

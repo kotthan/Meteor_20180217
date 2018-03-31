@@ -115,12 +115,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundView = from.backgroundView
         self.ground = from.ground
         super.init(size: from.frame.size)
+        self.scaleMode = from.scaleMode
     }
     
     override init(size: CGSize) {
         self.baseNode = SKNode()
         self.player = Player()
-        super.init(size: size)
+        //端末ごとのスケール調整
+        var scaleMode:SKSceneScaleMode = .aspectFill
+        var frameSize = size
+        //iPadの場合は上書きする
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
+            frameSize = CGSize(width: 375.0, height: 667.0)
+            scaleMode = .fill
+        }
+        super.init(size: frameSize)
+        self.scaleMode = scaleMode
     }
     
     required init?(coder aDecoder: NSCoder) {
