@@ -159,7 +159,7 @@ class GaugeView: SKSpriteNode {
     
     func setMeteorGaugeScale(ultraPower: CGFloat){
         print(ultraPower)
-        let ultraPowerMax:CGFloat = 20
+        let ultraPowerMax:CGFloat = 1
         if ultraPower < ultraPowerMax {
             let ultraPowerRate:CGFloat = ultraPower / ultraPowerMax
             let scale = ultraPowerRate * 0.69 / ( (ultraPowerMax-1) / ultraPowerMax )

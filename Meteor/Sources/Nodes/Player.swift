@@ -40,7 +40,7 @@ class Player: SKNode {
     var actionStatus = ActionState.Standing
     var attackFlg : Bool = false                                   //攻撃フラグ
     var attackShape: AttackShape!                                  //攻撃判定シェイプノード
-    let ultraAttackSpped : CGFloat = 9.8 * 150 * 2.5//プレイヤーの必殺技ジャンプ時の初速
+    let ultraAttackSpped : CGFloat = 9.8 * 150 *  1.5//プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
         case landing    //最初の着地
@@ -203,7 +203,7 @@ class Player: SKNode {
             //print("---アタックフラグをOFF---")
             //必殺技ゲージ増加
             self.ultraPower += 1
-            self.gaugeview?.setMeteorGaugeScale(to: CGFloat(self.ultraPower) / 1 )
+            self.gaugeview?.setMeteorGaugeScale(ultraPower: CGFloat(self.ultraPower))
         }
         //必殺技以外で隕石と接触していたら速度を0にする
         if ( self.ultraAttackStatus == .none ) && ( self.meteorCollisionFlg )
@@ -253,8 +253,10 @@ class Player: SKNode {
             self.actionStatus = .Jumping
             self.gravity = -3500
             self.velocity = self.ultraAttackSpped
-            //サウンド
+            //エフェクト
             self.ultraSonic()
+            self.ultraSmoke()
+            //サウンド
             self.playSound("jump10")
             //アニメーション
             self.sprite.ultraAttackAnimation()
@@ -294,6 +296,37 @@ class Player: SKNode {
         let repeatAction = SKAction.repeat(actions, count: 15)
         self.run(repeatAction)
     }
+    func ultraSmoke() {
+        let action = SKAction.run {
+            let smokeRight = SKSpriteNode(imageNamed:"smokeRight")
+            let smokeLeft = SKSpriteNode(imageNamed:"smokeLeft")
+            let smokeCenter = SKSpriteNode(imageNamed:"smokeMiddle")
+            smokeRight.position.x = self.position.x
+            smokeLeft.position.x = self.position.x
+            smokeCenter.position.x = self.position.x
+            smokeRight.position.y = self.position.y - 10
+            smokeLeft.position.y = self.position.y - 10
+            smokeCenter.position.y = self.position.y - 10
+            smokeCenter.zPosition = -1
+            self.ground.addChild(smokeRight)
+            self.ground.addChild(smokeLeft)
+            self.ground.addChild(smokeCenter)
+            let wait = SKAction.wait(forDuration: 1.0)
+            let removeAction = SKAction.group(
+                [ SKAction.run {
+                    smokeCenter.removeFromParent()
+                    smokeLeft.removeFromParent()
+                    smokeRight.removeFromParent()
+                    }])
+            let yscale =  SKAction.scaleY(to: 10, duration: 1)
+            let xscale = SKAction.scaleX(to: 1.5, duration: 1)
+            let actions = SKAction.sequence([wait,removeAction])
+            smokeCenter.run(yscale)
+            self.run(actions)
+        }
+        self.run(action)
+    }
+    
 
     func guardStart(){
         self.sprite.guardStartAnimation()
@@ -329,7 +362,6 @@ class Player: SKNode {
     func moveTo(_ pos: PosState){
         guard self.actionStatus == .Standing else{return}
         guard self.moving == false else{return}
-        
         self.posStatus = pos
         let move = SKAction.moveTo(x: CGFloat(pos.rawValue), duration: 0.15)
         let stop = SKAction.run(moveStop)
