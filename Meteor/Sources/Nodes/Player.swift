@@ -40,7 +40,7 @@ class Player: SKNode {
     var actionStatus = ActionState.Standing
     var attackFlg : Bool = false                                   //攻撃フラグ
     var attackShape: AttackShape!                                  //攻撃判定シェイプノード
-    let ultraAttackSpped : CGFloat = 9.8 * 150 *  1.5//プレイヤーの必殺技ジャンプ時の初速
+    let ultraAttackSpped : CGFloat = 9.8 * 150 *  1//プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
         case landing    //最初の着地
@@ -293,14 +293,14 @@ class Player: SKNode {
                 }
         let wait = SKAction.wait(forDuration: 0.05)
         let actions = SKAction.sequence([action,wait])
-        let repeatAction = SKAction.repeat(actions, count: 15)
+        let repeatAction = SKAction.repeat(actions, count: 7)
         self.run(repeatAction)
     }
     func ultraSmoke() {
         let action = SKAction.run {
             let smokeRight = SKSpriteNode(imageNamed:"smokeRight")
             let smokeLeft = SKSpriteNode(imageNamed:"smokeLeft")
-            let smokeCenter = SKSpriteNode(imageNamed:"smokeMiddle")
+            let smokeCenter = SKSpriteNode(imageNamed:"smokeBig")
             smokeRight.position.x = self.position.x
             smokeLeft.position.x = self.position.x
             smokeCenter.position.x = self.position.x
@@ -311,16 +311,17 @@ class Player: SKNode {
             self.ground.addChild(smokeRight)
             self.ground.addChild(smokeLeft)
             self.ground.addChild(smokeCenter)
-            let wait = SKAction.wait(forDuration: 1.0)
+            let wait = SKAction.wait(forDuration: 0.8)
             let removeAction = SKAction.group(
                 [ SKAction.run {
                     smokeCenter.removeFromParent()
                     smokeLeft.removeFromParent()
                     smokeRight.removeFromParent()
                     }])
-            let yscale =  SKAction.scaleY(to: 10, duration: 1)
-            let xscale = SKAction.scaleX(to: 1.5, duration: 1)
+            let yscale =  SKAction.scaleY(to:3, duration: 0.3)
+            let xscale = SKAction.scaleX(to: 1.5, duration: 0.3)
             let actions = SKAction.sequence([wait,removeAction])
+            smokeCenter.run(xscale)
             smokeCenter.run(yscale)
             self.run(actions)
         }
