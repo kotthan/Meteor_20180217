@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameClearScene: SKScene {
+class GameClearScene: BaseScene {
     
     //ノード
     let base: SKNode
@@ -18,15 +18,6 @@ class GameClearScene: SKScene {
     let guardPod: GuardPod
     
     var homeButton: SKSpriteNode!
-    
-    //タッチ処理用
-    var beganPos: CGPoint = CGPoint.zero
-    var beganPosOnView: CGPoint = CGPoint.zero  //viewの座標系でのタッチ位置
-    var tapPoint: CGPoint = CGPoint.zero
-    var beganPyPos: CGFloat = 0.0
-    var endPyPos:CGFloat = 0.0
-    var movePyPos:CGFloat = 0.0
-    var touchNode: SKSpriteNode!
     
     init(from: GameScene){
         self.base = from.baseNode
@@ -83,33 +74,12 @@ class GameClearScene: SKScene {
         self.player.update(meteor: nil, meteorSpeed: 0.0)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if let touch = touches.first as UITouch? {
-            self.beganPosOnView = CGPoint(x: touch.location(in: view).x,y: frame.maxY - touch.location(in: view).y ) //y座標を反転する
-            self.beganPos = touch.location(in: self)
-            //self.beganPyPos = (self.camera?.position.y)! //カメラの移動量を計算するために覚えておく
-            //タッチしたノードを記録しておく
-            touchNode = self.atPoint(beganPos) as? SKSpriteNode
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches
-        {
-            let endPos = touch.location(in: self)
-            //ボタンタップ判定
-            let node:SKSpriteNode? = self.atPoint(endPos) as? SKSpriteNode;
-            if( touchNode != nil ) && ( node == touchNode ) { // タッチ開始時と同じノードで離した
-                print("---タップを離したノード=\(String(describing: node?.name))---")
-                var buttonPushFlg = true
-                switch node{ //押したボタン別処理
-                case let node where node == self.homeButton :
-                    homeButtonAction()
-                default:
-                    buttonPushFlg = false
-                }
-            }
+    override func touchEnded(node: SKSpriteNode) {
+        switch node{ //押したボタン別処理
+        case let node where node == self.homeButton :
+            homeButtonAction()
+        default:
+            break
         }
     }
     
