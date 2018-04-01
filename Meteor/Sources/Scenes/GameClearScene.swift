@@ -27,6 +27,9 @@ class GameClearScene: BaseScene {
         self.guardPod = from.guardPod
         super.init(size: from.frame.size)
         self.scaleMode = from.scaleMode
+        self.camera = from.camera
+        from.camera?.removeAllChildren()
+        from.camera?.removeFromParent()
     }
     
     override func didMove(to view: SKView) {
@@ -38,8 +41,8 @@ class GameClearScene: BaseScene {
         homeButton.size.width = 75.0
         homeButton.size.height = 75.0
         homeButton.zPosition = 100001
-        homeButton.position.x = frame.size.width/3
-        homeButton.position.y = frame.size.height/5
+        homeButton.position.x = frame.size.width * 0.5
+        homeButton.position.y = frame.size.height * 0.1
         homeButton.xScale = 1
         homeButton.yScale = 1
         self.addChild(homeButton)
@@ -72,6 +75,9 @@ class GameClearScene: BaseScene {
     
     override func update(_ currentTime: TimeInterval) {
         self.player.update(meteor: nil, meteorSpeed: 0.0)
+        if let gameCamera: GameCamera = self.camera as? GameCamera {
+            gameCamera.update()
+        }
     }
     
     override func touchEnded(node: SKSpriteNode) {
@@ -80,6 +86,57 @@ class GameClearScene: BaseScene {
             homeButtonAction()
         default:
             break
+        }
+    }
+    override func touchMoved(action: BaseScene.TouchAction) {
+        switch action {
+        case .tap:
+            break
+        case .swipeDown:
+            self.player.guardStart()
+        case .swipeUp:
+            self.player.squat()
+        case .swipeLeft:
+            break
+        case .swipeRight:
+            break
+        }
+    }
+    override func touchEnded(action: BaseScene.TouchAction) {
+        switch action {
+        case .tap:
+            self.player.attack()
+        case .swipeDown:
+            self.player.guardEnd()
+        case .swipeUp:
+            if self.player.actionStatus == .Standing{
+                self.player.jump()
+                self.ground.jumpSprite(pos: player.position)
+            }
+        case .swipeLeft:
+            self.player.moveToLeft()
+        case .swipeRight:
+            self.player.moveToRight()
+        }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        //print("---didBeginで衝突しました---")
+        let nodeA = contact.bodyA.node
+        let nodeB = contact.bodyB.node
+        _ = nodeA?.name
+        _ = nodeB?.name
+        let bitA = contact.bodyA.categoryBitMask
+        let bitB = contact.bodyB.categoryBitMask
+        
+        if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b0001 || bitB == 0b0001)
+        {
+            self.player.landing()
+            //print("---Playerと地面が接触しました---")
+            if let gameCamera: GameCamera = self.camera as? GameCamera {
+                gameCamera.removeFromParent()
+                self.camera = nil
+            }
         }
     }
     

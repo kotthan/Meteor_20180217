@@ -36,6 +36,8 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         }
         super.init(size: frameSize)
         self.scaleMode = scaleMode
+        self.physicsWorld.contactDelegate = self                       //接触デリゲート
+        self.physicsWorld.gravity = CGVector(dx:0, dy:0)               //重力設定
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,7 +88,7 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
                                        y: frame.maxY - touch.location(in: view).y )
             //タッチアクション取得
             let touchAction = getTouchAction(begin: beganPosOnView, end: endPosOnView)
-            touchMoved(action: touchAction)
+            touchEnded(action: touchAction)
             //タップノード取得
             if let touchingNode = self.atPoint(touch.location(in: self)) as? SKSpriteNode {
                 if self.touchNode == touchingNode {     //同じノードをタップし続けていた場合
