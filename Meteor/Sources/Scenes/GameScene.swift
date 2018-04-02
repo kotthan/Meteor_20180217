@@ -243,7 +243,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //===================
         //MARK: ガードゲージ
         //===================
-        guardPod = GuardPod(gaugeView: gaugeview)
+        guardPod = GuardPod()
+        guardPod.gaugeView = gaugeview
         guardPod.position = CGPoint(x: self.player.sprite.position.x - 30, y: self.player.sprite.position.y )
         guardPod.setzPos(.GuadPod)
         self.player.addChild(guardPod)
