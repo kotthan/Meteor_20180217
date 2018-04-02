@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameClearScene: SKScene {
+class GameClearScene: BaseScene {
     
     //ノード
     let base: SKNode
@@ -19,15 +19,6 @@ class GameClearScene: SKScene {
     
     var homeButton: SKSpriteNode!
     
-    //タッチ処理用
-    var beganPos: CGPoint = CGPoint.zero
-    var beganPosOnView: CGPoint = CGPoint.zero  //viewの座標系でのタッチ位置
-    var tapPoint: CGPoint = CGPoint.zero
-    var beganPyPos: CGFloat = 0.0
-    var endPyPos:CGFloat = 0.0
-    var movePyPos:CGFloat = 0.0
-    var touchNode: SKSpriteNode!
-    
     init(from: GameScene){
         self.base = from.baseNode
         self.background = from.backgroundView
@@ -36,6 +27,9 @@ class GameClearScene: SKScene {
         self.guardPod = from.guardPod
         super.init(size: from.frame.size)
         self.scaleMode = from.scaleMode
+        self.camera = from.camera
+        from.camera?.removeAllChildren()
+        from.camera?.removeFromParent()
     }
     
     override func didMove(to view: SKView) {
@@ -47,8 +41,8 @@ class GameClearScene: SKScene {
         homeButton.size.width = 75.0
         homeButton.size.height = 75.0
         homeButton.zPosition = 100001
-        homeButton.position.x = frame.size.width/3
-        homeButton.position.y = frame.size.height/5
+        homeButton.position.x = frame.size.width * 0.5
+        homeButton.position.y = frame.size.height * 0.1
         homeButton.xScale = 1
         homeButton.yScale = 1
         self.addChild(homeButton)
@@ -81,34 +75,67 @@ class GameClearScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         self.player.update(meteor: nil, meteorSpeed: 0.0)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if let touch = touches.first as UITouch? {
-            self.beganPosOnView = CGPoint(x: touch.location(in: view).x,y: frame.maxY - touch.location(in: view).y ) //y座標を反転する
-            self.beganPos = touch.location(in: self)
-            //self.beganPyPos = (self.camera?.position.y)! //カメラの移動量を計算するために覚えておく
-            //タッチしたノードを記録しておく
-            touchNode = self.atPoint(beganPos) as? SKSpriteNode
+        if let gameCamera: GameCamera = self.camera as? GameCamera {
+            gameCamera.update()
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches
+    override func touchEnded(node: SKSpriteNode) {
+        switch node{ //押したボタン別処理
+        case let node where node == self.homeButton :
+            homeButtonAction()
+        default:
+            break
+        }
+    }
+    override func touchMoved(action: BaseScene.TouchAction) {
+        switch action {
+        case .tap:
+            break
+        case .swipeDown:
+            self.player.guardStart()
+        case .swipeUp:
+            self.player.squat()
+        case .swipeLeft:
+            break
+        case .swipeRight:
+            break
+        }
+    }
+    override func touchEnded(action: BaseScene.TouchAction) {
+        switch action {
+        case .tap:
+            self.player.attack()
+        case .swipeDown:
+            self.player.guardEnd()
+        case .swipeUp:
+            if self.player.actionStatus == .Standing{
+                self.player.jump()
+                self.ground.jumpSprite(pos: player.position)
+            }
+        case .swipeLeft:
+            self.player.moveToLeft()
+        case .swipeRight:
+            self.player.moveToRight()
+        }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        //print("---didBeginで衝突しました---")
+        let nodeA = contact.bodyA.node
+        let nodeB = contact.bodyB.node
+        _ = nodeA?.name
+        _ = nodeB?.name
+        let bitA = contact.bodyA.categoryBitMask
+        let bitB = contact.bodyB.categoryBitMask
+        
+        if (bitA == 0b0100 || bitB == 0b0100) && (bitA == 0b0001 || bitB == 0b0001)
         {
-            let endPos = touch.location(in: self)
-            //ボタンタップ判定
-            let node:SKSpriteNode? = self.atPoint(endPos) as? SKSpriteNode;
-            if( touchNode != nil ) && ( node == touchNode ) { // タッチ開始時と同じノードで離した
-                print("---タップを離したノード=\(String(describing: node?.name))---")
-                var buttonPushFlg = true
-                switch node{ //押したボタン別処理
-                case let node where node == self.homeButton :
-                    homeButtonAction()
-                default:
-                    buttonPushFlg = false
-                }
+            self.player.landing()
+            //print("---Playerと地面が接触しました---")
+            if let gameCamera: GameCamera = self.camera as? GameCamera {
+                gameCamera.removeFromParent()
+                self.camera = nil
             }
         }
     }
