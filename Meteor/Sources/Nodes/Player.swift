@@ -43,7 +43,6 @@ class Player: SKNode {
     let ultraAttackSpped : CGFloat = 9.8 * 150 *  1//プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
-        case landing    //最初の着地
         case attacking  //攻撃中
     }
     var ultraAttackStatus = UltraAttackState.none   //必殺技発動中フラグ
@@ -148,11 +147,6 @@ class Player: SKNode {
         //必殺技処理
         switch ( self.ultraAttackStatus )
         {
-        case .landing:
-            self.ultraAttackStatus = .attacking
-            self.position.y = self.defaultYPosition
-            self.ultraAttackJump()
-            break
         case .attacking:
             self.ultraAttackEnd()
             self.sprite.landingAnimation()
@@ -206,10 +200,12 @@ class Player: SKNode {
             self.gaugeview?.setMeteorGaugeScale(ultraPower: CGFloat(self.ultraPower))
         }
         //必殺技以外で隕石と接触していたら速度を0にする
-        if ( self.ultraAttackStatus == .none ) && ( self.meteorCollisionFlg )
+        if self.meteorCollisionFlg
         {
             self.meteorCollisionFlg = false
-            self.velocity = 0;
+            if self.ultraAttackStatus == .none {
+                self.velocity = 0
+            }
         }
     }
     
@@ -219,19 +215,9 @@ class Player: SKNode {
         self.ultraPower = 0
         gaugeview?.useMeteorGauge()
         //入力を受け付けないようにフラグを立てる
-        self.ultraAttackStatus = .landing
-        if( self.actionStatus != .Standing ) //空中にいる場合
-        {
-            //地面に戻る
-            self.velocity = -2000
-            self.sprite.fallAinmation()
-        }
-        else
-        {
-            self.ultraAttackStatus = .attacking
-            //大ジャンプ
-            self.ultraAttackJump()
-        }
+        self.ultraAttackStatus = .attacking
+        //大ジャンプ
+        self.ultraAttackJump()
         //ultraAttackフラグは地面に着いた時に落とす
     }
     func ultraAttackJump(){
