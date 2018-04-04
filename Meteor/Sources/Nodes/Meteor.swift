@@ -16,7 +16,8 @@ class Meteor: SKNode{
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
     var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
-    var meteorInt: Int = 0
+    var HP: Int = 0                                                 //隕石の数
+    var maxHP: Int = 0                                              //隕石の生成時の数
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
     var baseGravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
     
@@ -33,10 +34,11 @@ class Meteor: SKNode{
         
         self.buildFlg = false
         self.meteorSpeed = 0.0
-        self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.meteorInt)
+        self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.maxHP)
+        self.HP = self.maxHP
         
         var meteorZ = SKNode.zPos.Meteor.rawValue
-        for i in (0...meteorInt).reversed()
+        for i in (0...maxHP).reversed()
         {
             let size: CGFloat = 0.3 + CGFloat(i) * self.meteorUpScale
         
@@ -64,7 +66,7 @@ class Meteor: SKNode{
             
             meteorZ -= 0.001
         }
-        meteorInt += 1
+        maxHP += 1
     }
 
     func update(){
