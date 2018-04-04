@@ -37,25 +37,22 @@ class Meteor: SKNode{
         self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.maxHP)
         self.HP = self.maxHP
         
-        var meteorZ = SKNode.zPos.Meteor.rawValue
-        for i in (0...maxHP).reversed()
-        {
-            let size: CGFloat = 0.3 + CGFloat(i) * self.meteorUpScale
-            let meteor = createMeteor(size: size)
-            self.addChild(meteor)
-            self.meteores.append(meteor)
-            
-            meteorZ -= 0.001
-        }
-        maxHP += 1
+        let meteor = createMeteor(position: position)
+        self.addChild(meteor)
+        self.meteores.append(meteor)
+        
+        self.maxHP += 1
     }
 
-    func createMeteor(size: CGFloat) -> SKSpriteNode {
+    func createMeteor(position: CGPoint) -> SKSpriteNode {
+        
         let meteor = SKSpriteNode(texture: texture)
-        meteor.zPosition = meteorZ
+        meteor.setzPos(.Meteor)
         meteor.size = CGSize(width: texture.size().width, height: texture.size().height)
-        meteor.xScale = CGFloat(size)
-        meteor.yScale = CGFloat(size)
+        //現在のHPに合わせてサイズ調整する
+        let scale: CGFloat = 0.3 + CGFloat(self.HP) * self.meteorUpScale
+        meteor.xScale = CGFloat(scale)
+        meteor.yScale = CGFloat(scale)
         if meteores.isEmpty
         {
             meteor.position = position
@@ -85,6 +82,15 @@ class Meteor: SKNode{
     }
     
     func broken(attackPos: CGPoint){
+        
+        self.HP -= 1
+        if self.HP >= 0 {
+            if let first = meteores.first {
+                let meteor = createMeteor(position: first.position)
+                self.addChild(meteor)
+                self.meteores.append(meteor)
+            }
+        }
         self.meteores[0].physicsBody?.categoryBitMask = 0
         self.meteores[0].physicsBody?.contactTestBitMask = 0
         self.meteores[0].removeFromParent()
