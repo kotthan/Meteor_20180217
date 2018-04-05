@@ -799,6 +799,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         guard gameFlg == true else { return }
         self.gameFlg = false
+        self.view?.isUserInteractionEnabled = false //タッチを無効にする
         self.meteorTimer?.invalidate()
         pauseButton.isHidden = true//ポーズボタンを非表示にする
         hudView.scoreLabel.isHidden = true
