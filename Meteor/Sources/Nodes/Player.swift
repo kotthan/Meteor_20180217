@@ -24,13 +24,8 @@ class Player: SKNode {
     let moveSound = SKAction.playSoundFileNamed("move1", waitForCompletion: true)
     let jumpSound = SKAction.playSoundFileNamed("jump10", waitForCompletion: true)
     let landingSound = SKAction.playSoundFileNamed("tyakuti1", waitForCompletion: true)
-    //横位置
-    enum PosState: CGFloat {
-        case left = 93.75
-        case center = 187.5
-        case right = 281.25
-    }
-    var posStatus = PosState.center
+
+    var posStatus = XPositon.center
     var meteorCollisionFlg = false  /* 隕石衝突フラグ */
     enum ActionState{
         case Standing
@@ -65,7 +60,7 @@ class Player: SKNode {
         let groundY: CGFloat = 145.5
         self.defaultYPosition = groundY + 27
         self.addChild(sprite)
-        self.position.x = PosState.center.rawValue
+        self.position.x = XPositon.center.rawValue
         //攻撃判定用シェイプ
         self.attackShape = AttackShape(size: self.size)
         self.attackShape.position.y = self.size.height
@@ -346,7 +341,7 @@ class Player: SKNode {
         }
     }
     
-    func moveTo(_ pos: PosState){
+    func moveTo(_ pos: XPositon){
         guard self.actionStatus == .Standing else{return}
         guard self.moving == false else{return}
         self.posStatus = pos
