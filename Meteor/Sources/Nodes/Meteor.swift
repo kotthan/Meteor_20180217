@@ -20,6 +20,8 @@ class Meteor: SKNode{
     var maxLayer: Int = 0                                              //隕石の生成時の数
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
     var baseGravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
+    var HP: [Int] = [0,0,0]      //左中右の各HP
+    
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
@@ -73,6 +75,11 @@ class Meteor: SKNode{
         meteor.physicsBody?.collisionBitMask = 0b0000                        //接触対象をなしに設定
         meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
         meteor.name = "meteor"
+        //HPの設定
+        self.HP[XPositon.center.hashValue] = Int(arc4random_uniform(3)) + 1 /* 1 ~ 3 */
+        self.HP[XPositon.left.hashValue] = Int(arc4random_uniform(3)) + 1
+        self.HP[XPositon.right.hashValue] = Int(arc4random_uniform(3)) + 1
+        print("centerHP:\(self.HP[XPositon.center.hashValue])")
         return meteor
     }
 
@@ -87,8 +94,12 @@ class Meteor: SKNode{
         }
     }
     
-    func broken(attackPos: CGPoint){
+    func broken(attackPos: CGPoint, xPos: XPositon){
         
+        self.HP[xPos.hashValue] -= 1
+        print("\(xPos)HP:\(self.HP[xPos.hashValue])")
+        if self.HP [xPos.hashValue] <= 0 {
+            
         self.Layer -= 1
         if self.Layer >= 0 {
             if let first = meteores.first {
@@ -130,6 +141,7 @@ class Meteor: SKNode{
         //振動
         //vibrate()
 
+        }
     }
     
     func guarded(guardPos: CGPoint){
