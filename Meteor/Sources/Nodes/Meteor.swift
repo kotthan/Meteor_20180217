@@ -36,7 +36,7 @@ class Meteor: SKNode{
         
         self.buildFlg = false
         self.meteorSpeed = 0.0
-        self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.maxLayer)
+        self.meteorGravityCoefficient = 0.50 + 0.02 * CGFloat(self.maxLayer)
         self.Layer = self.maxLayer
         
         var meteor: SKSpriteNode!
