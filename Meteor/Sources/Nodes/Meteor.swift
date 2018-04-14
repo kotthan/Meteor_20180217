@@ -16,8 +16,8 @@ class Meteor: SKNode{
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
     var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
-    var HP: Int = 0                                                 //隕石の数
-    var maxHP: Int = 0                                              //隕石の生成時の数
+    var Layer: Int = 0                                                 //隕石の数
+    var maxLayer: Int = 0                                              //隕石の生成時の数
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
     var baseGravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
     
@@ -34,8 +34,8 @@ class Meteor: SKNode{
         
         self.buildFlg = false
         self.meteorSpeed = 0.0
-        self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.maxHP)
-        self.HP = self.maxHP
+        self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.maxLayer)
+        self.Layer = self.maxLayer
         
         var meteor: SKSpriteNode!
         if let xPos = XPositon.random?.rawValue{
@@ -48,7 +48,7 @@ class Meteor: SKNode{
         self.addChild(meteor)
         self.meteores.append(meteor)
         
-        self.maxHP += 1
+        self.maxLayer += 1
     }
 
     func createMeteor(position: CGPoint) -> SKSpriteNode {
@@ -56,8 +56,8 @@ class Meteor: SKNode{
         let meteor = SKSpriteNode(texture: texture)
         meteor.setzPos(.Meteor)
         meteor.size = CGSize(width: texture.size().width, height: texture.size().height)
-        //現在のHPに合わせてサイズ調整する
-        let scale: CGFloat = 0.3 + CGFloat(self.HP) * self.meteorUpScale
+        //現在のLayerに合わせてサイズ調整する
+        let scale: CGFloat = 0.3 + CGFloat(self.Layer) * self.meteorUpScale
         meteor.xScale = CGFloat(scale)
         meteor.yScale = CGFloat(scale)
         if let meteorPos = meteores.first?.position{
@@ -89,8 +89,8 @@ class Meteor: SKNode{
     
     func broken(attackPos: CGPoint){
         
-        self.HP -= 1
-        if self.HP >= 0 {
+        self.Layer -= 1
+        if self.Layer >= 0 {
             if let first = meteores.first {
                 let meteor = createMeteor(position: first.position)
                 self.addChild(meteor)
