@@ -721,7 +721,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //スコア
             self.score += Int(Float( 1 + self.meteorBase.meteores.count ) * comboBonus )
             self.player.attackMeteor()
-            meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)))
+            meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)), xPos: player.posStatus)
         }
         if meteorBase.meteores.isEmpty == true
         {

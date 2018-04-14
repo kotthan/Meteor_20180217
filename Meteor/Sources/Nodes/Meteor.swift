@@ -16,10 +16,12 @@ class Meteor: SKNode{
     var meteorSpeed : CGFloat = 0.0                                 //隕石のスピード[pixels/s]
     var meteorSpeedAtGuard: CGFloat = 100                           //隕石が防御された時の速度
     var meteorGravityCoefficient: CGFloat = 0.04                    //隕石が受ける重力の影響を調整する係数
-    var HP: Int = 0                                                 //隕石の数
-    var maxHP: Int = 0                                              //隕石の生成時の数
+    var Layer: Int = 0                                                 //隕石の数
+    var maxLayer: Int = 0                                              //隕石の生成時の数
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
-    var baseGravity : CGFloat = -900                                //重力 9.8 [m/s^2] * 150 [pixels/m]
+    var baseGravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
+    var HP: [Int] = [0,0,0]      //左中右の各HP
+    
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
@@ -29,11 +31,13 @@ class Meteor: SKNode{
     
     //MARK: 隕石落下
     func buildMeteor(position: CGPoint){
+        
         guard self.buildFlg == true else { return }
+        
         self.buildFlg = false
         self.meteorSpeed = 0.0
-        self.meteorGravityCoefficient = 0.50 + 0.02 * CGFloat(self.maxHP)
-        self.HP = self.maxHP
+        self.meteorGravityCoefficient = 0.50 + 0.02 * CGFloat(self.maxLayer)
+        self.Layer = self.maxLayer
         
         var meteor: SKSpriteNode!
         if let xPos = XPositon.random?.rawValue{
@@ -46,7 +50,7 @@ class Meteor: SKNode{
         self.addChild(meteor)
         self.meteores.append(meteor)
         
-        self.maxHP += 1
+        self.maxLayer += 1
     }
 
     func createMeteor(position: CGPoint) -> SKSpriteNode {
@@ -54,8 +58,8 @@ class Meteor: SKNode{
         let meteor = SKSpriteNode(texture: texture)
         meteor.setzPos(.Meteor)
         meteor.size = CGSize(width: texture.size().width, height: texture.size().height)
-        //現在のHPに合わせてサイズ調整する
-        let scale: CGFloat = 0.3 + CGFloat(self.HP) * self.meteorUpScale
+        //現在のLayerに合わせてサイズ調整する
+        let scale: CGFloat = 0.3 + CGFloat(self.Layer) * self.meteorUpScale
         meteor.xScale = CGFloat(scale)
         meteor.yScale = CGFloat(scale)
         if let meteorPos = meteores.first?.position{
@@ -71,6 +75,11 @@ class Meteor: SKNode{
         meteor.physicsBody?.collisionBitMask = 0b0000                        //接触対象をなしに設定
         meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
         meteor.name = "meteor"
+        //HPの設定
+        self.HP[XPositon.center.hashValue] = Int(arc4random_uniform(3)) + 1 /* 1 ~ 3 */
+        self.HP[XPositon.left.hashValue] = Int(arc4random_uniform(3)) + 1
+        self.HP[XPositon.right.hashValue] = Int(arc4random_uniform(3)) + 1
+        print("centerHP:\(self.HP[XPositon.center.hashValue])")
         return meteor
     }
 
@@ -85,10 +94,14 @@ class Meteor: SKNode{
         }
     }
     
-    func broken(attackPos: CGPoint){
+    func broken(attackPos: CGPoint, xPos: XPositon){
         
-        self.HP -= 1
-        if self.HP >= 0 {
+        self.HP[xPos.hashValue] -= 1
+        print("\(xPos)HP:\(self.HP[xPos.hashValue])")
+        if self.HP [xPos.hashValue] <= 0 {
+            
+        self.Layer -= 1
+        if self.Layer >= 0 {
             if let first = meteores.first {
                 let meteor = createMeteor(position: first.position)
                 self.addChild(meteor)
@@ -98,6 +111,10 @@ class Meteor: SKNode{
         self.meteores[0].physicsBody?.categoryBitMask = 0
         self.meteores[0].physicsBody?.contactTestBitMask = 0
         self.meteores[0].removeFromParent()
+        //spriteを削除する
+        self.meteores.remove(at: 0)
+            
+        }
         //隕石を爆発させる
         let particle = SKEmitterNode(fileNamed: "MeteorBroken.sks")
         //接触座標にパーティクルを放出するようにする。
@@ -121,8 +138,6 @@ class Meteor: SKNode{
         self.addChild(impact!)
         //アクションを実行する。
         impact!.run(actionAll1)
-        //spriteを削除する
-        self.meteores.remove(at: 0)
         //音
         playSound("broken1")
         //振動
