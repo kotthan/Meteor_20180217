@@ -49,8 +49,7 @@ class GameOverView: SKNode
         HomeButton.size.height = 75.0
         HomeButton.zPosition = 100001
         HomeButton.position.x = +frame.size.width/2 - 100
-        HomeButton.position.y = frame.size.height/2 - 35
-        //HomeButton.position.y = scoreLabel.position.y + scoreLabel.frame.size.height + 20 + 100
+        HomeButton.position.y = frame.size.height/2 - 23
         HomeButton.xScale = 1
         HomeButton.yScale = 1
         self.addChild(HomeButton)
@@ -61,8 +60,7 @@ class GameOverView: SKNode
         ReStartButton.size.height = 75.0
         ReStartButton.zPosition = 100001
         ReStartButton.position.x = +frame.size.width/2 + 100
-        ReStartButton.position.y = frame.size.height/2 - 35
-        //ReStartButton.position.y = scoreLabel.position.y + scoreLabel.frame.size.height + 20 + 100
+        ReStartButton.position.y = frame.size.height/2 - 23
         ReStartButton.xScale = 1
         ReStartButton.yScale = 1
         self.addChild(ReStartButton)
@@ -75,7 +73,6 @@ class GameOverView: SKNode
         scoreLabel.text = "Score:" + String( score )
         scoreLabel.fontColor = UIColor.black
         scoreLabel.position.x = +frame.size.width/2
-        //scoreLabel.position.y = HomeButton.position.y + HomeButton.frame.size.height + 20 + 100
         scoreLabel.position.y = frame.size.height/2 + 30
         self.addChild(scoreLabel)
         //ハイスコアラベル
