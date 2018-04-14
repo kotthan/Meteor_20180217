@@ -12,7 +12,7 @@ class Player: SKNode {
     var ground:Ground!
     var velocity: CGFloat = 0.0
     var ultraPower: Int = 0         //必殺技判定用
-    var gravity: CGFloat = -900
+    var gravity: CGFloat = -100
     let sprite = PlayerSprite()
     var auraNode: SKSpriteNode!
     var size: CGSize!

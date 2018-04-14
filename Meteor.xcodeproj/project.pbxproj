@@ -39,6 +39,7 @@
 		A3DCB55B204A2AE2008C8262 /* pod.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3DCB55A204A2AE2008C8262 /* pod.xcassets */; };
 		A3DCB55F204AC317008C8262 /* GaugeView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3DCB55E204AC317008C8262 /* GaugeView.xcassets */; };
 		B61D434D205D089B00EE5FDF /* LaunchScreen.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B61D434C205D089B00EE5FDF /* LaunchScreen.xcassets */; };
+		B62265FF20821E2200A43DD8 /* Meteor.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62265FE20821E2200A43DD8 /* Meteor.xcassets */; };
 		B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CFD642037390800F0F90E /* AppDelegate.swift */; };
 		B63CFD702037390800F0F90E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD6E2037390800F0F90E /* Main.storyboard */; };
 		B63CFD752037390800F0F90E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B63CFD732037390800F0F90E /* LaunchScreen.storyboard */; };
@@ -136,6 +137,7 @@
 		A3DCB55A204A2AE2008C8262 /* pod.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = pod.xcassets; sourceTree = "<group>"; };
 		A3DCB55E204AC317008C8262 /* GaugeView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = GaugeView.xcassets; sourceTree = "<group>"; };
 		B61D434C205D089B00EE5FDF /* LaunchScreen.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LaunchScreen.xcassets; sourceTree = "<group>"; };
+		B62265FE20821E2200A43DD8 /* Meteor.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Meteor.xcassets; sourceTree = "<group>"; };
 		B63CFD612037390800F0F90E /* Meteor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meteor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63CFD642037390800F0F90E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B63CFD6F2037390800F0F90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				B6610846204A67F0008B3767 /* GameOverView.xcassets */,
 				A3DCB55E204AC317008C8262 /* GaugeView.xcassets */,
 				B6C67B99205CEAAE002E89E9 /* PauseButton.xcassets */,
+				B62265FE20821E2200A43DD8 /* Meteor.xcassets */,
 				B63CFDA020373B1400F0F90E /* Base.lproj */,
 			);
 			path = Images;
@@ -608,6 +611,7 @@
 				B6958AB520459DBE00573D8D /* tyakuti1.mp3 in Resources */,
 				B6610847204A67F0008B3767 /* GameOverView.xcassets in Resources */,
 				A3DCB55F204AC317008C8262 /* GaugeView.xcassets in Resources */,
+				B62265FF20821E2200A43DD8 /* Meteor.xcassets in Resources */,
 				B6958ABB2045A49C00573D8D /* piano31.mp3 in Resources */,
 				B6958AB720459DE000573D8D /* move1.mp3 in Resources */,
 				B6958AAF20459D2F00573D8D /* broken1.mp3 in Resources */,
