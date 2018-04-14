@@ -111,6 +111,10 @@ class Meteor: SKNode{
         self.meteores[0].physicsBody?.categoryBitMask = 0
         self.meteores[0].physicsBody?.contactTestBitMask = 0
         self.meteores[0].removeFromParent()
+        //spriteを削除する
+        self.meteores.remove(at: 0)
+            
+        }
         //隕石を爆発させる
         let particle = SKEmitterNode(fileNamed: "MeteorBroken.sks")
         //接触座標にパーティクルを放出するようにする。
@@ -134,14 +138,11 @@ class Meteor: SKNode{
         self.addChild(impact!)
         //アクションを実行する。
         impact!.run(actionAll1)
-        //spriteを削除する
-        self.meteores.remove(at: 0)
         //音
         playSound("broken1")
         //振動
         //vibrate()
 
-        }
     }
     
     func guarded(guardPos: CGPoint){
