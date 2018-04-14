@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A3132924206F920500A66939 /* GameClearScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3132923206F920500A66939 /* GameClearScene.swift */; };
 		A354E9C320700BE9001D1467 /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E9C220700BE9001D1467 /* BaseScene.swift */; };
+		A354E9CB20791897001D1467 /* XPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E9CA20791897001D1467 /* XPosition.swift */; };
 		A36B6E672060032900466321 /* AttackShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E662060032900466321 /* AttackShape.swift */; };
 		A36B6E692060035300466321 /* GuardShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E682060035300466321 /* GuardShape.swift */; };
 		A36B6E6B2061F51300466321 /* SKNode+playSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E6A2061F51300466321 /* SKNode+playSound.swift */; };
@@ -105,6 +106,7 @@
 /* Begin PBXFileReference section */
 		A3132923206F920500A66939 /* GameClearScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameClearScene.swift; path = Meteor/Sources/Scenes/GameClearScene.swift; sourceTree = SOURCE_ROOT; };
 		A354E9C220700BE9001D1467 /* BaseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
+		A354E9CA20791897001D1467 /* XPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPosition.swift; sourceTree = "<group>"; };
 		A36B6E662060032900466321 /* AttackShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackShape.swift; sourceTree = "<group>"; };
 		A36B6E682060035300466321 /* GuardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardShape.swift; sourceTree = "<group>"; };
 		A36B6E6A2061F51300466321 /* SKNode+playSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+playSound.swift"; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 				B661083E2046A8B0008B3767 /* TitleNode.swift */,
 				A36B6E7020624F2000466321 /* PlayerSprite.swift */,
 				A3DBAE82203946960025B9DD /* Player.swift */,
+				A354E9CA20791897001D1467 /* XPosition.swift */,
 				A3DBAE80203926C50025B9DD /* LandingEffect.swift */,
 				B63CFDBD20373C9400F0F90E /* IconButton.swift */,
 				B63CFDC520373CEF00F0F90E /* GuardPod.swift */,
@@ -653,6 +656,7 @@
 				A3A24AD1206BEB18000180F5 /* GameCamera.swift in Sources */,
 				B63CFD652037390800F0F90E /* AppDelegate.swift in Sources */,
 				B6610841204829AA008B3767 /* GaugeView.swift in Sources */,
+				A354E9CB20791897001D1467 /* XPosition.swift in Sources */,
 				A36B6E672060032900466321 /* AttackShape.swift in Sources */,
 				A3132924206F920500A66939 /* GameClearScene.swift in Sources */,
 				B63CFDD020373D2C00F0F90E /* PauseView.swift in Sources */,

@@ -90,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var speedFromMeteorAtGuard : CGFloat = -1500  //隕石を防御した時にプレイヤーが受ける隕石の速度
     //MARK: タッチ関係プロパティ
+    var touchEnabled = true
     var beganPos: CGPoint = CGPoint.zero
     var beganPosOnView: CGPoint = CGPoint.zero  //viewの座標系でのタッチ位置
 	var tapPoint: CGPoint = CGPoint.zero
@@ -351,6 +352,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: タッチダウンされたときに呼ばれる関数
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
+        guard self.touchEnabled == true else { return }
         guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
@@ -381,6 +383,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: タッチ移動されたときに呼ばれる関数
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
     {
+        guard self.touchEnabled == true else { return }
         guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
@@ -422,6 +425,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: タッチアップされたときに呼ばれる関数
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {
+        guard self.touchEnabled == true else { return }
         guard ( player.ultraAttackStatus == .none ) else { //必殺技中でなければ次の処理に進む
             return
         }
@@ -799,7 +803,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         guard gameFlg == true else { return }
         self.gameFlg = false
+<<<<<<< HEAD
         self.view?.isUserInteractionEnabled = false //タッチを無効にする
+=======
+        self.touchEnabled = false //タッチを無効にする
+>>>>>>> master
         self.meteorTimer?.invalidate()
         pauseButton.isHidden = true//ポーズボタンを非表示にする
         hudView.scoreLabel.isHidden = true
