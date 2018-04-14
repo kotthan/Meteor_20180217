@@ -19,7 +19,7 @@ class Meteor: SKNode{
     var HP: Int = 0                                                 //隕石の数
     var maxHP: Int = 0                                              //隕石の生成時の数
     var meteorUpScale : CGFloat = 0.8                               //隕石の増加倍率
-    var baseGravity : CGFloat = -900                                    //重力 9.8 [m/s^2] * 150 [pixels/m]
+    var baseGravity : CGFloat = -900                                //重力 9.8 [m/s^2] * 150 [pixels/m]
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
@@ -29,12 +29,10 @@ class Meteor: SKNode{
     
     //MARK: 隕石落下
     func buildMeteor(position: CGPoint){
-        
         guard self.buildFlg == true else { return }
-        
         self.buildFlg = false
         self.meteorSpeed = 0.0
-        self.meteorGravityCoefficient = 0.05 + 0.01 * CGFloat(self.maxHP)
+        self.meteorGravityCoefficient = 0.50 + 0.02 * CGFloat(self.maxHP)
         self.HP = self.maxHP
         
         var meteor: SKSpriteNode!
