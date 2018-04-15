@@ -12,12 +12,12 @@ class Player: SKNode {
     var ground:Ground!
     var velocity: CGFloat = 0.0
     var ultraPower: Int = 0         //必殺技判定用
-    var gravity: CGFloat = -100
+    var gravity: CGFloat = -300
     let sprite = PlayerSprite()
     var auraNode: SKSpriteNode!
     var size: CGSize!
     let halfSize: CGFloat = 20 // playerPhisicsBody / 2 の実測値
-    let jumpVelocity:CGFloat = 1500  //プレイヤーのジャンプ時の初速
+    let jumpVelocity:CGFloat = 950  //プレイヤーのジャンプ時の初速
     var defaultYPosition : CGFloat = 0.0
     var jumping: Bool = false   //ジャンプ中フラグ
     var moving: Bool = false                                        //移動中フラグ
