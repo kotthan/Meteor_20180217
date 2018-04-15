@@ -39,13 +39,16 @@ class Meteor: SKNode{
         self.meteorGravityCoefficient = 1.3 + 0.08 * CGFloat(self.maxLayer)
         self.Layer = self.maxLayer
         var meteor: SKSpriteNode!
-        if let xPos = XPositon.random?.rawValue{
+        meteor = createMeteor(position: position)
+        
+/*        if let xPos = XPositon.random?.rawValue{
             meteor = createMeteor(position: CGPoint(x: xPos, y: position.y))
             print("meteorX: \(xPos)")
         }
         else {
             meteor = createMeteor(position: position)
         }
+ */
         self.addChild(meteor)
         self.meteores.append(meteor)
         
