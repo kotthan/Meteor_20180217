@@ -29,7 +29,7 @@ class GuardPod: SKNode {
     
     var guardStatus = guardState.enable         //ガード状態
     let maxCount:CGFloat = 90.0                 //最大値
-    var count:CGFloat = 0.0
+    var count:CGFloat = 90.0
     let recoverCountTime:Double = 2.0           //ガードを１回復するまでの時間
     let recoverBrokenTime:Double = 5.0          //破壊状態から回復するまでの時間
     let actionKey = "recover"
