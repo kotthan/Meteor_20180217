@@ -27,11 +27,11 @@ class GuardPod: SKNode {
     private let gaugeHeight: CGFloat
     var gaugeView: GaugeView?
     
-    var guardStatus = guardState.enable //ガード状態
-    let maxCount:CGFloat = 90.0   //最大値
+    var guardStatus = guardState.enable         //ガード状態
+    let maxCount:CGFloat = 90.0                 //最大値
     var count:CGFloat = 0.0
-    let recoverCountTime:Double = 2.0 //ガードを１回復するまでの時間
-    let recoverBrokenTime:Double = 5.0  //破壊状態から回復するまでの時間
+    let recoverCountTime:Double = 2.0           //ガードを１回復するまでの時間
+    let recoverBrokenTime:Double = 5.0          //破壊状態から回復するまでの時間
     let actionKey = "recover"
     
     override init() {
@@ -95,7 +95,7 @@ class GuardPod: SKNode {
     }
     
     //ガード回復
-    @objc func addCount(_ num: CGFloat = 0.1){
+    @objc func addCount(_ num: CGFloat = 0.2){
         self.count += num
         //最大値を超える場合は最大値にする
         if( self.count >= self.maxCount ){

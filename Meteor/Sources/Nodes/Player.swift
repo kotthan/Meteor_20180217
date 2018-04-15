@@ -35,7 +35,7 @@ class Player: SKNode {
     var actionStatus = ActionState.Standing
     var attackFlg : Bool = false                                   //攻撃フラグ
     var attackShape: AttackShape!                                  //攻撃判定シェイプノード
-    let ultraAttackSpped : CGFloat = 9.8 * 150 *  3//プレイヤーの必殺技ジャンプ時の初速
+    let ultraAttackSpped : CGFloat = 9.8 * 150 *  1//プレイヤーの必殺技ジャンプ時の初速
     enum UltraAttackState{ //必殺技の状態
         case none       //未発動
         case attacking  //攻撃中
@@ -245,7 +245,7 @@ class Player: SKNode {
         self.run(SKAction.sequence([squat,wait,attack]))
     }
     func ultraAttackEnd(){
-        self.gravity = -900
+        self.gravity = -300
         self.attackFlg = false
         //attackShapeを消す
         if let attackNode = self.childNode(withName: self.attackShape.name!)

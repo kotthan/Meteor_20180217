@@ -88,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //調整用パラメータ
 
-    var speedFromMeteorAtGuard : CGFloat = -1500  //隕石を防御した時にプレイヤーが受ける隕石の速度
+    var speedFromMeteorAtGuard : CGFloat = -500  //隕石を防御した時にプレイヤーが受ける隕石の速度
     //MARK: タッチ関係プロパティ
     var touchEnabled = true
     var beganPos: CGPoint = CGPoint.zero
