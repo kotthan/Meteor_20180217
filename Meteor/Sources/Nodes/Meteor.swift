@@ -31,12 +31,10 @@ class Meteor: SKNode{
     
     //MARK: 隕石落下
     func buildMeteor(position: CGPoint){
-        
         guard self.buildFlg == true else { return }
-        
         self.buildFlg = false
         self.meteorSpeed = 0.0
-        self.meteorGravityCoefficient = 1.3 + 0.08 * CGFloat(self.maxLayer)
+        self.meteorGravityCoefficient = 0.5 + 0.1 * CGFloat(self.maxLayer)
         self.Layer = self.maxLayer
         var meteor: SKSpriteNode!
         meteor = createMeteor(position: position)
