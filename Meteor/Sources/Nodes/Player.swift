@@ -194,13 +194,13 @@ class Player: SKNode {
             self.ultraPower += 1
             self.gaugeview?.setMeteorGaugeScale(ultraPower: CGFloat(self.ultraPower))
         }
-        //必殺技以外で隕石と接触していたら速度を0にする
-        if self.meteorCollisionFlg
-        {
+        //必殺技中以外は速度を0にする
+        if self.ultraAttackStatus == .none {
+            self.velocity = 0
+        }
+        //必殺技以外で隕石と接触していたら衝突フラグを落とす
+        if self.meteorCollisionFlg == true {
             self.meteorCollisionFlg = false
-            if self.ultraAttackStatus == .none {
-                self.velocity = 0
-            }
         }
     }
     
