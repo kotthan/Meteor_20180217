@@ -94,9 +94,9 @@ class Meteor: SKNode{
         }
     }
     
-    func broken(attackPos: CGPoint, xPos: XPositon){
+    func broken(attackPos: CGPoint, xPos: XPositon, damage: Int = 1){
         
-        self.HP[xPos.hashValue] -= 1
+        self.HP[xPos.hashValue] -= damage
         print("\(xPos)HP:\(self.HP[xPos.hashValue])")
         if self.HP [xPos.hashValue] <= 0 {
             

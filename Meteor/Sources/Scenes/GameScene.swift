@@ -721,7 +721,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //スコア
             self.score += Int(Float( 1 + self.meteorBase.meteores.count ) * comboBonus )
             self.player.attackMeteor()
-            meteorBase.broken(attackPos: CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y)), xPos: player.posStatus)
+            let attackPos = CGPoint(x: player.position.x, y: player.position.y + (player.attackShape.position.y))
+            //必殺技中は一撃で壊す為にダメージを大きくする
+            var damege = 1
+            if self.player.ultraAttackStatus != .none {
+                damege = 3
+            }
+            meteorBase.broken(attackPos: attackPos, xPos: player.posStatus, damage: damage)
         }
         if meteorBase.meteores.isEmpty == true
         {
