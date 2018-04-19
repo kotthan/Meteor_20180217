@@ -725,9 +725,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //必殺技中は一撃で壊す為にダメージを大きくする
             var damege = 1
             if self.player.ultraAttackStatus != .none {
-                damege = 3
+                damege = Int.max
             }
-            meteorBase.broken(attackPos: attackPos, xPos: player.posStatus, damage: damage)
+            meteorBase.broken(attackPos: attackPos, xPos: player.posStatus, damage: damege)
         }
         if meteorBase.meteores.isEmpty == true
         {

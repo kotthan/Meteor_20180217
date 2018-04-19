@@ -22,7 +22,7 @@ class Meteor: SKNode{
     var baseGravity : CGFloat = -100                                //重力 9.8 [m/s^2] * 150 [pixels/m]
     var HP: [Int] = [0,0,0]                         //左中右の各HP
     let maxHP: Int = 3                              //HPの最大値 
-    var weakPos: XPositon = .Center                 //弱点の位置
+    var weakPos: XPositon = .center                 //弱点の位置
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
@@ -87,9 +87,9 @@ class Meteor: SKNode{
         self.HP[XPositon.left.hashValue] = maxHP
         self.HP[XPositon.right.hashValue] = maxHP
         //弱点にする位置を決めてそこのHPを1に書き換える
-        if let xPos = XPositon.random?.rawValue{
+        if let xPos = XPositon.random{
             var weakPos = xPos
-            self.HP[XPositon.right.hashValue] = 1
+            self.HP[xPos.hashValue] = 1
         }
         print("HP:\(self.HP)")
     }
