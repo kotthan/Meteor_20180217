@@ -31,7 +31,7 @@ class GuardPod: SKNode {
     let maxCount:CGFloat = 90.0                 //最大値
     var count:CGFloat = 90.0
     let recoverCountTime:Double = 2.0           //ガードを１回復するまでの時間
-    let recoverBrokenTime:Double = 5.0          //破壊状態から回復するまでの時間
+    let recoverTime:Double = 5.0                //破壊状態から回復するまでの時間
     let actionKey = "recover"
     
     override init() {
@@ -168,6 +168,10 @@ class GuardPod: SKNode {
         brokenAnimation(duration: 1.0)
         //ガード不可状態にする
         self.guardStatus = .disable
+        //回復まで待ちAction
+        let wait = SKAction.wait(forDuration: self.recoverTime)
+        let repair = SKAction.run{ self.addCount(self.maxCount) }
+        self.run(SKAction.sequence([wait,repair]), withKey: self.actionKey )
     }
     
     private func brokenAnimation(duration: TimeInterval){
