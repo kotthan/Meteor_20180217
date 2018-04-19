@@ -161,6 +161,9 @@ class GuardPod: SKNode {
     //ガード破損
     func broken(){
         self.count = 0
+        //回復待ち時間が0なら破壊しない
+        guard self.recoverTime != 0 else { return }
+
         //アニメーション
         self.removeAllActions()
         self.run( SKAction.group( [SKAction.rotate(byAngle: 4 * CGFloat.pi , duration: 1.0),
