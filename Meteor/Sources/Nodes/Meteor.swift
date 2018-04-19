@@ -23,9 +23,11 @@ class Meteor: SKNode{
     var HP: [Int] = [0,0,0]                         //左中右の各HP
     let maxHP: Int = 3                              //HPの最大値 
     var weakPos: XPositon = .center                 //弱点の位置
+    let crack: SKSpriteNode
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
+        self.crack = SKSpriteNode(imageNamed: "ヒビ グレー 2")
         super.init()
         
     }
@@ -49,6 +51,8 @@ class Meteor: SKNode{
         }
  */
         self.addChild(meteor)
+        self.crack.zPosition = meteor.zPosition + 0.1
+        meteor.addChild(crack)
         self.meteores.append(meteor)
         
         self.maxLayer += 3
