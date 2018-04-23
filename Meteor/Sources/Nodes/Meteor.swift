@@ -27,7 +27,7 @@ class Meteor: SKNode{
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
-        self.crack = SKSpriteNode(imageNamed: "ヒビ グレー 2")
+        self.crack = SKSpriteNode(imageNamed: "ヒビ グレー 2")
         super.init()
         
     }
@@ -51,8 +51,6 @@ class Meteor: SKNode{
         }
  */
         self.addChild(meteor)
-        self.crack.zPosition = meteor.zPosition + 0.1
-        meteor.addChild(crack)
         self.meteores.append(meteor)
         
         self.maxLayer += 3
@@ -81,6 +79,10 @@ class Meteor: SKNode{
         meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
         meteor.name = "meteor"
         setHP()
+        //ヒビを追加
+        self.crack.removeFromParent()//すでに追加されていた場合エラーになるため削除しておく
+        self.crack.zPosition = meteor.zPosition + 0.1
+        meteor.addChild(crack)
         return meteor
     }
 
