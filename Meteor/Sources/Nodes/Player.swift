@@ -41,9 +41,11 @@ class Player: SKNode {
         case attacking  //攻撃中
     }
     var ultraAttackStatus = UltraAttackState.none   //必殺技発動中フラグ
+    let ultraAttackEffect: SKSpriteNode
     var gaugeview: GaugeView?
     
     override init() {
+        self.ultraAttackEffect = SKSpriteNode(imageNamed: "気 全体 エフェクト")
         super.init()
         let texture = SKTexture(imageNamed: "player00")
         let physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: 65, height: 65))
@@ -64,6 +66,13 @@ class Player: SKNode {
         //攻撃判定用シェイプ
         self.attackShape = AttackShape(size: self.size)
         self.attackShape.position.y = self.size.height
+        //攻撃エフェクト
+        self.ultraAttackEffect.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.ultraAttackEffect.isHidden = true
+        self.ultraAttackEffect.xScale *= 2
+        self.ultraAttackEffect.yScale = self.ultraAttackEffect.xScale
+        self.ultraAttackEffect.setzPos(.GuadPod)
+        self.addChild(self.ultraAttackEffect)
     }
 
     func update(meteor: SKSpriteNode?, meteorSpeed: CGFloat){
@@ -126,6 +135,7 @@ class Player: SKNode {
 
         actionStatus = .Falling
         self.sprite.fallAinmation()
+        self.ultraAttackEffect.isHidden = true
     }
     
     //着地
@@ -237,6 +247,7 @@ class Player: SKNode {
             //エフェクト
             self.ultraSonic()
             self.ultraSmoke()
+            self.ultraAttackEffect.isHidden = false
             //サウンド
             self.playSound("jump10")
             //アニメーション
