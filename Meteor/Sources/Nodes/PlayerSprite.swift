@@ -97,8 +97,8 @@ class PlayerSprite: SKSpriteNode {
         //輪っかのエフェクト
         if let jumpEffect = SKEmitterNode(fileNamed: "JumpEffect.sks") {
             //ファイルが存在する場合のみ実行される
-            jumpEffect.position = self.position
-            self.parent?.addChild(jumpEffect)
+            jumpEffect.position = self.parent!.position
+            self.parent?.parent?.addChild(jumpEffect)
             jumpEffect.position.y -= self.size.height / 2  //Playerの半分
             //シーンから消すアクションを作成する。
             let wait = SKAction.wait(forDuration: 1)
