@@ -27,7 +27,9 @@ class Meteor: SKNode{
     
     override init(){
         self.texture = SKTexture(imageNamed: "normal_meteor")
-        self.crack = SKSpriteNode(imageNamed: "ヒビ グレー 2")
+        self.crack = SKSpriteNode(imageNamed: "ヒビ グレー 2")
+        self.crack.xScale = 0.5
+        self.crack.yScale = self.crack.xScale
         super.init()
         
     }
@@ -51,8 +53,6 @@ class Meteor: SKNode{
         }
  */
         self.addChild(meteor)
-        self.crack.zPosition = meteor.zPosition + 0.1
-        meteor.addChild(crack)
         self.meteores.append(meteor)
         
         self.maxLayer += 3
@@ -81,6 +81,19 @@ class Meteor: SKNode{
         meteor.physicsBody?.contactTestBitMask = 0b0010 | 0b10000 | 0b100000 | 0b0100 //接触対象を各Shapeとプレイヤーに設定
         meteor.name = "meteor"
         setHP()
+        //ヒビを追加
+        self.crack.removeFromParent()//すでに追加されていた場合エラーになるため削除しておく
+        self.crack.zPosition = meteor.zPosition + 0.1
+        //弱点に応じてxの位置を調整
+        switch self.weakPos {
+        case .left:
+            self.crack.position.x = -meteor.size.width * 0.25
+        case .center:
+            self.crack.position.x = 0
+        case .right:
+            self.crack.position.x = meteor.size.width * 0.25
+        }
+        meteor.addChild(self.crack)
         return meteor
     }
 
@@ -92,7 +105,7 @@ class Meteor: SKNode{
         self.HP[XPositon.right.hashValue] = maxHP
         //弱点にする位置を決めてそこのHPを1に書き換える
         if let xPos = XPositon.random{
-            var weakPos = xPos
+            self.weakPos = xPos
             self.HP[xPos.hashValue] = 1
         }
         print("HP:\(self.HP)")

@@ -10,6 +10,7 @@
 		A3132924206F920500A66939 /* GameClearScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3132923206F920500A66939 /* GameClearScene.swift */; };
 		A354E9C320700BE9001D1467 /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E9C220700BE9001D1467 /* BaseScene.swift */; };
 		A354E9CB20791897001D1467 /* XPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E9CA20791897001D1467 /* XPosition.swift */; };
+		A354E9D52090CCD0001D1467 /* JumpEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = A354E9D42090CCCF001D1467 /* JumpEffect.sks */; };
 		A36B6E672060032900466321 /* AttackShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E662060032900466321 /* AttackShape.swift */; };
 		A36B6E692060035300466321 /* GuardShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E682060035300466321 /* GuardShape.swift */; };
 		A36B6E6B2061F51300466321 /* SKNode+playSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B6E6A2061F51300466321 /* SKNode+playSound.swift */; };
@@ -108,6 +109,7 @@
 		A3132923206F920500A66939 /* GameClearScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameClearScene.swift; path = Meteor/Sources/Scenes/GameClearScene.swift; sourceTree = SOURCE_ROOT; };
 		A354E9C220700BE9001D1467 /* BaseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
 		A354E9CA20791897001D1467 /* XPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPosition.swift; sourceTree = "<group>"; };
+		A354E9D42090CCCF001D1467 /* JumpEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = JumpEffect.sks; sourceTree = "<group>"; };
 		A36B6E662060032900466321 /* AttackShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackShape.swift; sourceTree = "<group>"; };
 		A36B6E682060035300466321 /* GuardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardShape.swift; sourceTree = "<group>"; };
 		A36B6E6A2061F51300466321 /* SKNode+playSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+playSound.swift"; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 		B63CFDF62037E31300F0F90E /* Particles */ = {
 			isa = PBXGroup;
 			children = (
+				A354E9D42090CCCF001D1467 /* JumpEffect.sks */,
 				B63CFDE620373EAC00F0F90E /* MeteorBroken.sks */,
 				B6D0C6142053A09B0007F8D1 /* Impact.sks */,
 				B6C67B91205AA6AF002E89E9 /* jump.sks */,
@@ -587,6 +590,7 @@
 			files = (
 				B6958AB320459D8000573D8D /* bougyo01.mp3 in Resources */,
 				B6A4CEC12041DACB00A9AB0D /* crasy.mp3 in Resources */,
+				A354E9D52090CCD0001D1467 /* JumpEffect.sks in Resources */,
 				B63CFDF42037E28D00F0F90E /* Asset.xcassets in Resources */,
 				B6D0C6162053A09B0007F8D1 /* Impact.sks in Resources */,
 				B6958AB92045A0FA00573D8D /* button01.mp3 in Resources */,

@@ -94,6 +94,18 @@ class PlayerSprite: SKSpriteNode {
         self.animationStatus = .Jumping
         self.removeAction(forKey: "textureAnimation")
         let action = SKAction.animate(with: jumpTextures, timePerFrame: 0.1, resize: false, restore: false)
+        //輪っかのエフェクト
+        if let jumpEffect = SKEmitterNode(fileNamed: "JumpEffect.sks") {
+            //ファイルが存在する場合のみ実行される
+            jumpEffect.position = self.parent!.position
+            self.parent?.parent?.addChild(jumpEffect)
+            jumpEffect.position.y -= self.size.height / 2  //Playerの半分
+            //シーンから消すアクションを作成する。
+            let wait = SKAction.wait(forDuration: 1)
+            let remove = SKAction.removeFromParent()
+            let willRemove = SKAction.sequence([wait, remove])
+            jumpEffect.run(willRemove)
+        }
         self.run(SKAction.repeat(action, count:1), withKey: "textureAnimation")
     }
     
